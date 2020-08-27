@@ -9,9 +9,9 @@
 1. __What kinds of obstacles might you encounter in trying to reach both your team and personal goals?__ 
    * My communications skill have gotten better since I've join college but I still am lacking when explainging bigger ideas. This might make it more difficult to get the point across cleanly
 1. __What happens if some people on the team want to get an “A” while others think a “B” will be acceptable?__ 
-   * Yes, based off of how we saw the grading scale work, the way someone else would get a higher grade is if a teammate and/or the professor believe their to be an inequality. 
+   * Yes, based off of how we saw the grading scale work, the way someone else would get a higher grade is if a teammate and/or the professor believe they should recive a higher grade. 
 1. __Is it acceptable for some team members to do more work on the assignment in order to get an “A”?__ 
-   * No, as a team we should come together to figure out what we need to do and split the workload. I belive people getting different grades should be based on unfairness.
+   * No, as a team we should come together to figure out what we need to do and split the workload. Although someone might want to get a higher grade, I don't want push more work on to
 1. __How much time per week do you anticipate it will take to make the project successful?__ 
    * 15-20hours about. Atleast I hope, It would be nice to not have to work on a project more than 25 hours in a week.
 1. __How will you decide who should do what on the project and activities?__ 
@@ -25,7 +25,7 @@
 1. __Do you want to have a standing meeting time outside of class?__ 
    * I would be willing, but it would have to be between 9am to 5pm
 1. __How often do you think the team will need to meet outside of class?__ 
-   * I think we should talk pretty offten about our project, I dont think we will be meeting is person but everyday , we could talk about our project
+   * I think we should talk pretty offten about our project, I dont think we will be meeting is person but everyday we could talk about our project
 1. __Will you need approval of every team member before making a decision?__ 
    * Depends, If its a big dicision that effects the whole team, then we should have everyone approve. But if were just updating the mastercode, we only need 2 people to change it.
 1. __What will you do if every team member except one agrees on something?__ 
