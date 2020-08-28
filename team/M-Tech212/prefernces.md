@@ -1,4 +1,4 @@
-# __Preferences forJack Melvin__
+# __Preferences for Jack Melvin__
 
 1. __Is it generally easier to reach you by text, electronic mail, voice mail or something else?  What hours?__ 
    * text for a relativly immediate but I check my Email once a day at least. 10am - 6pm are good hours 
