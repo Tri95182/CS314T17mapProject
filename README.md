@@ -5,3 +5,4 @@ This is our Masscot Bloo, He's from Foster's Home for Imaginary Friends
 | --------- | ---------- | --------- | --------------- | --------- |
 | Nguyen | Tri | Tri | Tri95182 | tri@rams.colostate.edu |
 | Wernsman | Collin | cwernsma | collinw99 | cwernsma@rams.colostate.edu |
+| Melvin | Jack | melvin42 | M-Tech212 | melvin42@rams.colostate.edu |
