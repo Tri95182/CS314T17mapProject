@@ -12,7 +12,7 @@ setLogLevelIfDefault();
 
 export const LOG = ulog("App");
 
-export const CLIENT_TEAM_NAME = "T## Team Name";
+export const CLIENT_TEAM_NAME = "T17 Team Bloo";
 
 export const EARTH_RADIUS_UNITS_DEFAULT = {"miles": 3959};
 
