@@ -1,4 +1,4 @@
-# Sprint # - t17 - Team Bloo
+# Sprint #1 - t17 - Team Bloo
 
 ## Goal
 ### Who is the development team?
@@ -50,7 +50,7 @@ The solution should clearly identify the team that created the product and a lit
 
 | Date | Tasks closed  | Tasks in progress | Impediments |
 | :--- | :--- | :--- | :--- |
-| *date* | *#task, ...* | *#task, ...* | *none* | 
+| 9/4 | #43 | #36, #37, #40, #42 | *none* | 
 
 
 ## Review
