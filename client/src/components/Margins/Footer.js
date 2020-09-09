@@ -31,9 +31,8 @@ export default class Footer extends Component {
                 <Container>
                     <div className="centered">
                         {linkStatusSymbol}Connected to {serverName} &nbsp;
-                        {this.renderInformationIcon()}&nbsp;
                         <a className="tco-text" onClick={() => this.setState({serverSettingsOpen: true})}>
-                            ({this.props.serverSettings.serverPort})
+                            {UNICODE_INFO_SYMBOL}Get More Info &nbsp;
                         </a>
                     {this.renderServerSettings()}
                 </div>
@@ -65,11 +64,4 @@ export default class Footer extends Component {
         );
     }
 
-    renderInformationIcon(){
-        return(
-            <a className="tco-text" onClick={() => this.setState({serverSettingsOpen: true})}>
-                 {UNICODE_INFO_SYMBOL}Get More Info &nbsp;
-           </a>
-        );
-    }
 }
