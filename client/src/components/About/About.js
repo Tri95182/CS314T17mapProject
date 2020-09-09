@@ -7,7 +7,7 @@ import {CLIENT_TEAM_NAME} from "../../utils/constants";
 import collinPicture from "../../static/images/Test-Picture.png";
 import austinPicture from "../../static/images/Test-Picture.png";
 import jackPicture from "../../static/images/Test-Picture.png";
-import triPicture from "../../static/images/Test-Picture.png";
+import triPicture from "../../static/images/TriNguyen.png";
 
 export default class About extends Component {
 
@@ -45,7 +45,8 @@ export default class About extends Component {
                 {this.createMemberCard(austinPicture, "Austin Wulfing", "Bio here")}
                 {this.createMemberCard(collinPicture, "Collin Wernsman", "Bio here")}
                 {this.createMemberCard(jackPicture, "Jack Melvin", "Bio here")}
-                {this.createMemberCard(triPicture, "Tri Nguyen", "Bio here")}
+                {this.createMemberCard(triPicture, "Tri Nguyen", "I’m a Junior at CSU, getting my major in Computer Science." +
+                    "I want to work hard and get good results. I like video games and mechanical keyboards. The keyboard I’m using right now is a Preonic, with purple Zealios switches. ")}
               </CardGroup>
             </Col>
           </Row>
