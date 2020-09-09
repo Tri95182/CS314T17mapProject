@@ -4,7 +4,7 @@ import {Container, Row, Col, Button, Card, CardBody, CardTitle, CardText, CardIm
 
 import {CLIENT_TEAM_NAME} from "../../utils/constants";
 
-import collinPicture from "../../static/images/Test-Picture.png";
+import collinPicture from "../../static/images/Collin-Picture.png";
 import austinPicture from "../../static/images/Test-Picture.png";
 import jackPicture from "../../static/images/Test-Picture.png";
 import triPicture from "../../static/images/Test-Picture.png";
@@ -43,7 +43,7 @@ export default class About extends Component {
             <Col>
               <CardGroup>
                 {this.createMemberCard(austinPicture, "Austin Wulfing", "Bio here")}
-                {this.createMemberCard(collinPicture, "Collin Wernsman", "Bio here")}
+                {this.createMemberCard(collinPicture, "Collin Wernsman", "I was born and grew up right here in Fort Collins, Colorado. I am currently a senior studying Computer Science with a minor in math at Colorado State University. In my free time, I enjoy hiking, snowboarding, and playing games. Last semester, I had an IT internship at Woodward Inc where I developed and maintained internal web applications. Unfortunately due to COVID I no longer have that internship, but I am excited to learn new skills throughout my last year at CSU and finally enter the workforce. ")}
                 {this.createMemberCard(jackPicture, "Jack Melvin", "Bio here")}
                 {this.createMemberCard(triPicture, "Tri Nguyen", "Bio here")}
               </CardGroup>
