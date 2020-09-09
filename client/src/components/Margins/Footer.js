@@ -5,6 +5,7 @@ import ServerSettings from "./ServerSettings";
 
 const UNICODE_LINK_SYMBOL = "\uD83D\uDD17";
 const UNICODE_WARNING_SIGN = "\u26A0";
+const UNICODE_INFO_SYMBOL = "\u24D8";
 const UNKNOWN_SERVER_NAME = "Unknown";
 
 export default class Footer extends Component {
@@ -29,12 +30,13 @@ export default class Footer extends Component {
             <div className="vertical-center tco-text">
                 <Container>
                     <div className="centered">
-                        {linkStatusSymbol} Connected to {serverName} &nbsp;
+                        {linkStatusSymbol}Connected to {serverName} &nbsp;
+                        {this.renderInformationIcon()}&nbsp;
                         <a className="tco-text" onClick={() => this.setState({serverSettingsOpen: true})}>
-                            ({this.props.serverSettings.serverPort}).
+                            ({this.props.serverSettings.serverPort})
                         </a>
                     {this.renderServerSettings()}
-                    </div>
+                </div>
                 </Container>
             </div>
         );
@@ -60,6 +62,14 @@ export default class Footer extends Component {
                 serverSettings={this.props.serverSettings}
                 processServerConfigSuccess={this.props.processServerConfigSuccess}
             />
+        );
+    }
+
+    renderInformationIcon(){
+        return(
+            <a className="tco-text" onClick={() => this.setState({serverSettingsOpen: true})}>
+                 {UNICODE_INFO_SYMBOL}Get More Info &nbsp;
+           </a>
         );
     }
 }
