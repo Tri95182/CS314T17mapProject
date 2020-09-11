@@ -106,6 +106,7 @@ Often there are several related classes but we've listed only one to simplify th
 
 
 # Sprint 1
+We added our team name to all the sections that needed the update. We also added a get more info clickable at the bottom instead of a url to make it easier to read. Once the info is clicked there is information about the name, URL, version, and type. Also, the name at the top of the page can be clicked to go to the team about page. Here we have information regarding the members of Team Bloo and a picture of them. The mission statement also appears on this page. The page can be closed either by clicking the team name at the top or the close button on the right side of the screen.
 # Sprint 2
 # Sprint 3
 # Sprint 4 
