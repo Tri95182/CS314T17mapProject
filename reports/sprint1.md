@@ -58,13 +58,13 @@ The solution should clearly identify the team that created the product and a lit
 ## Review
 
 #### Epics done  
-
+Finsihed the v1 Protocol, Team Identification, and About Epics
 #### Epics not done 
-
+We did not finish the Where am I?, or the Where is? Epics this sprint
 #### What went well
-
+We had good scrum meetings and are good at communicating
 #### Problems encountered and resolutions
-
+Getting used to Intellij and not messing up master were a big hurdle that our group had to overcome. It seems that everyone is now used to a new working enviornment and can use the software a lot better.
 
 ## Retrospective
 
