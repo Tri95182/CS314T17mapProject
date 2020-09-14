@@ -40,6 +40,8 @@
 
 ## Metrics
 
+We believe that we have the ability to complete the planned epics. we say this based on the fact that we were able to complete all of our tasks last sprint. We will take a look at how far we are in a week and reaccess our ability to complete things and if need be move an epic, not required for this sprint, to the ice box.
+
 | Statistic | # Planned | # Completed |
 | --- | ---: | ---: |
 | Epics | *6* | *count* |
