@@ -67,8 +67,8 @@ We believe that we have the ability to complete the planned epics. we say this b
 | Statistic | # Planned | # Completed |
 | --- | ---: | ---: |
 | Epics | *6* | *count* |
-| Tasks |  *8*   | *count* | 
-| Story Points |  *8*  | *sum* | 
+| Tasks |  *18*   | *count* | 
+| Story Points |  *18*  | *sum* | 
 
 
 ## Scrums
