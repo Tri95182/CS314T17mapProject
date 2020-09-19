@@ -75,7 +75,8 @@ We believe that we have the ability to complete the planned epics. we say this b
 
 | Date | Tasks closed  | Tasks in progress | Impediments |
 | :--- | :--- | :--- | :--- |
-| 9/7 |  | #90 ,#35 | Were all new to back end server dev stuff so where all getting a feel for it more or less  | 
+| 9/17 |  | #90 ,#35 | Were all new to back end server dev stuff so where all getting a feel for it more or less  | 
+| 9/19 | 91 | #90 , #35 | Were having a hard time meeting very often |  
 
 
 ## Review
