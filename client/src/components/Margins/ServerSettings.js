@@ -24,52 +24,20 @@ export default class ServerSettings extends Component {
             <div>
                 <Modal isOpen={this.props.isOpen} toggle={() => this.props.toggleOpen()}>
                     <ModalHeader toggle={() => this.props.toggleOpen()}>Server Connection</ModalHeader>
-                    {this.renderSettings({
-                        serverName: this.getCurrentServerName(),
-                        serverType: this.getCurrentServerType(),
-                        serverVersion: this.getCurrentServerVersion()
-                    })}
+                    {this.renderSettings()}
                     {this.renderActions()}
                 </Modal>
             </div>
         );
     }
 
-    renderSettings(currentServerSettings) {
+    renderSettings() {
         return (
             <ModalBody>
-                <Row className="m-2">
-                    <Col xs={2}>
-                        Name:
-                    </Col>
-                    <Col cs={10}>
-                        {currentServerSettings.serverName}
-                    </Col>
-                </Row>
-                <Row className="m-2">
-                    <Col xs={2}>
-                        URL:
-                    </Col>
-                    <Col xs={10}>
-                        {this.renderInputField()}
-                    </Col>
-                </Row>
-                <Row className="m-2">
-                    <Col xs={2}>
-                        Version:
-                    </Col>
-                    <Col xs={10}>
-                        {currentServerSettings.serverVersion}
-                    </Col>
-                </Row>
-                <Row className="m-2">
-                    <Col xs={2}>
-                        Type:
-                    </Col>
-                    <Col xs={10}>
-                        {currentServerSettings.serverType}
-                    </Col>
-                </Row>
+                {this.renderRow("Name:", this.getServerInfo("serverName"))}
+                {this.renderRow("URL:", this.renderInputField())}
+                {this.renderRow("Version:", this.getServerInfo("requestVersion"))}
+                {this.renderRow("Type:", this.getServerInfo("requestType"))}
             </ModalBody>
         );
     }
@@ -104,33 +72,27 @@ export default class ServerSettings extends Component {
         );
     }
 
-    getCurrentServerName() {
-        let currentServerName = this.props.serverSettings.serverConfig && this.state.validServer === null ?
-                                this.props.serverSettings.serverConfig.serverName : "";
-        if (this.state.config && Object.keys(this.state.config).length > 0) {
-            currentServerName = this.state.config.serverName;
-        }
-        return currentServerName;
+    renderRow(title, value) {
+        return (
+            <Row className="m-2">
+                <Col xs={2}>
+                    {title}
+                </Col>
+                <Col xs={10}>
+                    {value}
+                </Col>
+            </Row>
+        )
     }
 
-    getCurrentServerType() {
-        let currentServerType = this.props.serverSettings.serverConfig && this.state.validServer === null ?
-                                this.props.serverSettings.serverConfig.requestType : "";
+    getServerInfo(property) {
+        let serverInfo = this.props.serverSettings.serverConfig && this.state.validServer === null ?
+                                   this.props.serverSettings.serverConfig[property] : "";
         if (this.state.config && Object.keys(this.state.config).length > 0) {
-            currentServerType = this.state.config.requestType;
+            serverInfo = this.state.config[property];
         }
-        
-        return currentServerType;
-    }
-
-    getCurrentServerVersion() {
-        let currentServerVersion = this.props.serverSettings.serverConfig && this.state.validServer === null ?
-                                   this.props.serverSettings.serverConfig.requestVersion : "";
-        if (this.state.config && Object.keys(this.state.config).length > 0) {
-            currentServerVersion = this.state.config.requestVersion;
-        }
-
-        return currentServerVersion;
+    
+        return serverInfo;
     }
 
     updateInput(value) {
