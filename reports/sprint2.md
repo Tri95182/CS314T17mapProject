@@ -78,7 +78,7 @@ We believe that we have the ability to complete the planned epics. we say this b
 | 9/17 |  | #90 ,#35 | Were all new to back end server dev stuff so where all getting a feel for it more or less  | 
 | 9/19 | #91 | #90 , #35 | Were having a hard time meeting very often |  
 | 9/21 | #101 | #96 , #95 , #81 , #78 | We talk about a time to meet with dave, and we talk about what were doing next.| 
-| 9/23 | #106, #107, #104, #103 | #88, #97, #96, #95, #81, #78  | We talk about our progression in sprint 1 and how we should spl ittask more often.|
+| 9/23 | #106, #107, #104, #103 | #88, #97, #96, #95, #81, #78  | We talk about our progression in sprint 1 and how we should split task more often.|
 ## Review
 
 ### Epics done  
