@@ -61,7 +61,7 @@ class MicroServer {
     response.type("application/json");
     response.header("Access-Control-Allow-Origin", "*");
     response.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
-    response.status(200);
+    response.status(HTTP_OK);
   }
 
   private String buildJSONResponse(RequestHeader request) throws BadRequestException {
