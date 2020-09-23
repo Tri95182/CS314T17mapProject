@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-
 public class RequestConfig extends RequestHeader {
 
   private String serverName;
@@ -25,7 +24,9 @@ public class RequestConfig extends RequestHeader {
 
   @Override
   public void buildResponse() {
+    this.requestVersion = RequestHeader.CURRENT_SUPPORTED_VERSION;
     this.serverName = "t17 Team Bloo";
+
     log.trace("buildResponse -> {}", this);
   }
 
