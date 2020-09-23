@@ -1,7 +1,8 @@
 package com.tco.requests;
 
 import com.tco.requests.RequestConfig;
-
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -26,10 +27,10 @@ public class TestRequestConfig {
   }
 
   @Test
-  @DisplayName("Version number is equal to 1")
+  @DisplayName("Version number is equal to 2")
   public void testVersion() {
     int version = conf.getRequestVersion();
-    assertEquals(1, version);
+    assertEquals(2, version);
   }
 
 
@@ -38,5 +39,23 @@ public class TestRequestConfig {
   public void testServerName() {
     String name = conf.getServerName();
     assertEquals("t17 Team Bloo", name);
+  }
+
+  @Test
+  @DisplayName("Supported Requests length")
+  public void testSupportedRequestsLength() {
+    List<String> supportedRequests = conf.getSupportedRequests();
+    assertEquals(3, supportedRequests.size());
+  }
+
+  @Test
+  @DisplayName("Supported Requests contents")
+  public void testSupportedRequestscontents() {
+    List<String> supportedRequests = conf.getSupportedRequests();
+    List<String> actualSupportedRequests =  new ArrayList();
+    actualSupportedRequests.add("config");
+    actualSupportedRequests.add("distance");
+    actualSupportedRequests.add("find");
+    assertEquals(actualSupportedRequests, supportedRequests);
   }
 }
