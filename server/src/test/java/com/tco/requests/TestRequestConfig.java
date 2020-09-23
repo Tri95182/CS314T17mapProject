@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -43,8 +44,19 @@ public class TestRequestConfig {
 
   @Test
   @DisplayName("Supported Requests length")
-  public void testSupportedRequests() {
+  public void testSupportedRequestsLength() {
     List<String> supportedRequests = conf.getSupportedRequests();
     assertEquals(3, supportedRequests.size());
+  }
+
+  @Test
+  @DisplayName("Supported Requests contents")
+  public void testSupportedRequestscontents() {
+    List<String> supportedRequests = conf.getSupportedRequests();
+    List<String> actualSupportedRequests =  new ArrayList();
+    actualSupportedRequests.add("config");
+    actualSupportedRequests.add("distance");
+    actualSupportedRequests.add("find");
+    assertEquals(actualSupportedRequests, supportedRequests);
   }
 }
