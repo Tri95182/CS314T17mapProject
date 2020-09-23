@@ -38,6 +38,8 @@ public class RequestFind extends RequestHeader {
 
       if(this.useDatabase) {
           this.places = Database.queryFind(cleanMatch);
+      } else {
+          this.places = new ArrayList<Map<String, String>>();
       }
 
       if(this.places != null) {
@@ -58,6 +60,16 @@ public class RequestFind extends RequestHeader {
         } else {
             return "";
         }
+    }
+
+    // The functions below are for testing purposes
+
+    public List<Map<String, String>> getPlaces() {
+        return places;
+    }
+
+    public Integer getFound() {
+        return found;
     }
   
 }
