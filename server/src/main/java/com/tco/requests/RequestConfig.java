@@ -1,11 +1,13 @@
 package com.tco.requests;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import com.tco.misc.BadRequestException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
-import java.util.ArrayList;
+
 
 public class RequestConfig extends RequestHeader {
 
