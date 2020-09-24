@@ -16,46 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `colorado`
+-- Table structure for table `continent`
 --
 
-DROP TABLE IF EXISTS `colorado`;
+DROP TABLE IF EXISTS `continent`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `colorado` (
-  `index` int(11) NOT NULL,
-  `id` varchar(30) NOT NULL,
-  `type` varchar(100) DEFAULT NULL,
-  `name` varchar(1000) DEFAULT NULL,
-  `latitude` varchar(1000) DEFAULT NULL,
-  `longitude` varchar(1000) DEFAULT NULL,
-  `altitude` varchar(1000) DEFAULT NULL,
-  `continent` varchar(1000) DEFAULT NULL,
-  `iso_country` varchar(1000) DEFAULT NULL,
-  `iso_region` varchar(1000) DEFAULT NULL,
-  `municipality` varchar(1000) DEFAULT NULL,
-  `scheduled_service` varchar(1000) DEFAULT NULL,
-  `gps_code` varchar(1000) DEFAULT NULL,
-  `iata_code` varchar(1000) DEFAULT NULL,
-  `local_code` varchar(1000) DEFAULT NULL,
-  `home_link` varchar(1000) DEFAULT NULL,
+CREATE TABLE `continent` (
+  `index` int(8) NOT NULL,
+  `id` varchar(3) NOT NULL,
+  `name` varchar(15) DEFAULT NULL,
   `wikipedia_link` varchar(1000) DEFAULT NULL,
-  `keywords` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  FULLTEXT KEY `airports_name_idx` (`name`),
-  FULLTEXT KEY `airpots_municipality_idx` (`municipality`)
+  KEY `continents_id_idx` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `colorado`
+-- Dumping data for table `continent`
 --
--- WHERE:  municipality='Louisville'
+-- WHERE:  id='NA'
 
-LOCK TABLES `colorado` WRITE;
-/*!40000 ALTER TABLE `colorado` DISABLE KEYS */;
-INSERT INTO `colorado` VALUES (7138,'0CO1','small_airport','Dave\'s Airport','40.0332984924','-105.124000549','5170','NA','US','US-CO','Louisville','no','0CO1',NULL,'0CO1',NULL,NULL,NULL),(16899,'CO45','heliport','Avista Hospital Heliport','39.95280075073242','-105.1520004272461','5510','NA','US','US-CO','Louisville','no','CO45',NULL,'CO45',NULL,NULL,NULL);
-/*!40000 ALTER TABLE `colorado` ENABLE KEYS */;
+LOCK TABLES `continent` WRITE;
+/*!40000 ALTER TABLE `continent` DISABLE KEYS */;
+INSERT INTO `continent` VALUES (400005,'NA','North America','https://en.wikipedia.org/wiki/North_America');
+/*!40000 ALTER TABLE `continent` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -67,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-09-23 16:48:22
+-- Dump completed on 2020-09-23 18:35:10
