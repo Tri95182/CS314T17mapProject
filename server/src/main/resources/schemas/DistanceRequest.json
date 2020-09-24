@@ -50,6 +50,6 @@
       "minimum":0
     }
   },
-  "required":["requestVersion","requestType","place1","place2","earthRadius","distance"],
+  "required":["requestVersion","requestType","place1","place2","earthRadius"],
   "additionalProperties": false
 }
