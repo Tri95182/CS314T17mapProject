@@ -43,3 +43,4 @@ after_script:
 
 addons:
     mariadb: 10.2
+

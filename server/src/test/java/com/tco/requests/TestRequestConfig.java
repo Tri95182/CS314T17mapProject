@@ -32,6 +32,7 @@ public class TestRequestConfig {
     assertEquals(2, version);
   }
 
+
   @Test
   @DisplayName("Team name is t17 Team Bloo")
   public void testServerName() {
