@@ -64,10 +64,10 @@ public class Database {
     private static Map<String, String> processFindResult(ResultSet results) throws Exception {
 
         Map<String, String> place = new HashMap<String, String>();
-        place.put("country_name", results.getString("country.name"));
-        place.put("region_name", results.getString("region.name"));
-        place.put("world_name", results.getString("world.name"));
-        place.put("world_municipality", results.getString("world.municipality"));
+        place.put("country", results.getString("country.name"));
+        place.put("region", results.getString("region.name"));
+        place.put("name", results.getString("world.name"));
+        place.put("municipality", results.getString("world.municipality"));
         place.put("latitude", results.getString("world.latitude"));
         place.put("longitude", results.getString("world.longitude"));
 
