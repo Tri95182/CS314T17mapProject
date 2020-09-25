@@ -24,11 +24,11 @@ public class TestDatabase {
 
       List<Map<String, String>> expected = new ArrayList<Map<String, String>>();
       Map<String, String> place1 = new HashMap<String, String>();
-      place1.put("world_name", "Dave's Airport");
+      place1.put("name", "Dave's Airport");
       place1.put("latitude", "40.0332984924");
-      place1.put("country_name", "United States");
-      place1.put("region_name", "Colorado");
-      place1.put("world_municipality", "Louisville");
+      place1.put("country", "United States");
+      place1.put("region", "Colorado");
+      place1.put("municipality", "Louisville");
       place1.put("longitude", "-105.124000549");
       expected.add(place1);
 
