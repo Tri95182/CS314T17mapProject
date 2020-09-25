@@ -2,34 +2,50 @@
   "$id": "https://example.com/address.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "find",
-  "description": "find response",
+  "description": "find request/response",
   "type": "object",
   "properties": {
     "requestVersion": {
       "description":"the TIP protocol version",
       "type":"integer",
-      "minimum": 1
+      "minimum": 2
     },
     "requestType": {
-      "description":"the TIP object type should be find",
+      "description":"the TIP object type should be locations",
       "type":"string",
       "pattern":"^find$"
     },
     "match": {
-      "description":"text string to match appropriate fields in the data source",
-      "type":"string"
+      "description":"an alphanumeric pattern used to find geographic locations.",
+      "type":"string",
+      "pattern":"^[a-zA-Z0-9_ ]+$"
     },
     "limit": {
-      "description":"maximum number of geographic locations to appear in response",
-      "type":"integer"
+      "description":"the maximum number of matching places that may be returned.",
+      "type":"integer",
+      "minimum":0
     },
     "found": {
-      "description":"total number of matching locations",
-      "type":"integer"
+      "description":"the total number of matching places in the data source(s).",
+      "type":"integer",
+      "minimum":0
     },
     "places": {
-      "description":"list/array of objects describing the geographic locations",
-      "type":"array"
+      "description": "list of places places found",
+      "type":"array",
+      "items": {
+        "type":"object",
+        "properties": {
+          "name": {"type":"string"},
+          "latitude": {"type":"string",
+            "pattern":"^[-+]?(?:90(?:(?:\\.0+)?)|(?:[0-9]|[1-8][0-9])(?:(?:\\.[0-9]+)?))$"},
+          "longitude": {"type":"string",
+            "pattern":"^[-+]?(?:180(?:(?:\\.0+)?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\\.[0-9]+)?))$"}
+        },
+        "required": ["latitude","longitude"],
+        "additionalProperties": true
+      },
+      "minitems": 0
     }
   },
   "required":["requestVersion","requestType"],
