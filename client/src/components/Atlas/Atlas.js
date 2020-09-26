@@ -2,10 +2,12 @@ import React, {Component} from 'react';
 import {Col, Container, Row, Button} from 'reactstrap';
 
 import {Map, Marker, Popup, TileLayer} from 'react-leaflet';
+import Control from 'react-leaflet-control';
 
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import userIcon from '../../static/images/user-marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+import LocationIcon from '@material-ui/icons/GpsFixed';
 
 import 'leaflet/dist/leaflet.css';
 
@@ -41,11 +43,6 @@ export default class Atlas extends Component {
             <Row>
               <Col sm={12} md={{size: 10, offset: 1}}>
                 {this.renderLeafletMap()}
-                <Button 
-                  onClick={this.handleReturnCurrentLocation} 
-                  disabled={!this.state.userPosition}>
-                    Return to Current Location
-                </Button>
               </Col>
             </Row>
           </Container>
@@ -68,9 +65,24 @@ export default class Atlas extends Component {
             onClick={this.setMarker}
         >
           <TileLayer url={MAP_LAYER_URL} attribution={MAP_LAYER_ATTRIBUTION}/>
+          {this.renderReturnLocationButton()}
           {this.getUserPosition()}
           {this.getMarker()}
         </Map>
+    );
+  }
+
+  renderReturnLocationButton() {
+    return (
+      <Control position={'topleft'}>
+        <Button 
+          className={'map-control'}
+          size="sm"
+          onClick={this.handleReturnCurrentLocation}
+          disabled={!this.state.userPosition}>
+            <LocationIcon fontSize="small"/>
+        </Button>
+      </Control>
     );
   }
 
