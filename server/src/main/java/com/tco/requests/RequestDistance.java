@@ -9,8 +9,8 @@ import java.util.Map;
 
 public class RequestDistance extends RequestHeader {
 
-  private Integer distance;
-  private Float earthRadius;
+  private Long distance;
+  private Double earthRadius;
   private Map<String,String> place1, place2;
 
   private final transient Logger log = LoggerFactory.getLogger(RequestConfig.class);
@@ -29,7 +29,7 @@ public class RequestDistance extends RequestHeader {
     this.requestVersion = RequestHeader.CURRENT_SUPPORTED_VERSION;
   }
 
-  public RequestDistance(Float radius, String lat1, String lon1, String lat2, String lon2) {
+  public RequestDistance(Double radius, String lat1, String lon1, String lat2, String lon2) {
       this();
       this.distance = null;
       this.earthRadius = radius;
@@ -41,8 +41,7 @@ public class RequestDistance extends RequestHeader {
       this.place2.put("Longitude", lon2);
     }
 
-    public Integer getDistance() {
+    public Long getDistance() {
       return distance;
     }
-
 }
