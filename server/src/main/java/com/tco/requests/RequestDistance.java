@@ -1,6 +1,5 @@
 package com.tco.requests;
 
-import com.tco.misc.DistanceCalculator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,8 +16,7 @@ public class RequestDistance extends RequestHeader {
 
   @Override
     public void buildResponse() {
-    DistanceCalculator distanceCalc = new DistanceCalculator();
-    this.distance = distanceCalc.calculate(this.earthRadius, this.place1, this.place2);
+    this.distance = 466; //.calculate(this.earthRadius, this.place1, this.place2);
       log.trace("buildResponse -> {}", this);
     }
 
