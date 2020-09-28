@@ -10,8 +10,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestRequestDistance {
 
-  private RequestDistance Dist;
-
   @Test
   @DisplayName("Request type is \"Distance\"")
   public void testColoradoDiagonal() {
