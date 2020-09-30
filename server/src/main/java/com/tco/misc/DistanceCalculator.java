@@ -18,6 +18,7 @@ public class DistanceCalculator {
     double sinLat2 = Math.sin(lat2);
     double cosLat2 = Math.cos(lat2);
     double deltaLon = Math.abs(lon2 - lon1);
+
     double sinDeltaLon = Math.sin(deltaLon);
     double cosDeltaLon = Math.cos(deltaLon);
 

@@ -5,6 +5,7 @@ import com.tco.misc.Database;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,16 +39,18 @@ public class RequestFind extends RequestHeader {
 
       if(this.useDatabase) {
           this.places = Database.queryFind(cleanMatch);
-      } else {
-          this.places = new ArrayList<Map<String, String>>();
       }
 
       if(this.places != null) {
-          this.found = this.places.size();
-          if(this.limit != null && this.limit != 0 && this.found > this.limit) {
-              this.places.subList(this.limit, this.found).clear();
-          } else if((this.limit == null || this.limit == 0) && this.places.size() > this.INTERNAL_LIMIT) {
-              this.places.subList(this.INTERNAL_LIMIT, this.found).clear();
+          if(cleanMatch == "" && this.useDatabase) {
+            getRandomPlace();
+          } else {
+            this.found = this.places.size();
+            if(this.limit != null && this.limit != 0 && this.found > this.limit) {
+                this.places.subList(this.limit, this.found).clear();
+            } else if((this.limit == null || this.limit == 0) && this.places.size() > this.INTERNAL_LIMIT) {
+                this.places.subList(this.INTERNAL_LIMIT, this.found).clear();
+            }
           }
       }
 
@@ -62,10 +65,27 @@ public class RequestFind extends RequestHeader {
         }
     }
 
+    public void getRandomPlace() {
+      int size = this.places.size();
+      if(size > 0) {
+        Random rand = new Random();
+        int randNum = rand.nextInt(size);
+        if(randNum == 0) randNum += 1;
+
+        this.places.subList(randNum, size).clear();
+        this.places.subList(0, randNum-1).clear();      
+        this.found = 1;
+      }
+    }
+
     // The functions below are for testing purposes
 
     public List<Map<String, String>> getPlaces() {
         return places;
+    }
+
+    public void setPlaces(List<Map<String, String>> places) {
+      this.places = places;
     }
 
     public Integer getFound() {

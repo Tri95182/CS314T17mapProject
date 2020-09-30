@@ -46,6 +46,10 @@ export default class Atlas extends Component {
     };
   }
 
+  componentDidMount() {
+    this.handleSearch({target:{value:""}});
+  }
+
   render() {
     return (
         <div>

@@ -1,6 +1,7 @@
 package com.tco.requests;
 
 import com.tco.misc.DistanceCalculator;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,6 +12,7 @@ public class RequestDistance extends RequestHeader {
 
   private Long distance;
   private Double earthRadius;
+
   private Map<String,String> place1, place2;
 
   private final transient Logger log = LoggerFactory.getLogger(RequestConfig.class);
@@ -28,6 +30,7 @@ public class RequestDistance extends RequestHeader {
     this.requestType = "distance";
     this.requestVersion = RequestHeader.CURRENT_SUPPORTED_VERSION;
   }
+
 
   public RequestDistance(double radius, String lat1, String lon1, String lat2, String lon2) {
       this();
