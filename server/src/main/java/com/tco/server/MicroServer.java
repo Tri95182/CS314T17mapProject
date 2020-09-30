@@ -4,6 +4,7 @@ import com.tco.misc.BadRequestException;
 import com.tco.misc.JSONValidator;
 import com.tco.requests.RequestConfig;
 import com.tco.requests.RequestFind;
+import com.tco.requests.RequestDistance;
 import com.tco.requests.RequestHeader;
 
 import java.io.IOException;
@@ -38,7 +39,7 @@ class MicroServer {
       before("/*", (req, res) -> logRequest(req));
       post("/config", (req, res) -> processHttpRequest(req, res, RequestConfig.class));
       post("/find", (req, res) -> processHttpRequest(req, res, RequestFind.class));
-      post("/distance", (req, res) -> processHttpRequest(req, res, RequestFind.class));
+      post("/distance", (req, res) -> processHttpRequest(req, res, RequestDistance.class));
     });
   }
 
