@@ -34,11 +34,11 @@ public class RequestDistance extends RequestHeader {
       this.distance = null;
       this.earthRadius = radius;
       this.place1 = new HashMap();
-      this.place1.put("Latitude", lat1);
-      this.place1.put("Longitude", lon1);
+      this.place1.put("latitude", lat1);
+      this.place1.put("longitude", lon1);
       this.place2 = new HashMap();
-      this.place2.put("Latitude", lat2);
-      this.place2.put("Longitude", lon2);
+      this.place2.put("latitude", lat2);
+      this.place2.put("longitude", lon2);
     }
 
     public Long getDistance() {
