@@ -80,6 +80,8 @@ We believe that we have the ability to complete the planned epics. we say this b
 | 9/21 | #101 | #96 , #95 , #81 , #78 | We talk about a time to meet with dave, and we talk about what were doing next.| 
 | 9/23 | #106, #107, #104, #103 | #88, #97, #96, #95, #81, #78  | We talk about our progression in sprint 1 and how we should split task more often.|
 | 9/26 | #108, #96, #105, #81, #110, #109, #95, #112, #116, #113, #115, #111, #119, #118 | #88, #97, #90, #78 | Talk about how were doing on task, and talk about what were going to be doing over the weekend. We talked about how we should plan scrums with the idea
+| 9/29 | #119, #120, #121, #88, #123, #125, #90 ,#129 ,| #97, #124, #93, #127 | We talked about how to test through postman and worked through fixing jack's issues with request distance.
+
 ## Review
 
 ### Epics done  
