@@ -32,6 +32,7 @@ export default class Atlas extends Component {
     this.setMarker = this.setMarker.bind(this);
     this.handleReturnCurrentLocation = this.handleReturnCurrentLocation.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+    this.handleDistanceSelect = this.handleDistanceSelect.bind(this);
 
     this.mapRef = React.createRef();
 
@@ -43,6 +44,7 @@ export default class Atlas extends Component {
       places: [],
       placesFound: 0,
       placesSelected: [],
+      placesDistance: [] 
     };
   }
 
@@ -58,6 +60,7 @@ export default class Atlas extends Component {
               <Col sm={12} md={{size: 10, offset: 1}}>
                 {this.renderLeafletMap()}
                 {this.renderSearchModal()}
+                {this.renderLocationsList()}
               </Col>
             </Row>
           </Container>
@@ -85,6 +88,7 @@ export default class Atlas extends Component {
           <ZoomControl position={'topleft'}/>
           {this.renderReturnLocationButton()}
           {this.getUserPosition()}
+          {this.state.placesSelected.map((place) => this.createMarker({lat:Number(place.latitude), lng:Number(place.longitude)}, MARKER_ICON, place.name))}
           {this.getMarker()}
         </Map>
     );
@@ -167,6 +171,52 @@ export default class Atlas extends Component {
         )}
       </ListGroup>
     );
+  }
+
+  renderLocationsList() {
+    return (
+      <ListGroup>
+        <ListGroupItem active>Select Locations </ListGroupItem>
+        {this.state.userPosition != null ?
+          this.renderLocationItem("Current Location", this.state.userPosition.lat.toFixed(2), this.state.userPosition.lng.toFixed(2)) : ""
+        }
+        {this.state.markerPosition != null ?
+          this.renderLocationItem("Marker Location", this.state.markerPosition.lat.toFixed(2), this.state.markerPosition.lng.toFixed(2)) : ""
+        }
+        {this.state.placesSelected.map((place) =>
+          this.renderLocationItem(place.name, Number(place.latitude).toFixed(2), Number(place.longitude).toFixed(2))
+        )}
+      </ListGroup>
+    );
+  }
+
+  renderLocationItem(name, lat, lng) {
+    return (
+      <ListGroupItem 
+        tag="button" 
+        color={this.state.placesDistance.filter(val => val.name == name).length != 0 ? "primary":"white"}
+        onClick={() => this.handleDistanceSelect(name, lat, lng)} 
+      >
+        <ListGroupItemHeading>{name}</ListGroupItemHeading>
+        <ListGroupItemText>Lat: {lat} Lng: {lng}</ListGroupItemText>
+      </ListGroupItem>
+    );
+  }
+
+  handleDistanceSelect(name, lat, lng) {
+    let newSelect = {name, lat, lng};
+    if(this.state.placesDistance.filter(val => val.name == name).length == 0) {
+      
+      if(this.state.placesDistance.length >= 2) {
+        let temp = this.state.placesDistance.splice(0,1);
+        this.setState({placesDistance: temp});
+      }
+
+      this.setState({placesDistance: [...this.state.placesDistance, newSelect]});
+    } else {
+      let temp = this.state.placesDistance.filter(val => val.name != name);
+      this.setState({placesDistance: temp});
+    }
   }
 
   setMarker(mapClickInfo) {
