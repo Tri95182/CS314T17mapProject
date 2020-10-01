@@ -33,7 +33,7 @@ export default class Atlas extends Component {
     this.setMarker = this.setMarker.bind(this);
     this.handleReturnCurrentLocation = this.handleReturnCurrentLocation.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
-    this.handleDistanceSelect = this.handleDistanceSelect.bind(this);
+    this.handleDistance = this.handleDistance.bind(this);
 
     this.mapRef = React.createRef();
 
@@ -61,7 +61,6 @@ export default class Atlas extends Component {
             <Row>
               <Col sm={12} md={{size: 10, offset: 1}}>
                 {this.renderLeafletMap()}
-                {this.renderDistanceBetweenPoints()}
                 {this.renderSearchModal()}
                 {this.renderLocationsList()}
 
@@ -176,15 +175,12 @@ export default class Atlas extends Component {
       </ListGroup>
     );
   }
-  renderDistanceBetweenPoints() {
-    return (
-        <ListGroupItem active> Distance </ListGroupItem>
-    );
-  }
+
   renderLocationsList() {
     return (
       <ListGroup>
         <ListGroupItem active>Select Locations </ListGroupItem>
+        <ListGroupItem tag="button" onClick={this.handleDistance}>Distance:{this.state.distanceBetween} Miles</ListGroupItem>
         {this.state.userPosition != null ?
           this.renderLocationItem("Current Location", this.state.userPosition.lat.toFixed(2), this.state.userPosition.lng.toFixed(2)) : ""
         }
@@ -294,16 +290,18 @@ export default class Atlas extends Component {
     });
 
   }
-  distanceFind(){
+  handleDistance(){
+    if(this.state.placesDistance.length == 2){
     let distanceRequest = {requestType: "distance", requestVersion: 2,
-      place1: {latitude: this.state.placesDistance[0].lat, longitude: this.state.placeDistance[0].lng},
-      place2: {latitude: this.state.placesDistance[1].lat, longitude: this.state.placeDistance[1].lng},
+      place1: {latitude: this.state.placesDistance[0].lat, longitude: this.state.placesDistance[0].lng},
+      place2: {latitude: this.state.placesDistance[1].lat, longitude: this.state.placesDistance[1].lng},
       earthRadius: 6371.0}
     sendServerRequest(distanceRequest)
         .then(distance => {
           if (distance) { this.processDistanceResponse(distance.data); }
           else { this.props.createSnackBar("The Request To The Server Failed. Please Try Again Later."); }
         });
+    }
 
   }
 
