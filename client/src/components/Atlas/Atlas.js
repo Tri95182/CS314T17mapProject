@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Col, Container, Row, Button, InputGroup, Input, InputGroupAddon, InputGroupText, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
 import { isJsonResponseValid, sendServerRequest } from "../../utils/restfulAPI";
 import * as findSchema from "../../../schemas/ResponseFind";
+import * as distanceSchema from "../../../schemas/ResponseDistance";
 
 import {Map, Marker, Popup, TileLayer, ZoomControl} from 'react-leaflet';
 import Control from 'react-leaflet-control';
@@ -44,7 +45,8 @@ export default class Atlas extends Component {
       places: [],
       placesFound: 0,
       placesSelected: [],
-      placesDistance: [] 
+      placesDistance: [],
+      distanceBetween: 0
     };
   }
 
@@ -59,8 +61,10 @@ export default class Atlas extends Component {
             <Row>
               <Col sm={12} md={{size: 10, offset: 1}}>
                 {this.renderLeafletMap()}
+                {this.renderDistanceBetweenPoints()}
                 {this.renderSearchModal()}
                 {this.renderLocationsList()}
+
               </Col>
             </Row>
           </Container>
@@ -172,7 +176,11 @@ export default class Atlas extends Component {
       </ListGroup>
     );
   }
-
+  renderDistanceBetweenPoints() {
+    return (
+        <ListGroupItem active> Distance </ListGroupItem>
+    );
+  }
   renderLocationsList() {
     return (
       <ListGroup>
@@ -282,9 +290,32 @@ export default class Atlas extends Component {
 		sendServerRequest(findRequest)
     .then(find => {
       if (find) { this.processFindResponse(find.data); }
-      else { this.props.createSnackBar("The Request To The Server Failed. Please Try Again Later."); }
+      else { this.props.createSnackBar("The Request To The Server Failed. Pl+ease Try Again Later."); }
     });
 
+  }
+  distanceFind(){
+    let distanceRequest = {requestType: "distance", requestVersion: 2,
+      place1: {latitude: this.state.placesDistance[0].lat, longitude: this.state.placeDistance[0].lng},
+      place2: {latitude: this.state.placesDistance[1].lat, longitude: this.state.placeDistance[1].lng},
+      earthRadius: 6371.0}
+    sendServerRequest(distanceRequest)
+        .then(distance => {
+          if (distance) { this.processDistanceResponse(distance.data); }
+          else { this.props.createSnackBar("The Request To The Server Failed. Please Try Again Later."); }
+        });
+
+  }
+
+  processDistanceResponse(DistanceResponse) {
+    if(!isJsonResponseValid(DistanceResponse, distanceSchema)) {
+      this.processServerDistanceError("Distance Response Not Valid. Check The Server.");
+    } else {
+      this.processServerDistanceSuccess(DistanceResponse);
+    }
+  }
+  processServerDistanceSuccess(Distance) {
+    this.setState({distanceBetween: Distance.distance});
   }
 
   sanitizeInput(input) {
@@ -298,7 +329,7 @@ export default class Atlas extends Component {
 			this.processServerFindSuccess(findResponse);
 		}
   }
-  
+
   processServerFindSuccess(find) {
 		this.setState({places: find.places, placesFound: find.found});
 	}
@@ -308,4 +339,9 @@ export default class Atlas extends Component {
 		this.setState({places: [], found: 0});
 		this.props.createSnackBar(message);
 	}
+  processServerDistanceError(message) {
+    LOG.error(message);
+    this.setState({distanceBetween: 0});
+    this.props.createSnackBar(message);
+  }
 }
