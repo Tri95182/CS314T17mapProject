@@ -41,7 +41,7 @@ They will be added later in the semester.
 
 
 ### User Interface
-![base](images/UserInterface.png)
+![base](images/WebUIS2.png)
 
 The basic screen in black shows the view on a mobile device, with a header, footer, and map.
 The header contains a earth logo and the team name obtained from the server when the client was loaded.
@@ -64,7 +64,22 @@ A close button / icon in the top right corner of the about will close the about 
 A simple toggle in state should be able to control this rendering.
 The about page should contain the team name as a heading, but be otherwise blank in base. 
 
-#### Clicking on the URL in the footer should let me change the server.
+#### Clicking on the search button brings up a search box.
+Whenever a user clicks the magnifying glass on the map, a search box will appear and allow the user to input a location to look up. 
+A series of results will pop up allowing the user to select an option. 
+A close button / icon in the top right corner or cancel in the lower left corner of the search box will close the box and return the map to display.
+
+#### Clicking on Current Location button brings users map to current location.
+Whenever a user clicks the current location button on the map, the map will center on the current location. 
+
+#### Clicking on the Locations sets the values for the distance button.
+Whenever a user a selected location below, it will add the location for distance to use.
+
+#### Clicking on the Distance button shows distance between the two selected locations.
+Whenever a user selects the distance button after selecting 2 locations, it will display the distance in the button.
+If no two locations are selected, then distance will not update.
+
+#### Clicking on the (i)Get more info in the footer should let me change the server.
 Whenever a user clicks on the URL a popup should open showing the team name, the URL in an input text box, and a Cancel button.
 When the user modifies the URL, a Test button should appear and the server name should disappear.
 When the Test button is clicked, it will attempt to connect to the server.
@@ -81,20 +96,24 @@ The component hierarchy for the base application depicted below shows the our to
 * Atlas renders a map.
 * About renders information about the team.
 
-![base component hierarchy](images/ComponentHierarchy.png)
+![base component hierarchy](images/ComponentHierarchyS2.png)
 
 We do not show the many ReactStrap components in this hierarchy, even though they will appear when you are debugging on the client.
 
 ### Class Diagram
 The class diagram for the base application depicted below shows the basic structure of the web server application.
 
-![class diagram](images/ClassDiagram.png )
+![class diagram](images/ClassDiagramS2.png )
 
 The classes in blue represent the classes specific to this application.  
 * WebApplication processes command line parameters and creates MicroServer.
 * MicroServer start a web server on the given port, configures the server for security, static files, and APIs for different types of requests, and processes the requests as they arrive.
 * JSONValidator verifies a request is properly formatted before attempting to process it using JSON Schemas.
 * RequestConfig is a specific request that allows the server to respond with its configuration to allow interoperability between clients and servers. 
+* RequestDistance is a specific request that allows the server to respond with the distance between two locations.
+* RequestFind is a specific request that allows the server to respond with the results of the item searched.
+* DistanceCalcuator calculates the distance between two locations given to it by RequestDistance
+* Database accesses the database and gives the search result to RequestFind
 * RequestHeader defines the basic components of all requests.
 
 The classes in orange represent the external libraries used by the application.
@@ -108,6 +127,7 @@ Often there are several related classes but we've listed only one to simplify th
 # Sprint 1
 We added our team name to all the sections that needed the update. We also added a get more info clickable at the bottom instead of a url to make it easier to read. Once the info is clicked there is information about the name, URL, version, and type. Also, the name at the top of the page can be clicked to go to the team about page. Here we have information regarding the members of Team Bloo and a picture of them. The mission statement also appears on this page. The page can be closed either by clicking the team name at the top or the close button on the right side of the screen.
 # Sprint 2
+For sprint 2 we added both distance and find .json requests along with their appropriate needed files to help them run. We also added a return to current location button and a search button to the map. The search button uses the find request to show locations relating to the search. Adding to that, we added buttons that generate below the map that allow us to select which two locations we want in order to get the distance. Finally, we added a distance button that when clicked after selecting two locations will provide the distance in miles to the user.
 # Sprint 3
 # Sprint 4 
 # Sprint 5
