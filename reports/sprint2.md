@@ -1,4 +1,4 @@
-# Sprint # - T17 - Team Bloo
+# Sprint 2 - T17 - Team Bloo
 
 ## Goal
 ### Show me the distance
@@ -66,9 +66,9 @@ We believe that we have the ability to complete the planned epics. we say this b
 
 | Statistic | # Planned | # Completed |
 | --- | ---: | ---: |
-| Epics | *6* | *count* |
-| Tasks |  *18*   | *count* | 
-| Story Points |  *18*  | *sum* | 
+| Epics | *6* | *3* |
+| Tasks |  *18*   | *29* | 
+| Story Points |  *18*  | *40* | 
 
 
 ## Scrums
@@ -81,24 +81,28 @@ We believe that we have the ability to complete the planned epics. we say this b
 | 9/23 | #106, #107, #104, #103 | #88, #97, #96, #95, #81, #78  | We talk about our progression in sprint 1 and how we should split task more often.|
 | 9/26 | #108, #96, #105, #81, #110, #109, #95, #112, #116, #113, #115, #111, #119, #118 | #88, #97, #90, #78 | Talk about how were doing on task, and talk about what were going to be doing over the weekend. We talked about how we should plan scrums with the idea
 | 9/29 | #119, #120, #121, #88, #123, #125, #90 ,#129 ,| #97, #124, #93, #127 | We talked about how to test through postman and worked through fixing jack's issues with request distance.
+| 10/1 | #127, #131, #122, #132, #128, #124, #97, #78, #92, #133, #134, #72 ,#34, #135, #136, #137 | | We finish up sprint 2
 
 ## Review
-
+  Overall as a team, we learned a lot this sprint, after talking to you after sprint 1, we knew we needed to plan and work with zenhub more. I think we have gotten better at that this sprint. We in general don’t have strong knowledge of website development, so we were slowly trucking there. I like our progress and between the 3 of us, we can get help pretty easily. The only issue that still plagues our team is that we can't meet consistently. After the first half of sprint 2, we weren’t able to meet up with Austin. We're still trying to figure it out but the others are definitely coming together as a team.
 ### Epics done  
-0
+  We didn’t finish the “Where Am I” epic last sprint so we did that first. In that, we added our location marker to the map, and a button to return to your location on the map. After that we started working on sprint2 epics like “Where is” and “Find Distance”. 
+In “Where Is” , our team worked on tasks like finding location based on information, like a name. As well as adding a UI search bar, to look for and add to locations. 
+Our "Find Distance" task was our last task and probably where we worked the most. In this epic we had 4 main tasks, request distance from the server, use the use and check distance formula, Make the UI for choosing 2 different targets, and making the UI for showing Distance. It took our team a while to figure out UI, but we got it after a bit.
 ### Epics not done 
-
+  We didn’t do “Feeling Lucky” ,“Distance Unit” and "V2 protocol" when we were planning we assumed that those would be pretty easy to add to go along with “where-is” and “Find Distance” especially because a lot of the work seemed to already be done if we finished finding distance and where is. I think if we had an extra 2 days, we probably could have done these epics, next time we will plan better.Also, All our epics are under "V2 Protocol" so unless we finshed everything we chouldn't say we finish "V2 Protocol".
 ### What went well
-
+  We're getting better at splitting up our big task into smaller, more manageable tasks. As Well as making sure to put it in zenhub to make sure we're getting points for it. Also, Collin, Jack, and Me are getting much better and communicating if we're lost and trying to help each other out. We also know what Jack's work schedule is like, so now we know we can meet him usually around 5:15 pm after he finishes working. 
 ### Problems encountered and resolutions
-
-
+  Jack and I don’t have much experience in javascript, so this sprint was a bit of a learning curve. But using the zybooks, piazza, and each other we are figuring it out. Collin is always willing to help and is way more familiar with Javascript than us. 
+	Midway through sprint 2, we had trouble meeting up, with each other, after having a scrum, we realized that not everyone had checked the chat very often. So to ensure that everyone got the messages and that we scrumed after every class period, we gave each other our cellphones and made a cell group chat. At first, it seemed like it would work because everyone was replying quickly to it, but for some reason, we still couldn’t meet on agreed upon time. 
 ## Retrospective
-
+  In retrospect Collin and I probably should have split up atlas.js , as the file is now huge, being several hundred lines. That will be something we try to focus on early on the next sprint 3 because if it gets any bigger it might get too hard to separate. 
 ### What we changed this sprint
-
+  We tried to make sure to use zenhub and to make sure that if we have a task that we feel is to big that we break it up. Also, more often than not, other than Austin, everyone met every day, slowly we figured out what we were doing, what place our team was in. That allowed us to know who needed help, and help them. 
 ### What went well
-
-### Potential improvements
-
+  I think Jack, Collin, and me(Tri), got closer as a team because we depended on each other for help often in this sprint. We asked each other if they needed help, and tried to make sure someone was doing something every scrum. Also, any problems that we had in the group we tried to have out in the open to solve. For example, I would often try to have scrums directly after class, so I could catch everyone, but Jack told me that he had work after class and that when we scrumed without him he would miss important info that he needed to be apart of the team. So we now only meet when we agree we can. Although this rule has kinda been broken with Austin. 
+### Potential improvement
+  I know you told us to talk to you if we had any problems within the class or even our team. But we had a problem with meeting that,we thought we could fix ourselves, but it seems we can't so next sprint we plan on talking to dave more about our team dynamics. 
 ### What we will change next time
+  You talked to us after we planned sprint 2, so this sprint, we plan to make sure we have more tasks and our work is more spit into even tasks.  We understood that our planning was lacking and needed more tasks. In sprint 3 we hope to change that by planning a lot of it earlier, that way our plan better reflects what sprint3 will look like. We will try to fix problems within a week, and if we notice it is not working we should talk to dave. 
