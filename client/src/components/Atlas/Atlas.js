@@ -180,7 +180,7 @@ export default class Atlas extends Component {
     return (
       <ListGroup>
         <ListGroupItem active>Select Locations </ListGroupItem>
-        <ListGroupItem tag="button" onClick={this.handleDistance}>Distance:{this.state.distanceBetween} Miles</ListGroupItem>
+        <ListGroupItem tag="button" onClick={this.handleDistance}>Distance:{this.state.distanceBetween} KM</ListGroupItem>
         {this.state.userPosition != null ?
           this.renderLocationItem("Current Location", this.state.userPosition.lat.toFixed(2), this.state.userPosition.lng.toFixed(2)) : ""
         }
