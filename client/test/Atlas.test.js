@@ -46,39 +46,39 @@ function simulateOnClickEvent(reactWrapper, event) {
 test("Testing Atlas's Initial State", testMarkerIsRenderedOnClick);
 
 
-function testSanitizeSearchInput() {
+// function testSanitizeSearchInput() {
 
-  const atlas = shallow(<Atlas createSnackBar={startProperties.createSnackBar}/>);
-  const instance = atlas.instance();
+//   const atlas = shallow(<Atlas createSnackBar={startProperties.createSnackBar}/>);
+//   const instance = atlas.instance();
 
-  let match = "~!@#$%^&*()_+-=Test`;:'<>,./?[]{}|\"\\";
-  let cleanMatch = instance.sanitizeInput(match);
-  let expectedCleanMatch = "_______________Test_________________";
+//   let match = "~!@#$%^&*()_+-=Test`;:'<>,./?[]{}|\"\\";
+//   let cleanMatch = instance.sanitizeInput(match);
+//   let expectedCleanMatch = "_______________Test_________________";
   
-  expect(cleanMatch).toEqual(expectedCleanMatch);
-}
+//   expect(cleanMatch).toEqual(expectedCleanMatch);
+// }
 
-test("Testing Sanitization of Search Input", testSanitizeSearchInput);
+// test("Testing Sanitization of Search Input", testSanitizeSearchInput);
 
 
-function testUpdateSearchText() {
+// function testUpdateSearchText() {
 
-  const atlas = shallow(<Atlas createSnackBar={startProperties.createSnackBar}/>);
-  atlas.setState({searchModalOpen: true});
+//   const atlas = shallow(<Atlas createSnackBar={startProperties.createSnackBar}/>);
+//   atlas.setState({searchModalOpen: true});
 
-  expect(atlas.state().searchInput).toEqual('');
+//   expect(atlas.state().searchInput).toEqual('');
 
-  let inputText = 'Fake Input Text';
-  simulateOnChangeEvent(atlas, {target: {value: inputText}});
-  expect(atlas.state().searchInput).toEqual(inputText);
-}
+//   let inputText = 'Fake Input Text';
+//   simulateOnChangeEvent(atlas, {target: {value: inputText}});
+//   expect(atlas.state().searchInput).toEqual(inputText);
+// }
 
-function simulateOnChangeEvent(reactWrapper, event) {
-  reactWrapper.find('Input').at(0).simulate('change', event);
-  reactWrapper.update();
-}
+// function simulateOnChangeEvent(reactWrapper, event) {
+//   reactWrapper.find('Input').at(0).simulate('change', event);
+//   reactWrapper.update();
+// }
 
-test("Testing Update of Search Input", testUpdateSearchText);
+// test("Testing Update of Search Input", testUpdateSearchText);
 
 
 function testHandleSearch() {
