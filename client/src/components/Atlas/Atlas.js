@@ -5,7 +5,7 @@ import * as distanceSchema from "../../../schemas/ResponseDistance";
 
 import Search from "./Search";
 
-import {Map, Marker, Popup, TileLayer, ZoomControl} from 'react-leaflet';
+import {Map, Marker, Popup, TileLayer} from 'react-leaflet';
 import Control from 'react-leaflet-control';
 
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
@@ -31,7 +31,6 @@ export default class Atlas extends Component {
     super(props);
 
     this.setMarker = this.setMarker.bind(this);
-    this.handleReturnCurrentLocation = this.handleReturnCurrentLocation.bind(this);
     this.setParentState = this.setParentState.bind(this);
     this.handleDistance = this.handleDistance.bind(this);
 
@@ -81,7 +80,6 @@ export default class Atlas extends Component {
             boxZoom={false}
             useFlyTo={true}
             zoom={15}
-            zoomControl={false}
             minZoom={MAP_MIN_ZOOM}
             maxZoom={MAP_MAX_ZOOM}
             maxBounds={MAP_BOUNDS}
@@ -90,7 +88,6 @@ export default class Atlas extends Component {
         >
           <TileLayer url={MAP_LAYER_URL} attribution={MAP_LAYER_ATTRIBUTION}/>
           {this.renderSearchButton()}
-          <ZoomControl position={'topleft'}/>
           {this.renderReturnLocationButton()}
           {this.getUserPosition()}
           {this.state.placesSelected.map((place) => this.createMarker({lat:Number(place.latitude), lng:Number(place.longitude)}, MARKER_ICON, place.name))}
@@ -105,7 +102,7 @@ export default class Atlas extends Component {
         <Button 
           className={'map-control'}
           size="sm"
-          onClick={this.handleReturnCurrentLocation}
+          onClick={() => this.flyToLocation(this.state.userPosition)}
           disabled={!this.state.userPosition}>
             <LocationIcon fontSize="small"/>
         </Button>
@@ -219,10 +216,10 @@ export default class Atlas extends Component {
     return position.lat.toFixed(2) + ', ' + position.lng.toFixed(2);
   }
 
-  handleReturnCurrentLocation() {
-    if(this.mapRef.current && this.state.userPosition) {
+  flyToLocation(coords, zoom=15) {
+    if(this.mapRef.current) {
       var map = this.mapRef.current.leafletElement;
-      map.flyTo(this.state.userPosition, 15)
+      map.flyTo(coords, zoom)
     }
   }
 
