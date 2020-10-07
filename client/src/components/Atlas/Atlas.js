@@ -152,7 +152,7 @@ export default class Atlas extends Component {
         key={name}
         tag="button" 
         color={this.state.placesDistance.filter(val => val.name == name).length != 0 ? "primary":"white"}
-        onClick={() => this.handleDistanceSelect(name, lat, lng)} 
+        onClick={() => this.handleLocationSelect(name, lat, lng)} 
       >
         <ListGroupItemHeading>{name}</ListGroupItemHeading>
         <ListGroupItemText>Lat: {lat} Lng: {lng}</ListGroupItemText>
@@ -160,7 +160,7 @@ export default class Atlas extends Component {
     );
   }
 
-  handleDistanceSelect(name, lat, lng) {
+  handleLocationSelect(name, lat, lng) {
     let newSelect = {name, lat, lng};
     if(this.state.placesDistance.filter(val => val.name == name).length == 0) {
       
