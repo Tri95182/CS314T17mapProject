@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
-import {Col, Container, Row, Button, InputGroup, Input, InputGroupAddon, InputGroupText, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
+import {Col, Container, Row, Button, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText} from 'reactstrap';
 import { isJsonResponseValid, sendServerRequest } from "../../utils/restfulAPI";
-import * as findSchema from "../../../schemas/ResponseFind";
 import * as distanceSchema from "../../../schemas/ResponseDistance";
 
-import {Map, Marker, Popup, TileLayer, ZoomControl} from 'react-leaflet';
+import Search from "./Search";
+
+import {Map, Marker, Popup, TileLayer} from 'react-leaflet';
 import Control from 'react-leaflet-control';
 
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
@@ -23,7 +24,6 @@ const MAP_LAYER_ATTRIBUTION = "&copy; <a href=&quot;http://osm.org/copyright&quo
 const MAP_LAYER_URL = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
 const MAP_MIN_ZOOM = 1;
 const MAP_MAX_ZOOM = 19;
-const PLACES_LIMIT = 25;
 
 export default class Atlas extends Component {
 
@@ -31,8 +31,7 @@ export default class Atlas extends Component {
     super(props);
 
     this.setMarker = this.setMarker.bind(this);
-    this.handleReturnCurrentLocation = this.handleReturnCurrentLocation.bind(this);
-    this.handleSearch = this.handleSearch.bind(this);
+    this.setParentState = this.setParentState.bind(this);
     this.handleDistance = this.handleDistance.bind(this);
 
     this.mapRef = React.createRef();
@@ -50,10 +49,6 @@ export default class Atlas extends Component {
     };
   }
 
-  componentDidMount() {
-    this.handleSearch({target:{value:""}});
-  }
-
   render() {
     return (
         <div>
@@ -61,9 +56,15 @@ export default class Atlas extends Component {
             <Row>
               <Col sm={12} md={{size: 10, offset: 1}}>
                 {this.renderLeafletMap()}
-                {this.renderSearchModal()}
+                <Search 
+                  searchModalOpen={this.state.searchModalOpen} 
+                  places={this.state.places} 
+                  placesFound={this.state.placesFound} 
+                  placesSelected={this.state.placesSelected}
+                  setParentState={this.setParentState}
+                  createSnackBar={this.props.createSnackBar}
+                />
                 {this.renderLocationsList()}
-
               </Col>
             </Row>
           </Container>
@@ -79,7 +80,6 @@ export default class Atlas extends Component {
             boxZoom={false}
             useFlyTo={true}
             zoom={15}
-            zoomControl={false}
             minZoom={MAP_MIN_ZOOM}
             maxZoom={MAP_MAX_ZOOM}
             maxBounds={MAP_BOUNDS}
@@ -88,7 +88,6 @@ export default class Atlas extends Component {
         >
           <TileLayer url={MAP_LAYER_URL} attribution={MAP_LAYER_ATTRIBUTION}/>
           {this.renderSearchButton()}
-          <ZoomControl position={'topleft'}/>
           {this.renderReturnLocationButton()}
           {this.getUserPosition()}
           {this.state.placesSelected.map((place) => this.createMarker({lat:Number(place.latitude), lng:Number(place.longitude)}, MARKER_ICON, place.name))}
@@ -103,7 +102,7 @@ export default class Atlas extends Component {
         <Button 
           className={'map-control'}
           size="sm"
-          onClick={this.handleReturnCurrentLocation}
+          onClick={() => this.flyToLocation(this.state.userPosition)}
           disabled={!this.state.userPosition}>
             <LocationIcon fontSize="small"/>
         </Button>
@@ -125,62 +124,15 @@ export default class Atlas extends Component {
     )
   }
 
-  renderSearchModal() {
-    const toggle = () => {
-      let isOpen = !this.state.searchModalOpen;
-      this.setState({searchModalOpen: isOpen});
-    };
-    return (
-      <Modal isOpen={this.state.searchModalOpen} toggle={toggle} scrollable={true}>
-        <ModalHeader toggle={toggle}>Search</ModalHeader>
-        {this.renderSearchModalBody()}
-        <ModalFooter>
-          <Button color="primary" onClick={toggle}>Close</Button>
-        </ModalFooter>
-      </Modal>
-    );
-  }
-
-  renderSearchModalBody() {
-    return (
-      <ModalBody>
-        <InputGroup id="SearchBar">
-          <InputGroupAddon addonType='prepend'>
-            <InputGroupText>
-              <SearchIcon/>
-            </InputGroupText>
-          </InputGroupAddon>
-          <Input
-            type='search'
-            placeholder='Search by name'
-            onChange={this.handleSearch}
-            value={this.state.searchInput}
-          />
-        </InputGroup>
-        {this.renderSearchResults()}
-      </ModalBody>
-    );
-  }
-
-  renderSearchResults() {
-    return (
-      <ListGroup>
-        <ListGroupItem active>Results: {this.state.placesFound}</ListGroupItem>
-        {this.state.places.map((place) => 
-          <ListGroupItem tag="button" onClick={() => this.addSelectedPlace(place)}>
-            <ListGroupItemHeading>{place.name}</ListGroupItemHeading>
-            <ListGroupItemText>Lat: {Number(place.latitude).toFixed(2)} Lng: {Number(place.longitude).toFixed(2)}</ListGroupItemText>
-          </ListGroupItem>
-        )}
-      </ListGroup>
-    );
+  setParentState(stateObj) {
+    this.setState(stateObj);
   }
 
   renderLocationsList() {
     return (
-      <ListGroup>
+      <ListGroup key={"loclist"}>
         <ListGroupItem active>Select Locations </ListGroupItem>
-        <ListGroupItem tag="button" onClick={this.handleDistance}>Distance:{this.state.distanceBetween} KM</ListGroupItem>
+        <ListGroupItem tag="button" onClick={this.handleDistance}>Distance: {this.state.distanceBetween} KM</ListGroupItem>
         {this.state.userPosition != null ?
           this.renderLocationItem("Current Location", this.state.userPosition.lat.toFixed(2), this.state.userPosition.lng.toFixed(2)) : ""
         }
@@ -197,9 +149,10 @@ export default class Atlas extends Component {
   renderLocationItem(name, lat, lng) {
     return (
       <ListGroupItem 
+        key={name}
         tag="button" 
         color={this.state.placesDistance.filter(val => val.name == name).length != 0 ? "primary":"white"}
-        onClick={() => this.handleDistanceSelect(name, lat, lng)} 
+        onClick={() => this.handleLocationSelect(name, lat, lng)} 
       >
         <ListGroupItemHeading>{name}</ListGroupItemHeading>
         <ListGroupItemText>Lat: {lat} Lng: {lng}</ListGroupItemText>
@@ -207,7 +160,7 @@ export default class Atlas extends Component {
     );
   }
 
-  handleDistanceSelect(name, lat, lng) {
+  handleLocationSelect(name, lat, lng) {
     let newSelect = {name, lat, lng};
     if(this.state.placesDistance.filter(val => val.name == name).length == 0) {
       
@@ -253,7 +206,7 @@ export default class Atlas extends Component {
     };
 
     return (
-      <Marker ref={initMarker} position={position} icon={icon}>
+      <Marker key={title} ref={initMarker} position={position} icon={icon}>
         <Popup offset={[0, -18]} className="font-weight-bold">{title}{title ? <br/> : ""}{this.getStringMarkerPosition(position)}</Popup>
       </Marker>
   );
@@ -263,33 +216,13 @@ export default class Atlas extends Component {
     return position.lat.toFixed(2) + ', ' + position.lng.toFixed(2);
   }
 
-  handleReturnCurrentLocation() {
-    if(this.mapRef.current && this.state.userPosition) {
+  flyToLocation(coords, zoom=15) {
+    if(this.mapRef.current) {
       var map = this.mapRef.current.leafletElement;
-      map.flyTo(this.state.userPosition, 15)
+      map.flyTo(coords, zoom)
     }
   }
 
-  addSelectedPlace(place) {
-    if(!this.state.placesSelected.includes(place)) {
-      this.setState({placesSelected: [...this.state.placesSelected, place]});
-    }
-  }
-
-  handleSearch(input) {
-    this.setState({searchInput: input.target.value});
-    let cleanInput = this.sanitizeInput(input.target.value);
-
-    let findRequest = {requestType: "find", requestVersion: 2, limit: PLACES_LIMIT};
-    if(cleanInput != "") findRequest.match = cleanInput;
-
-		sendServerRequest(findRequest)
-    .then(find => {
-      if (find) { this.processFindResponse(find.data); }
-      else { this.props.createSnackBar("The Request To The Server Failed. Pl+ease Try Again Later."); }
-    });
-
-  }
   handleDistance(){
     if(this.state.placesDistance.length == 2){
     let distanceRequest = {requestType: "distance", requestVersion: 2,
@@ -316,27 +249,6 @@ export default class Atlas extends Component {
     this.setState({distanceBetween: Distance.distance});
   }
 
-  sanitizeInput(input) {
-    return input.replace(/[^A-Za-z0-9]/g, "_");
-  }
-
-  processFindResponse(findResponse) {
-		if(!isJsonResponseValid(findResponse, findSchema)) {
-			this.processServerFindError("Find Response Not Valid. Check The Server.");
-		} else {
-			this.processServerFindSuccess(findResponse);
-		}
-  }
-
-  processServerFindSuccess(find) {
-		this.setState({places: find.places, placesFound: find.found});
-	}
-
-	processServerFindError(message) {
-		LOG.error(message);
-		this.setState({places: [], found: 0});
-		this.props.createSnackBar(message);
-	}
   processServerDistanceError(message) {
     LOG.error(message);
     this.setState({distanceBetween: 0});
