@@ -62,8 +62,9 @@ We believe that we can accomplish all the epics this sprint. It seems we have fi
 
 | Date | Tasks closed  | Tasks in progress | Impediments |
 | :--- | :--- | :--- | :--- |
-| *10/3* | ** | *#86, #87, #143, #83, #144* |  | 
+| *10/3* | ** | *#86, #87, #143, #83, #144* | Not knowing V3 Protcol  | 
 | *10/5* | ** | *#87, #143, #144, #170* |  | 
+| *10/7* | *#87, #143* | *#144, #153, #154, #170* |  | 
 
 
 ## Review
