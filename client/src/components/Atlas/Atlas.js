@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import {Col, Container, Row, Button, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText} from 'reactstrap';
-import { isJsonResponseValid, sendServerRequest } from "../../utils/restfulAPI";
-import * as distanceSchema from "../../../schemas/ResponseDistance";
 
 import Search from "./Search";
+import Distance from "./Distance";
 
 import {Map, Marker, Popup, TileLayer} from 'react-leaflet';
 import Control from 'react-leaflet-control';
@@ -32,7 +31,6 @@ export default class Atlas extends Component {
 
     this.setMarker = this.setMarker.bind(this);
     this.setParentState = this.setParentState.bind(this);
-    this.handleDistance = this.handleDistance.bind(this);
 
     this.mapRef = React.createRef();
 
@@ -132,7 +130,12 @@ export default class Atlas extends Component {
     return (
       <ListGroup key={"loclist"}>
         <ListGroupItem active>Select Locations </ListGroupItem>
-        <ListGroupItem tag="button" onClick={this.handleDistance}>Distance: {this.state.distanceBetween} KM</ListGroupItem>
+        <Distance 
+          placesDistance={this.state.placesDistance}
+          distanceBetween={this.state.distanceBetween}
+          setParentState={this.setParentState}
+          createSnackBar={this.props.createSnackBar}
+        />
         {this.state.userPosition != null ?
           this.renderLocationItem("Current Location", this.state.userPosition.lat.toFixed(2), this.state.userPosition.lng.toFixed(2)) : ""
         }
@@ -223,35 +226,4 @@ export default class Atlas extends Component {
     }
   }
 
-  handleDistance(){
-    if(this.state.placesDistance.length == 2){
-    let distanceRequest = {requestType: "distance", requestVersion: 2,
-      place1: {latitude: this.state.placesDistance[0].lat, longitude: this.state.placesDistance[0].lng},
-      place2: {latitude: this.state.placesDistance[1].lat, longitude: this.state.placesDistance[1].lng},
-      earthRadius: 6371.0}
-    sendServerRequest(distanceRequest)
-        .then(distance => {
-          if (distance) { this.processDistanceResponse(distance.data); }
-          else { this.props.createSnackBar("The Request To The Server Failed. Please Try Again Later."); }
-        });
-    }
-
-  }
-
-  processDistanceResponse(DistanceResponse) {
-    if(!isJsonResponseValid(DistanceResponse, distanceSchema)) {
-      this.processServerDistanceError("Distance Response Not Valid. Check The Server.");
-    } else {
-      this.processServerDistanceSuccess(DistanceResponse);
-    }
-  }
-  processServerDistanceSuccess(Distance) {
-    this.setState({distanceBetween: Distance.distance});
-  }
-
-  processServerDistanceError(message) {
-    LOG.error(message);
-    this.setState({distanceBetween: 0});
-    this.props.createSnackBar(message);
-  }
 }
