@@ -125,6 +125,7 @@ function testHandleSearch() {
 
   let input = {target:{value:"daves"}};
   search.instance().handleSearch(input)
+  search.update();
   
   let placesAfter = atlas.state().places;
   let placesFoundAfter = atlas.state().placesFound;
