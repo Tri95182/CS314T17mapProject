@@ -12,25 +12,25 @@ const PLACES_LIMIT = 25;
 export default class Search extends Component {
 
   constructor(props) {
-      super(props);
-  
-      this.handleSearch = this.handleSearch.bind(this);
-  
-      this.state = {
-        searchInput: '',
-      };
-    }
+    super(props);
+
+    this.handleSearch = this.handleSearch.bind(this);
+
+    this.state = {
+      searchInput: '',
+    };
+  }
 
   componentDidMount() {
     this.handleSearch({target:{value:""}});
   }
 
   render() {
-      return (
-          <div>
-              {this.renderSearchModal()}
-          </div>
-      );
+    return (
+        <div>
+            {this.renderSearchModal()}
+        </div>
+    );
   }
 
   renderSearchModal() {
