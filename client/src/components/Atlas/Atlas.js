@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Col, Container, Row, Button} from 'reactstrap';
+import _ from 'lodash';
 
 import Search from "./Search";
 import LocationsList from "./LocationsList";
@@ -193,7 +194,8 @@ export default class Atlas extends Component {
       var map = this.mapRef.current.leafletElement;
       
       await map.eachLayer((layer) => {
-        if(JSON.stringify(layer.options.position) == JSON.stringify(coords)) {
+        let popup = layer.getPopup();
+        if(popup && _.isEqual(JSON.stringify(popup.getLatLng()), JSON.stringify(coords))) {
           layer.openPopup()
         }
       })
