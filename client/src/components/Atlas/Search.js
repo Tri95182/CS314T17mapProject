@@ -75,7 +75,7 @@ export default class Search extends Component {
       <ListGroup key={"searchres"}>
         <ListGroupItem key={"head"} active>Results: {this.props.placesFound}</ListGroupItem>
         {this.props.places && this.props.places.map((place) => 
-          <ListGroupItem key={place.name} tag="button" onClick={() => this.addSelectedPlace(place)}>
+          <ListGroupItem key={place.name+place.latitude+place.longitude} tag="button" onClick={() => this.addSelectedPlace(place)}>
             <ListGroupItemHeading>{place.name}</ListGroupItemHeading>
             <ListGroupItemText>Lat: {Number(place.latitude).toFixed(2)} Lng: {Number(place.longitude).toFixed(2)}</ListGroupItemText>
           </ListGroupItem>

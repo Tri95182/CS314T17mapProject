@@ -30,8 +30,8 @@ export default class Distance extends Component {
     if(this.props.placesDistance.length == 2){
 
       let distanceRequest = {requestType: "distance", requestVersion: 2,
-        place1: {latitude: this.props.placesDistance[0].lat, longitude: this.props.placesDistance[0].lng},
-        place2: {latitude: this.props.placesDistance[1].lat, longitude: this.props.placesDistance[1].lng},
+        place1: {latitude: this.props.placesDistance[0].lat.toString(), longitude: this.props.placesDistance[0].lng.toString()},
+        place2: {latitude: this.props.placesDistance[1].lat.toString(), longitude: this.props.placesDistance[1].lng.toString()},
         earthRadius: 6371.0}
 
       sendServerRequest(distanceRequest)
