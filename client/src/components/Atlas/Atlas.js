@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import {Col, Container, Row, Button, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText} from 'reactstrap';
+import {Col, Container, Row, Button} from 'reactstrap';
+import _ from 'lodash';
 
 import Search from "./Search";
-import Distance from "./Distance";
+import LocationsList from "./LocationsList";
 
 import {Map, Marker, Popup, TileLayer} from 'react-leaflet';
 import Control from 'react-leaflet-control';
@@ -54,15 +55,8 @@ export default class Atlas extends Component {
             <Row>
               <Col sm={12} md={{size: 10, offset: 1}}>
                 {this.renderLeafletMap()}
-                <Search 
-                  searchModalOpen={this.state.searchModalOpen} 
-                  places={this.state.places} 
-                  placesFound={this.state.placesFound} 
-                  placesSelected={this.state.placesSelected}
-                  setParentState={this.setParentState}
-                  createSnackBar={this.props.createSnackBar}
-                />
-                {this.renderLocationsList()}
+                {this.renderSearchComponent()}
+                {this.renderLocationsListComponent()}
               </Col>
             </Row>
           </Container>
@@ -122,61 +116,37 @@ export default class Atlas extends Component {
     )
   }
 
+  renderSearchComponent() {
+    return (
+      <Search 
+        searchModalOpen={this.state.searchModalOpen} 
+        places={this.state.places} 
+        placesFound={this.state.placesFound} 
+        placesSelected={this.state.placesSelected}
+        setParentState={this.setParentState}
+        createSnackBar={this.props.createSnackBar}
+      />
+    );
+  }
+
+  renderLocationsListComponent() {
+    return (
+      <LocationsList
+        userPosition={this.state.userPosition}
+        markerPosition={this.state.markerPosition}
+        placesSelected={this.state.placesSelected}
+        placesDistance={this.state.placesDistance}
+        distanceBetween={this.state.distanceBetween}
+        flyToLocation={this.flyToLocation}
+        setParentState={this.setParentState}
+        createSnackBar={this.props.createSnackBar}
+        mapRef={this.mapRef}
+      />
+    );
+  }
+
   setParentState(stateObj) {
     this.setState(stateObj);
-  }
-
-  renderLocationsList() {
-    return (
-      <ListGroup key={"loclist"}>
-        <ListGroupItem active>Select Locations </ListGroupItem>
-        <Distance 
-          placesDistance={this.state.placesDistance}
-          distanceBetween={this.state.distanceBetween}
-          setParentState={this.setParentState}
-          createSnackBar={this.props.createSnackBar}
-        />
-        {this.state.userPosition != null ?
-          this.renderLocationItem("Current Location", this.state.userPosition.lat.toFixed(2), this.state.userPosition.lng.toFixed(2)) : ""
-        }
-        {this.state.markerPosition != null ?
-          this.renderLocationItem("Marker Location", this.state.markerPosition.lat.toFixed(2), this.state.markerPosition.lng.toFixed(2)) : ""
-        }
-        {this.state.placesSelected.map((place) =>
-          this.renderLocationItem(place.name, Number(place.latitude).toFixed(2), Number(place.longitude).toFixed(2))
-        )}
-      </ListGroup>
-    );
-  }
-
-  renderLocationItem(name, lat, lng) {
-    return (
-      <ListGroupItem 
-        key={name}
-        tag="button" 
-        color={this.state.placesDistance.filter(val => val.name == name).length != 0 ? "primary":"white"}
-        onClick={() => this.handleLocationSelect(name, lat, lng)} 
-      >
-        <ListGroupItemHeading>{name}</ListGroupItemHeading>
-        <ListGroupItemText>Lat: {lat} Lng: {lng}</ListGroupItemText>
-      </ListGroupItem>
-    );
-  }
-
-  handleLocationSelect(name, lat, lng) {
-    let newSelect = {name, lat, lng};
-    if(this.state.placesDistance.filter(val => val.name == name).length == 0) {
-      
-      if(this.state.placesDistance.length >= 2) {
-        let temp = this.state.placesDistance.splice(0,1);
-        this.setState({placesDistance: temp});
-      }
-
-      this.setState({placesDistance: [...this.state.placesDistance, newSelect]});
-    } else {
-      let temp = this.state.placesDistance.filter(val => val.name != name);
-      this.setState({placesDistance: temp});
-    }
   }
 
   setMarker(mapClickInfo) {
@@ -212,17 +182,25 @@ export default class Atlas extends Component {
       <Marker key={title} ref={initMarker} position={position} icon={icon}>
         <Popup offset={[0, -18]} className="font-weight-bold">{title}{title ? <br/> : ""}{this.getStringMarkerPosition(position)}</Popup>
       </Marker>
-  );
+    );
   }
 
   getStringMarkerPosition(position) {
     return position.lat.toFixed(2) + ', ' + position.lng.toFixed(2);
   }
 
-  flyToLocation(coords, zoom=15) {
+  async flyToLocation(coords, zoom=15) {
     if(this.mapRef.current) {
       var map = this.mapRef.current.leafletElement;
-      map.flyTo(coords, zoom)
+      
+      await map.eachLayer((layer) => {
+        let popup = layer.getPopup();
+        if(popup && _.isEqual(JSON.stringify(popup.getLatLng()), JSON.stringify(coords))) {
+          layer.openPopup()
+        }
+      })
+
+      await map.flyTo(coords, zoom)
     }
   }
 
