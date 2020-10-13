@@ -38,6 +38,7 @@ export default class ServerSettings extends Component {
                 {this.renderRow("URL:", this.renderInputField())}
                 {this.renderRow("Version:", this.getServerInfo("requestVersion"))}
                 {this.renderRow("Type:", this.getServerInfo("requestType"))}
+                {this.renderRow("Supported Requests: ", this.getServerInfo("supportedRequests"))}
             </ModalBody>
         );
     }
