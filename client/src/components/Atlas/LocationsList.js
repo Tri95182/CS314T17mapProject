@@ -32,17 +32,19 @@ export default class LocationsList extends Component {
           setParentState={this.props.setParentState}
           createSnackBar={this.props.createSnackBar}
         />
-        {this.props.userPosition != null ?
-          this.renderLocationItem("Current Location", this.props.userPosition.lat, this.props.userPosition.lng) : ""
-        }
-        {this.props.markerPosition != null ?
-          this.renderLocationItem("Marker Location", this.props.markerPosition.lat, this.props.markerPosition.lng) : ""
-        }
+        {this.renderIfPropExists("Current Location", this.props.userPosition)}
+        {this.renderIfPropExists("Marker Location", this.props.markerPosition)}
         {this.props.placesSelected.map((place) =>
           this.renderLocationItem(place.name, Number(place.latitude), Number(place.longitude))
         )}
       </ListGroup>
     );
+  }
+
+  renderIfPropExists(name, prop) {
+    if(prop != null) {
+      return this.renderLocationItem(name, prop.lat, prop.lng);
+    }
   }
 
   renderLocationItem(name, lat, lng) {
@@ -87,19 +89,18 @@ export default class LocationsList extends Component {
     if(name == 'Marker Location') {
       this.props.setParentState({markerPosition: null});
     } else {
-      let index = this.props.placesSelected.findIndex(place => place.name == name);
-      if(index != -1) {
-        let temp = this.props.placesSelected;
-        temp.splice(index, 1);
-        this.props.setParentState({placesSelected: temp});
-      }
+      this.removeItem(name, this.props.placesSelected, 'placesSelected');
     }
 
-    let distanceIndex = this.props.placesDistance.findIndex(place => place.name == name);
-    if(distanceIndex != -1) {
-      let temp = this.props.placesDistance;
-      temp.splice(distanceIndex, 1);
-      this.props.setParentState({placesDistance: temp});
+    this.removeItem(name, this.props.placesDistance, 'placesDistance');
+  }
+
+  removeItem(name, places, propName) {
+    let index = places.findIndex(place => place.name == name);
+    if(index != -1) {
+      let temp = places;
+      temp.splice(index, 1);
+      this.props.setParentState({[propName]: temp});
     }
   }
 
