@@ -66,8 +66,7 @@ We believe that we can accomplish all the epics this sprint. It seems we have fi
 | *10/5* | ** | *#87, #143, #144, #170* |  | 
 | *10/7* | *#87, #143* | *#144, #153, #154, #170* |  | 
 | *10/9* | ** | *#144, #153, #154, #170* | All occupied by other things last few days | 
-
-
+| *10/13* | *#144, #151, #153, #154* | *#145, #166, #170, #176* | | 
 
 ## Review
 
