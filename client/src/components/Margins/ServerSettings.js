@@ -38,7 +38,7 @@ export default class ServerSettings extends Component {
                 {this.renderRow("URL:", this.renderInputField())}
                 {this.renderRow("Version:", this.getServerInfo("requestVersion"))}
                 {this.renderRow("Type:", this.getServerInfo("requestType"))}
-                {this.renderRow("Supported Requests: ", this.getServerInfo("supportedRequests"))}
+                {this.renderRow("Supported Requests: ", JSON.stringify(this.getServerInfo("supportedRequests")))}
             </ModalBody>
         );
     }
@@ -76,10 +76,10 @@ export default class ServerSettings extends Component {
     renderRow(title, value) {
         return (
             <Row className="m-2">
-                <Col xs={2}>
+                <Col xs={3}>
                     {title}
                 </Col>
-                <Col xs={10}>
+                <Col xs={9}>
                     {value}
                 </Col>
             </Row>
