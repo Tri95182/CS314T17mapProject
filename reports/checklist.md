@@ -1,4 +1,4 @@
-# Inspection Checklist for t##
+# Inspection Checklist for t17
 
 The goal of an Inspection is to file defects.
 This checklist is our guide to help us look for defects.
@@ -37,3 +37,12 @@ The checklist will be updated as we identify new faults in our code that we wish
 
 ### Exception faults
 * Have all possible error conditions been considered?
+
+### Readability faults
+* Was the code easy to understand?
+* Can the readability of the code be improved by smaller methods?
+* Can the readability of the code be improved by different function/method or variable names?
+* Is the code located in the right file/folder/package?
+* Would more comments make the code more understandable?
+* Could some comments be removed by making the code itself more readable?
+* Is there any commented out code?
