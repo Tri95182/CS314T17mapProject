@@ -37,6 +37,8 @@ The checklist will be updated as we identify new faults in our code that we wish
 
 ### Exception faults
 * Have all possible error conditions been considered?
+* Are we reinventing the Wheel?
+* Are we testing all Expected and some unexpected test cases?
 
 ### Readability faults
 * Was the code easy to understand?
