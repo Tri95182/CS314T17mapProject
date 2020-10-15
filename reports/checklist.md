@@ -37,3 +37,5 @@ The checklist will be updated as we identify new faults in our code that we wish
 
 ### Exception faults
 * Have all possible error conditions been considered?
+
+*Are we reinventing the Wheel?
