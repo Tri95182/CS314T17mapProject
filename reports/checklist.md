@@ -48,3 +48,8 @@ The checklist will be updated as we identify new faults in our code that we wish
 * Would more comments make the code more understandable?
 * Could some comments be removed by making the code itself more readable?
 * Is there any commented out code?
+
+### Formatting faults
+* Is CamelCase used for all variables?
+* Are proper margins and white spaced used throughout?
+* Is the code readable without horizontal scrolling?
