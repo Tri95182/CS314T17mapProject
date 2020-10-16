@@ -2,7 +2,7 @@
  
 | Inspection | Details |
 | ----- | ----- |
-| Subject | Distance.js , Atlas.js , About.Js|
+| Subject | Distance.js , Atlas.js , About.js, RequestFind.java|
 | Meeting | 10/16/2020 5.30pm online|
 | Checklist | Our checklist |
 
