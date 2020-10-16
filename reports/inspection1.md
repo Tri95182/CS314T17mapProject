@@ -20,3 +20,5 @@
 | file:line | problem | hi/med/low | who found | github#  |
 | --- | --- | :---: | :---: | --- |
 | Distance.js: #33 , #34 | Duplicate, refactor | low | CodeCliamte/Tri | #194 |
+| Distance.js: #37 | Similar blocks of code, refactor| low | CodeClimate/tri | #195 |
+
