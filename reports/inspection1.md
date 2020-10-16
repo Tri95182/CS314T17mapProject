@@ -13,7 +13,7 @@
 | Tri Nguyen | 1 hour |
 | Jack Melvin |  |
 | Collin Wernsman | 1 hour |
-| Austin Wulfing |  |
+| Austin Wulfing | 1 hour |
 
 ### Problems found
 
