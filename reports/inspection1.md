@@ -10,7 +10,7 @@
 
 | Name | Preparation Time |
 | ---- | ---- |
-| Tri Nguyen | 4pm |
+| Tri Nguyen | 1hour |
 | Jack Melvin |  |
 | Collin Wernsman |  |
 | Austin Wulfing |  |
