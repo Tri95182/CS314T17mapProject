@@ -23,4 +23,6 @@
 | Distance.js: #37 | Similar blocks of code, refactor| low | CodeClimate/tri | #195 |
 | About.js: #14-#55| This render is huge we should probably break it down a bit | low | Tri| #196 |
 | Atlas.js | Missing a decent amount of test coverage. | med | CodeClimate/Tri | #197 |
+| Atlas.js: #194 | var could be changed to let | low | wulfing | #200 |
+| Atlas.js: #85, #183 | Lines are out of the page view | low | wulfing | #201
 
