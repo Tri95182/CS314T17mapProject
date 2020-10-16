@@ -21,4 +21,5 @@
 | --- | --- | :---: | :---: | --- |
 | Distance.js: #33 , #34 | Duplicate, refactor | low | CodeCliamte/Tri | #194 |
 | Distance.js: #37 | Similar blocks of code, refactor| low | CodeClimate/tri | #195 |
+| About.js: #14-#55| This render is huge we should probably break it down a bit | low | #196 |
 
