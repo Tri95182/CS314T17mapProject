@@ -2,16 +2,18 @@
  
 | Inspection | Details |
 | ----- | ----- |
-| Subject | *file and methods/line range to review for meeting* |
-| Meeting | *date, time, location* |
-| Checklist | *reference, URL, etc.* |
+| Subject | Atlas.js |
+| Meeting | *date, time, location* 10/16/2020 5.30pm online|
+| Checklist | Our checklist |
 
 ### Roles
 
 | Name | Preparation Time |
 | ---- | ---- |
-|  |  |
-|  |  |
+| Tri Nguyen |  |
+| Jack Melvin |  |
+| Collin Wernsman |  |
+| Austin Wulfing |  |
 
 ### Problems found
 
