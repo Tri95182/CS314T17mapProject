@@ -2,7 +2,7 @@
  
 | Inspection | Details |
 | ----- | ----- |
-| Subject | Distance.js |
+| Subject | Distance.js , Atlas.js , About.Js|
 | Meeting | 10/16/2020 5.30pm online|
 | Checklist | Our checklist |
 
@@ -10,7 +10,7 @@
 
 | Name | Preparation Time |
 | ---- | ---- |
-| Tri Nguyen |  |
+| Tri Nguyen | 4pm |
 | Jack Melvin |  |
 | Collin Wernsman |  |
 | Austin Wulfing |  |
@@ -19,5 +19,4 @@
 
 | file:line | problem | hi/med/low | who found | github#  |
 | --- | --- | :---: | :---: | --- |
-|  | | | | |
-|  | | | | |
+| Distance.js: #33 , #34 | Duplicate, refactor | low | CodeCliamte/Tri | #194 |
