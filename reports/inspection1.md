@@ -2,8 +2,8 @@
  
 | Inspection | Details |
 | ----- | ----- |
-| Subject | Atlas.js |
-| Meeting | *date, time, location* 10/16/2020 5.30pm online|
+| Subject | Distance.js |
+| Meeting | 10/16/2020 5.30pm online|
 | Checklist | Our checklist |
 
 ### Roles
