@@ -57,7 +57,7 @@ public class RequestFind extends RequestHeader {
       log.trace("buildResponse -> {}", this);
     }
 
-    private Boolean varExists(var) {
+    private Boolean varExists(Integer var) {
       if(var != null && var != 0) {
         return true;
       } else {
