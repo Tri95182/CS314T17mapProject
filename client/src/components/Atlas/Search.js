@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Button, InputGroup, Input, InputGroupAddon, InputGroupText, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
-import { isJsonResponseValid, sendServerRequest } from "../../utils/restfulAPI";
+import { isJsonResponseValid } from "../../utils/restfulAPI";
 
 import { LOG } from "../../utils/constants";
 import * as findSchema from "../../../schemas/ResponseFind";
@@ -27,9 +27,9 @@ export default class Search extends Component {
 
   render() {
     return (
-        <div>
-            {this.renderSearchModal()}
-        </div>
+      <div>
+          {this.renderSearchModal()}
+      </div>
     );
   }
 
@@ -98,12 +98,8 @@ export default class Search extends Component {
     let findRequest = {requestType: "find", requestVersion: 2, limit: PLACES_LIMIT};
     if(cleanInput != "") findRequest.match = cleanInput;
 
-    sendServerRequest(findRequest)
-    .then(find => {
-      if (find) { this.processFindResponse(find.data); }
-      else { this.props.createSnackBar("The Request To The Server Failed. Please Try Again Later."); }
-    });
-
+    this.props.sendRequest(findRequest)
+    .then(response => this.processFindResponse(response));
   }
 
   sanitizeInput(input) {

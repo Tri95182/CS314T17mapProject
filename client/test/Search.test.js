@@ -8,11 +8,15 @@ import Search from '../src/components/Atlas/Search';
 
 const startProperties = {
   searchModalOpen: true,
+  sendRequest: jest.fn(async x => {return await x})
 };
 
 function testRenderModal() {
 
-  const search = mount(<Search searchModalOpen={startProperties.searchModalOpen}/>);
+  const search = shallow(<Search 
+    searchModalOpen={startProperties.searchModalOpen}
+    sendRequest={startProperties.sendRequest}
+  />);
 
   expect(search.find('Modal').length).toEqual(1);
   expect(search.find('ModalHeader').length).toEqual(1);
@@ -24,7 +28,10 @@ test("Test render of modal", testRenderModal);
 
 function testRenderModalBody() {
 
-  const search = mount(<Search searchModalOpen={startProperties.searchModalOpen}/>);
+  const search = shallow(<Search 
+    searchModalOpen={startProperties.searchModalOpen}
+    sendRequest={startProperties.sendRequest}
+  />);
 
   expect(search.find('ModalBody').length).toEqual(1);
   expect(search.find('InputGroup').length).toEqual(1);
@@ -36,7 +43,10 @@ test("Test render of modal body", testRenderModalBody);
 
 function testRenderSearchResults() {
 
-  const search = mount(<Search searchModalOpen={startProperties.searchModalOpen}/>);
+  const search = shallow(<Search 
+    searchModalOpen={startProperties.searchModalOpen}
+    sendRequest={startProperties.sendRequest}
+  />);
 
   expect(search.find('ListGroup').length).toEqual(1);
   expect(search.find('ListGroupItem').length).toEqual(1);
@@ -47,7 +57,10 @@ test("Test render of search results", testRenderSearchResults);
 
 function testSanitizeSearchInput() {
 
-  const search = shallow(<Search searchModalOpen={startProperties.searchModalOpen}/>);
+  const search = shallow(<Search 
+    searchModalOpen={startProperties.searchModalOpen}
+    sendRequest={startProperties.sendRequest}
+  />);
   const instance = search.instance();
 
   let match = "~!@#$%^&*()_+-=Test`;:'<>,./?[]{}|\"\\";
@@ -62,7 +75,10 @@ test("Testing Sanitization of Search Input", testSanitizeSearchInput);
 
 function testUpdateSearchText() {
 
-  const search = shallow(<Search searchModalOpen={startProperties.searchModalOpen}/>);
+  const search = shallow(<Search 
+    searchModalOpen={startProperties.searchModalOpen}
+    sendRequest={startProperties.sendRequest}
+  />);
 
   expect(search.state().searchInput).toEqual('');
 
@@ -87,6 +103,7 @@ function testAddSelectedPlace() {
     placesFound={atlas.state().placesFound} 
     placesSelected={atlas.state().placesSelected}
     setParentState={(obj) => atlas.instance().setParentState(obj)}
+    sendRequest={startProperties.sendRequest}
   />);
   let instance = search.instance();
 
@@ -118,6 +135,7 @@ function testHandleSearch() {
     placesFound={atlas.state().placesFound} 
     placesSelected={atlas.state().placesSelected}
     setParentState={(obj) => atlas.instance().setParentState(obj)}
+    sendRequest={(req) => atlas.instance().sendRequest(req)}
   />);
     
   expect(atlas.state().places.length).toEqual(0);
