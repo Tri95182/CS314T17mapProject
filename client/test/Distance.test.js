@@ -85,6 +85,7 @@ function testHandleDistance() {
     distanceBetween={startProperties.distanceBetween}
     setParentState={(obj) => atlas.instance().setParentState(obj)}
     createSnackBar={startProperties.createSnackBar}
+    sendRequest={(req) => atlas.instance().sendRequest(req)}
   />);
 
   expect(atlas.state().distanceBetween).toEqual(0);
