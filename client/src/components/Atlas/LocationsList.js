@@ -31,6 +31,7 @@ export default class LocationsList extends Component {
           distanceBetween={this.props.distanceBetween}
           setParentState={this.props.setParentState}
           createSnackBar={this.props.createSnackBar}
+          sendRequest={this.props.sendRequest}
         />
         {this.renderIfPropExists("Current Location", this.props.userPosition)}
         {this.renderIfPropExists("Marker Location", this.props.markerPosition)}

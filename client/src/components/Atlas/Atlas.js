@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Col, Container, Row, Button} from 'reactstrap';
+import { sendServerRequest } from "../../utils/restfulAPI";
 import _ from 'lodash';
 
 import Search from "./Search";
@@ -125,6 +126,7 @@ export default class Atlas extends Component {
         placesSelected={this.state.placesSelected}
         setParentState={this.setParentState}
         createSnackBar={this.props.createSnackBar}
+        sendRequest={this.sendRequest}
       />
     );
   }
@@ -141,6 +143,7 @@ export default class Atlas extends Component {
         setParentState={this.setParentState}
         createSnackBar={this.props.createSnackBar}
         mapRef={this.mapRef}
+        sendRequest={this.sendRequest}
       />
     );
   }
@@ -202,6 +205,20 @@ export default class Atlas extends Component {
 
       await map.flyTo(coords, zoom)
     }
+  }
+
+  async sendRequest(request) {
+    let res = null;
+
+    await sendServerRequest(request)
+    .then(response => {
+      if(response) { res = response.data; }
+      else {
+        this.props.createSnackBar("The Request To The Server Failed. Please Try Again Later.");
+      }
+    })
+
+    return res;
   }
 
 }

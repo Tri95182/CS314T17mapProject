@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {ListGroupItem} from 'reactstrap';
-import { isJsonResponseValid, sendServerRequest } from "../../utils/restfulAPI";
+import { isJsonResponseValid } from "../../utils/restfulAPI";
 
 import { LOG } from "../../utils/constants";
 import * as distanceSchema from "../../../schemas/ResponseDistance";
@@ -30,16 +30,17 @@ export default class Distance extends Component {
     if(this.props.placesDistance.length == 2){
 
       let distanceRequest = {requestType: "distance", requestVersion: 2,
-        place1: {latitude: this.props.placesDistance[0].lat.toString(), longitude: this.props.placesDistance[0].lng.toString()},
-        place2: {latitude: this.props.placesDistance[1].lat.toString(), longitude: this.props.placesDistance[1].lng.toString()},
+        place1: this.getRequestPlace(this.props.placesDistance[0]),
+        place2: this.getRequestPlace(this.props.placesDistance[1]),
         earthRadius: 6371.0}
 
-      sendServerRequest(distanceRequest)
-      .then(distance => {
-        if (distance) { this.processDistanceResponse(distance.data); }
-        else { this.props.createSnackBar("The Request To The Server Failed. Please Try Again Later."); }
-      });
+      this.props.sendRequest(distanceRequest)
+      .then(response => this.processDistanceResponse(response));
     }
+  }
+
+  getRequestPlace(place) {
+    return {latitude: place.lat.toString(), longitude: place.lng.toString()};
   }
 
   processDistanceResponse(distanceResponse) {
