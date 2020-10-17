@@ -29,8 +29,8 @@ public class RequestFind extends RequestHeader {
     // The following constructor is for testing purposes
 
     public RequestFind(boolean useDatabase) {
-        this();
-        this.useDatabase = useDatabase;
+      this();
+      this.useDatabase = useDatabase;
     }
 
     @Override
@@ -38,31 +38,39 @@ public class RequestFind extends RequestHeader {
       String cleanMatch = sanitizeMatch(this.match);
 
       if(this.useDatabase) {
-          this.places = Database.queryFind(cleanMatch);
+        this.places = Database.queryFind(cleanMatch);
       }
 
       if(this.places != null) {
-          if(cleanMatch == "" && this.useDatabase) {
-            getRandomPlace();
-          } else {
-            this.found = this.places.size();
-            if(this.limit != null && this.limit != 0 && this.found > this.limit) {
-                this.places.subList(this.limit, this.found).clear();
-            } else if((this.limit == null || this.limit == 0) && this.places.size() > this.INTERNAL_LIMIT) {
-                this.places.subList(this.INTERNAL_LIMIT, this.found).clear();
-            }
+        if(cleanMatch == "" && this.useDatabase) {
+          getRandomPlace();
+        } else {
+          this.found = this.places.size();
+          if(varExists(this.limit) && this.found > this.limit) {
+            this.places.subList(this.limit, this.found).clear();
+          } else if(!varExists(this.limit) && this.found > this.INTERNAL_LIMIT) {
+            this.places.subList(this.INTERNAL_LIMIT, this.found).clear();
           }
+        }
       }
 
       log.trace("buildResponse -> {}", this);
     }
 
+    private Boolean varExists(var) {
+      if(var != null && var != 0) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
     public String sanitizeMatch(String match) {
-        if(match != null && match.length() != 0) {
-            return match.replaceAll("[^A-Za-z0-9]", "_");
-        } else {
-            return "";
-        }
+      if(match != null && match.length() != 0) {
+        return match.replaceAll("[^A-Za-z0-9]", "_");
+      } else {
+        return "";
+      }
     }
 
     public void getRandomPlace() {
@@ -81,7 +89,7 @@ public class RequestFind extends RequestHeader {
     // The functions below are for testing purposes
 
     public List<Map<String, String>> getPlaces() {
-        return places;
+      return places;
     }
 
     public void setPlaces(List<Map<String, String>> places) {
@@ -89,7 +97,7 @@ public class RequestFind extends RequestHeader {
     }
 
     public Integer getFound() {
-        return found;
+      return found;
     }
   
 }
