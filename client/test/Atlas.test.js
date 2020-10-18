@@ -44,3 +44,22 @@ function simulateOnClickEvent(reactWrapper, event) {
 }
 
 test("Testing Atlas's Initial State", testMarkerIsRenderedOnClick);
+
+function testGeolocation() {
+  const atlas = shallow(<Atlas createSnackBar={startProperties.createSnackBar}/>);
+
+  const mockGeolocation = {
+    getCurrentPosition: jest.fn()
+    .mockImplementationOnce((success) => success({
+      coords: {latitude:10, longitude:20}
+    }))
+  };
+  global.navigator.geolocation = mockGeolocation;
+
+
+  atlas.instance().getUserPosition();  
+
+  expect(atlas.state().userPosition).toEqual({lat:10, lng:20});
+}
+
+test("Test geolocation sets user state", testGeolocation);
