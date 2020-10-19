@@ -28,10 +28,9 @@ public class TestRequestTrip {
     List<Map<String,String>> places = Arrays.asList(
             genPlace("Alice","0","0","","",""),
             genPlace("Bob","0","100","","",""));
-    trip = new RequestTrip("title","1",places);
-    trip.buildResponse();
+    this.trip = new RequestTrip("title","1",places);
+    this.trip.buildResponse();
     List<Long> ans= Arrays.asList((long)2,(long)2);
     assertEquals(ans, trip.getDistances());
   }
-
 }

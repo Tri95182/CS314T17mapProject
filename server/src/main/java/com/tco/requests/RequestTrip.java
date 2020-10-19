@@ -1,12 +1,10 @@
 package com.tco.requests;
 
+import com.tco.misc.DistanceCalculator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.List;
+import java.util.*;
 
 public class RequestTrip extends RequestHeader {
   private Map<String, String> options;
@@ -17,13 +15,30 @@ public class RequestTrip extends RequestHeader {
 
   @Override
   public void buildResponse() {
-    GenerateDistancesList();
-
+    this.distances = null;
+    if(!this.places.isEmpty()) {
+      GenerateDistancesList();
+    }
     log.trace("buildResponse -> {}", this);
   }
 
   private void GenerateDistancesList() {
-    this.distances = Arrays.asList((long)2,(long)2);
+    DistanceCalculator distanceCalc = new DistanceCalculator();
+    this.distances = new ArrayList<>();
+
+    double earthRadius = Double.parseDouble(options.get("earthRadius"));
+    long distance;
+
+    if(this.places.size() > 1) {
+      // distance between [i] and [i+1]
+      for (int i = 0; i < this.places.size() - 1; i++) {
+        distance = distanceCalc.calculate(earthRadius, this.places.get(i), this.places.get(i + 1));
+        distances.add(distance);
+      }
+      // distance between first and last
+      distance = distanceCalc.calculate(earthRadius, this.places.get(0), this.places.get(this.places.size() - 1));
+      this.distances.add(distance);
+    }
   }
 
   //for testing purposes
