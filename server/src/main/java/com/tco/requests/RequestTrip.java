@@ -33,7 +33,6 @@ public class RequestTrip extends RequestHeader {
     this.requestVersion = RequestHeader.CURRENT_SUPPORTED_VERSION;
   }
 
-
   public RequestTrip(String title, String radius, List<Map<String, String>> places) {
     this();
     distances = null;
