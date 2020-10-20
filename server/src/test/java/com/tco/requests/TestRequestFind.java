@@ -46,10 +46,10 @@ public class TestRequestFind {
     }
 
     @Test
-    @DisplayName("Version number is equal to 2")
+    @DisplayName("Version number is equal to 3")
     public void testVersion() {
       int version = find.getRequestVersion();
-      assertEquals(2, version);
+      assertEquals(3, version);
     }
 
     @Test
