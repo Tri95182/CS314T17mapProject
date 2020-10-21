@@ -52,7 +52,9 @@ export default class Trip extends Component {
     const header = title == this.state.tripTitle;
     return (
         <Navbar className="trip-item" dark={header} light={!header} color={header ? "primary" : "white"}>
-          <NavbarBrand>{title}{header ? <div>Distances:{this.props.tripDistances.toString()}</div> : ""}</NavbarBrand>
+          <NavbarBrand>{title}
+            {header ? <div>Distances:{this.props.tripDistances ? this.props.tripDistances.toString() : ""}</div> : ""}
+          </NavbarBrand>
           <NavbarToggler onClick={() => toggle()}>
             {trigger ? <MenuOpenIcon/> : <MenuIcon/>}
           </NavbarToggler>
