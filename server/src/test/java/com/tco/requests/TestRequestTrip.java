@@ -11,26 +11,36 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class TestRequestTrip {
   private RequestTrip trip;
 
-  public Map<String, String> genPlace(String name, String lat, String lng, String country, String reg, String munic) {
+  public Map<String, String> genPlace(String name, String lat, String lng) {
     Map<String, String> place = new HashMap<>();
     place.put("name", name);
     place.put("latitude", lat);
-    place.put("country", country);
-    place.put("region", reg);
-    place.put("municipality", munic);
     place.put("longitude", lng);
     return place;
   }
 
+  @BeforeEach
+  public void createConfigurationForTestCases() {
+    trip = new RequestTrip("","", new ArrayList<>());
+    trip.buildResponse();
+  }
+
   @Test
-  @DisplayName("Request type is \"Trip\"")
+  @DisplayName("test simple trip request")
   public void testDistances() {
     List<Map<String,String>> places = Arrays.asList(
-            genPlace("Alice","0","0","","",""),
-            genPlace("Bob","0","100","","",""));
+            genPlace("Alice","0","0"),
+            genPlace("Bob","0","100"));
     this.trip = new RequestTrip("title","1",places);
     this.trip.buildResponse();
     List<Long> ans= Arrays.asList((long)2,(long)2);
     assertEquals(ans, trip.getDistances());
+  }
+
+  @Test
+  @DisplayName("Request type is \"trip\"")
+  public void testType() {
+    String type = trip.getRequestType();
+    assertEquals("trip", type);
   }
 }
