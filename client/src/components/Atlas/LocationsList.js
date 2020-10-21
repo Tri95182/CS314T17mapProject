@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Row, Col, Button, ButtonGroup, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText} from 'reactstrap';
+import {Row, Col, Button, ButtonGroup, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText, Modal, ModalHeader, ModalFooter, ModalBody} from 'reactstrap';
 
 import Distance from "./Distance";
 
@@ -15,11 +15,19 @@ export default class LocationsList extends Component {
   }
 
   render() {
-      return (
-        <div>
-            {this.renderLocationsList()}
-        </div>
-      );
+    const toggle = () => {
+      let isOpen = !this.props.listModalOpen;
+      this.props.setParentState({listModalOpen: isOpen});
+    };
+    return (
+      <Modal isOpen={this.props.listModalOpen} toggle={toggle} scrollable={true}>
+        <ModalHeader toggle={toggle}>Locations</ModalHeader>
+        <ModalBody>{this.renderLocationsList()}</ModalBody>
+        <ModalFooter>
+          <Button color="primary" onClick={toggle}>Close</Button>
+        </ModalFooter>
+      </Modal>
+    );
   }
 
   renderLocationsList() {
@@ -76,7 +84,10 @@ export default class LocationsList extends Component {
             <AddIcon fontSize="small"/>
           } 
         </Button>
-        <Button onClick={() => this.props.flyToLocation({lat, lng})}>
+        <Button onClick={async () => {
+          await this.props.setParentState({listModalOpen:false})
+          await this.props.flyToLocation({lat, lng})
+        }}>
           <LocationIcon fontSize="small"/>
         </Button>
         <Button onClick={() => this.handleLocationRemove(name)} disabled={name=="Current Location"}>
@@ -107,13 +118,21 @@ export default class LocationsList extends Component {
 
   handleLocationSelect(name, lat, lng) {
     let newSelect = {name, lat, lng};
-    if(this.props.placesDistance.filter(val => val.name == name).length == 0) {
-      
-      if(this.props.placesDistance.length >= 2) {
-        let temp = this.props.placesDistance.splice(0,1);
-        this.props.setParentState({placesDistance: temp});
-      }
 
+    const placeSelected = this.props.placesSelected.filter(place =>
+      place.name == name && place.latitude == lat && place.longitude == lng
+    );
+    if(placeSelected.length != 0) {
+      const placeKeys = Object.keys(placeSelected[0]);
+      placeKeys.map((key) => {
+        if(key != "name" && key != "latitude" && key != "longitude") {
+          newSelect[key] = placeSelected[0][key];
+        }
+        return key;
+      });
+    }
+
+    if(this.props.placesDistance.filter(val => val.name == name).length == 0) {
       this.props.setParentState({placesDistance: [...this.props.placesDistance, newSelect]});
     } else {
       let temp = this.props.placesDistance.filter(val => val.name != name);

@@ -4,6 +4,7 @@ import { sendServerRequest } from "../../utils/restfulAPI";
 import _ from 'lodash';
 
 import Search from "./Search";
+import Trip from "./Trip";
 import LocationsList from "./LocationsList";
 
 import {Map, Marker, Popup, TileLayer} from 'react-leaflet';
@@ -14,6 +15,7 @@ import userIcon from '../../static/images/user-marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import LocationIcon from '@material-ui/icons/GpsFixed';
 import SearchIcon from '@material-ui/icons/Search';
+import ViewListIcon from '@material-ui/icons/ViewList';
 
 import 'leaflet/dist/leaflet.css';
 
@@ -40,12 +42,13 @@ export default class Atlas extends Component {
       markerPosition: null,
       userPosition: null,
       searchModalOpen: false,
-      searchInput: '',
+      listModalOpen: false,
       places: [],
       placesFound: 0,
       placesSelected: [],
       placesDistance: [],
-      distanceBetween: 0
+      distanceBetween: 0,
+      tripDistances: []
     };
   }
 
@@ -57,6 +60,7 @@ export default class Atlas extends Component {
               <Col sm={12} md={{size: 10, offset: 1}}>
                 {this.renderLeafletMap()}
                 {this.renderSearchComponent()}
+                {this.renderTrip()}
                 {this.renderLocationsListComponent()}
               </Col>
             </Row>
@@ -80,8 +84,9 @@ export default class Atlas extends Component {
             onClick={this.setMarker}
         >
           <TileLayer url={MAP_LAYER_URL} attribution={MAP_LAYER_ATTRIBUTION}/>
-          {this.renderSearchButton()}
-          {this.renderReturnLocationButton()}
+          {this.renderControlButton(() => this.setState({searchModalOpen: true}), SearchIcon)}
+          {this.renderControlButton(() => this.flyToLocation(this.state.userPosition), LocationIcon, !this.state.userPosition)}
+          {this.renderControlButton(() => this.setState({listModalOpen: true}), ViewListIcon)}
           {this.getUserPosition()}
           {this.state.placesSelected.map((place) => this.createMarker({lat:Number(place.latitude), lng:Number(place.longitude)}, MARKER_ICON, place.name))}
           {this.getMarker()}
@@ -89,32 +94,14 @@ export default class Atlas extends Component {
     );
   }
 
-  renderReturnLocationButton() {
+  renderControlButton(onClick, Icon, disabled=false) {
     return (
-      <Control position={'topleft'}>
-        <Button 
-          className={'map-control'}
-          size="sm"
-          onClick={() => this.flyToLocation(this.state.userPosition)}
-          disabled={!this.state.userPosition}>
-            <LocationIcon fontSize="small"/>
+      <Control position="topleft">
+        <Button className="map-control" size="sm" onClick={onClick} disabled={disabled}>
+            <Icon fontSize="small"/>
         </Button>
-      </Control>
+      </Control>      
     );
-  }
-
-  renderSearchButton() {
-    return (
-      <Control position={'topleft'}>
-        <Button 
-          className={'map-control'}
-          size="sm"
-          onClick={() => this.setState({searchModalOpen: true})}
-        >
-          <SearchIcon fontSize="small"/>
-        </Button>
-      </Control>
-    )
   }
 
   renderSearchComponent() {
@@ -134,6 +121,7 @@ export default class Atlas extends Component {
   renderLocationsListComponent() {
     return (
       <LocationsList
+        listModalOpen={this.state.listModalOpen}
         userPosition={this.state.userPosition}
         markerPosition={this.state.markerPosition}
         placesSelected={this.state.placesSelected}
@@ -144,6 +132,18 @@ export default class Atlas extends Component {
         createSnackBar={this.props.createSnackBar}
         mapRef={this.mapRef}
         sendRequest={this.sendRequest}
+      />
+    );
+  }
+
+  renderTrip() {
+    return (
+      <Trip
+        placesDistance={this.state.placesDistance}
+        tripDistances={this.state.tripDistances}
+        setParentState={this.setParentState}
+        sendRequest={this.sendRequest}
+        createSnackBar={this.props.createSnackBar}
       />
     );
   }

@@ -16,11 +16,15 @@ const startProperties = {
   placesDistance: [],
   userPosition: {lat: 40, lng: -100},
   markerPosition: {lat: 0, lng: 0},
+  listModalOpen: true
 }
 
 function testRenderLocationsList() {
 
-  const loclist = mount(<LocationsList placesSelected={startProperties.placesSelectedEmpty}/>);
+  const loclist = mount(<LocationsList 
+    placesSelected={startProperties.placesSelectedEmpty} 
+    listModalOpen={startProperties.listModalOpen}
+  />);
 
   expect(loclist.find("ListGroup").length).toEqual(1);
   expect(loclist.find("ListGroupItem").length).toEqual(2);
@@ -36,6 +40,7 @@ function testRenderLocationItems() {
     markerPosition={startProperties.markerPosition}
     placesSelected={startProperties.placesSelected}
     placesDistance={startProperties.placesDistance}
+    listModalOpen={startProperties.listModalOpen}
   />);
 
   expect(loclist.find("ListGroup").length).toEqual(1);
@@ -50,11 +55,12 @@ function testRenderLocationItemBtns() {
   const loclist = mount(<LocationsList
     placesSelected={startProperties.placesSelected}
     placesDistance={startProperties.placesDistance}
+    listModalOpen={startProperties.listModalOpen}
   />);
 
   expect(loclist.find("ListGroup").length).toEqual(1);
   expect(loclist.find("ButtonGroup").length).toEqual(1);
-  expect(loclist.find("Button").length).toEqual(3);
+  expect(loclist.find("Button").length).toEqual(4);
 }
 
 test("Testing the render of location item buttons", testRenderLocationItemBtns);
@@ -69,6 +75,7 @@ function testHandleLocationRemove() {
     placesSelected={startProperties.placesSelectedEmpty}
     placesDistance={startProperties.placesDistance}
     setParentState={(obj) => atlas.instance().setParentState(obj)}
+    listModalOpen={this.listModalOpen}
   />);
 
   let coord = {lat: 0, lng: 0};
@@ -96,6 +103,7 @@ function testHandleLocationSelect() {
     placesSelected={startProperties.placesSelectedMultiple}
     placesDistance={atlas.state().placesDistance}
     setParentState={(obj) => atlas.instance().setParentState(obj)}
+    listModalOpen={startProperties.listModalOpen}
   />);
 
   expect(atlas.state().placesDistance.length).toEqual(0);
@@ -104,8 +112,8 @@ function testHandleLocationSelect() {
   let places = startProperties.placesSelectedMultiple;
   callHandleLocationSelect(atlas, loclist, places[0], 1);
   callHandleLocationSelect(atlas, loclist, places[1], 2);
-  callHandleLocationSelect(atlas, loclist, places[2], 2);
-  callHandleLocationSelect(atlas, loclist, places[1], 1);
+  callHandleLocationSelect(atlas, loclist, places[2], 3);
+  callHandleLocationSelect(atlas, loclist, places[1], 2);
 }
 
 function callHandleLocationSelect(wrapperParent, wrapperChild, place, expected) {
