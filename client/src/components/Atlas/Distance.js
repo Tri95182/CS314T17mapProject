@@ -9,9 +9,7 @@ export default class Distance extends Component {
 
   constructor(props) {
     super(props);
-
     this.handleDistance = this.handleDistance.bind(this);
-
   }
 
   render() {
@@ -26,10 +24,9 @@ export default class Distance extends Component {
   }
 
   handleDistance(){
-
     if(this.props.placesDistance.length == 2){
 
-      let distanceRequest = {requestType: "distance", requestVersion: 2,
+      let distanceRequest = {requestType: "distance", requestVersion: 3,
         place1: this.getRequestPlace(this.props.placesDistance[0]),
         place2: this.getRequestPlace(this.props.placesDistance[1]),
         earthRadius: 6371.0}

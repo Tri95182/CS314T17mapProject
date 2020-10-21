@@ -194,7 +194,7 @@ export default class Atlas extends Component {
 
   async flyToLocation(coords, zoom=15) {
     if(this.mapRef.current) {
-      var map = this.mapRef.current.leafletElement;
+      let map = this.mapRef.current.leafletElement;
       
       await map.eachLayer((layer) => {
         let popup = layer.getPopup();
@@ -220,5 +220,4 @@ export default class Atlas extends Component {
 
     return res;
   }
-
 }
