@@ -220,9 +220,11 @@ export default class Atlas extends Component {
     return res;
   }
 
-  renderPolyline(){
-    render(
-
+  renderPolyline(fromLat,fromLng,toLat,toLng) {
+    Return(
+        <Polyline
+            postitions={[[fromLat, fromLng], [toLat, toLng]]}
+        />
     );
   }
 }
