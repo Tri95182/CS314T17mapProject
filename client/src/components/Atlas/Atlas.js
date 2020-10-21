@@ -195,7 +195,6 @@ export default class Atlas extends Component {
   async flyToLocation(coords, zoom=15) {
     if(this.mapRef.current) {
       let map = this.mapRef.current.leafletElement;
-      
       await map.eachLayer((layer) => {
         let popup = layer.getPopup();
         if(popup && _.isEqual(JSON.stringify(popup.getLatLng()), JSON.stringify(coords))) {
