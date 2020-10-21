@@ -8,7 +8,7 @@ import LocationsList from "./LocationsList";
 
 import {Map, Marker, Popup, TileLayer} from 'react-leaflet';
 import Control from 'react-leaflet-control';
-
+import L from "leaflet";
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import userIcon from '../../static/images/user-marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
@@ -218,5 +218,11 @@ export default class Atlas extends Component {
     })
 
     return res;
+  }
+
+  renderPolyline(){
+    render(
+
+    );
   }
 }
