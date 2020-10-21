@@ -38,6 +38,14 @@ public class TestRequestTrip {
   }
 
   @Test
+  @DisplayName("test empty trip request")
+  public void testEmptyDistances() {
+    this.trip = new RequestTrip("title","1",new ArrayList<>());
+    this.trip.buildResponse();
+    assertEquals(0, trip.getDistances().size());
+  }
+
+  @Test
   @DisplayName("Request type is \"trip\"")
   public void testType() {
     String type = trip.getRequestType();

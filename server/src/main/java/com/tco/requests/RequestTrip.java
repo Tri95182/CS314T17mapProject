@@ -15,7 +15,7 @@ public class RequestTrip extends RequestHeader {
 
   @Override
   public void buildResponse() {
-    this.distances = null;
+    this.distances = new ArrayList<>();
     if(!this.places.isEmpty()) {
       GenerateDistancesList();
     }
@@ -24,7 +24,6 @@ public class RequestTrip extends RequestHeader {
 
   private void GenerateDistancesList() {
     DistanceCalculator distanceCalc = new DistanceCalculator();
-    this.distances = new ArrayList<>();
 
     double earthRadius = Double.parseDouble(options.get("earthRadius"));
     long distance;
