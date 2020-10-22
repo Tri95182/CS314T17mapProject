@@ -19,5 +19,5 @@
 
 | file:line | problem | hi/med/low | who found | github#  |
 | --- | --- | :---: | :---: | --- |
-| trip.js:# | Data: could swap color choice to a const | low | Melvin42 | #234 |
+| trip.js:#54 | Data: could swap color choice to a const | low | Melvin42 | #234 |
 | trip.js:#134 | Readability:could add comment to clarify what it does | low | Melvin42 | #236 |
