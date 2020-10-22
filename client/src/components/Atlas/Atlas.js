@@ -7,9 +7,8 @@ import Search from "./Search";
 import Trip from "./Trip";
 import LocationsList from "./LocationsList";
 
-import {Map, Marker, Popup, TileLayer} from 'react-leaflet';
+import {Map, Marker, Popup, TileLayer, Polyline} from 'react-leaflet';
 import Control from 'react-leaflet-control';
-import L from "leaflet";
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import userIcon from '../../static/images/user-marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
@@ -90,6 +89,7 @@ export default class Atlas extends Component {
           {this.getUserPosition()}
           {this.state.placesSelected.map((place) => this.createMarker({lat:Number(place.latitude), lng:Number(place.longitude)}, MARKER_ICON, place.name))}
           {this.getMarker()}
+          {this.renderTripPolylines()}
         </Map>
     );
   }
@@ -153,7 +153,22 @@ export default class Atlas extends Component {
   }
 
   setMarker(mapClickInfo) {
-    this.setState({markerPosition: mapClickInfo.latlng});
+    const mapLatLng = {name:"Marker Location", lat:mapClickInfo.latlng.lat, lng:mapClickInfo.latlng.lng};
+    if(this.state.markerPosition) {
+      let tempMarker = this.state.markerPosition;
+      this.changeInArray(this.state.placesSelected, tempMarker, mapLatLng, "placesSelected");
+      this.changeInArray(this.state.placesDistance, tempMarker, mapLatLng, "placesDistance");
+    }
+    this.setState({markerPosition: mapLatLng});
+  }
+
+  changeInArray(array, item, newItem, name) {
+    const index = array.findIndex((entry) => _.isEqual(entry, item));
+    if(index != -1) {
+      let tempArray = array;
+      array[index] = newItem;
+      this.setState({[name]: tempArray});
+    }
   }
 
   getUserPosition() {
@@ -220,11 +235,25 @@ export default class Atlas extends Component {
     return res;
   }
 
-  renderPolyline(fromLat,fromLng,toLat,toLng) {
-    Return(
-        <Polyline
-            postitions={[[fromLat, fromLng], [toLat, toLng]]}
-        />
+  renderTripPolylines() {
+    return (
+      <div>
+        {this.state.placesDistance.map((place, index) => {
+          let prevLatLng;
+           if(index == this.state.placesDistance.length-1) {
+            prevLatLng = this.state.placesDistance[0];
+          } else {
+            prevLatLng = this.state.placesDistance[index+1];
+          }
+          return this.renderPolyline([prevLatLng.lat, prevLatLng.lng], [place.lat, place.lng]);
+        })}
+      </div>
+    );
+  }
+
+  renderPolyline(from, to) {
+    return(
+        <Polyline positions={[from, to]}/>
     );
   }
 }
