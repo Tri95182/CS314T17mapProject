@@ -19,3 +19,4 @@
 
 | file:line | problem | hi/med/low | who found | github#  |
 | --- | --- | :---: | :---: | --- |
+| Trip.js:113 | renderTripItem is big, we could break it down into smaller functions | low | Tri | |
