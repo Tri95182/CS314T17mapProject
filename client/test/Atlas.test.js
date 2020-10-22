@@ -63,3 +63,8 @@ function testGeolocation() {
 }
 
 test("Test geolocation sets user state", testGeolocation);
+
+function testPolyline(){
+  const atlas = shallow(<Atlas createSnackBar={startProperties.createSnackBar}/>);
+
+}

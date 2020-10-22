@@ -9,7 +9,7 @@ import LocationsList from "./LocationsList";
 
 import {Map, Marker, Popup, TileLayer} from 'react-leaflet';
 import Control from 'react-leaflet-control';
-
+import L from "leaflet";
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import userIcon from '../../static/images/user-marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
@@ -195,7 +195,6 @@ export default class Atlas extends Component {
   async flyToLocation(coords, zoom=15) {
     if(this.mapRef.current) {
       let map = this.mapRef.current.leafletElement;
-      
       await map.eachLayer((layer) => {
         let popup = layer.getPopup();
         if(popup && _.isEqual(JSON.stringify(popup.getLatLng()), JSON.stringify(coords))) {
@@ -219,5 +218,13 @@ export default class Atlas extends Component {
     })
 
     return res;
+  }
+
+  renderPolyline(fromLat,fromLng,toLat,toLng) {
+    Return(
+        <Polyline
+            postitions={[[fromLat, fromLng], [toLat, toLng]]}
+        />
+    );
   }
 }
