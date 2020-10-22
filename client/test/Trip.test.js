@@ -34,7 +34,6 @@ test("Test initial trip render", testTripRender);
 
 
 
-
 function testTripToggle() {
 
   const trip = shallow(<Trip placesDistance={startproperties.placesDistanceEmpty}/>);
@@ -261,3 +260,43 @@ function testResetItemIndex() {
 }
 
 test("Test reset of item index", testResetItemIndex);
+
+
+function testTitleInputRender() {
+
+  const trip = shallow(<Trip placesDistance={startproperties.placesDistanceEmpty}/>);
+  trip.setState({editingTripTitle: true});
+
+  expect(trip.find("InputGroup").length).toEqual(1);
+  expect(trip.find("Input").length).toEqual(1);
+  expect(trip.find("InputGroupAddon").length).toEqual(1);
+  expect(trip.find("Button").length).toEqual(2);
+}
+
+test("Test render of trip title change input", testTitleInputRender);
+  
+
+function testTitleInputChange() {
+
+  const trip = shallow(<Trip placesDistance={startproperties.placesDistanceEmpty}/>);
+
+  expect(trip.state().tripTitle).toEqual("Trip");
+
+  simulateOnClickEvent(trip, 'div');
+  simulateOnChangeEvent(trip, {target:{value:"Test Trip Name"}});
+  simulateOnClickEvent(trip, 'Button');
+
+  expect(trip.state().tripTitle).toEqual("Test Trip Name");
+}
+
+function simulateOnClickEvent(reactWrapper, component) {
+  reactWrapper.find(component).at(0).simulate('click');
+  reactWrapper.update();
+}
+
+function simulateOnChangeEvent(reactWrapper, event) {
+  reactWrapper.find('Input').at(0).simulate('change', event);
+  reactWrapper.update();
+}
+
+test("Test title is changed", testTitleInputChange);
