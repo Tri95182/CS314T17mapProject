@@ -140,4 +140,5 @@ export default class LocationsList extends Component {
     }
   }
 
+
 }
