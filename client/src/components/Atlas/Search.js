@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Button, InputGroup, Input, InputGroupAddon, InputGroupText, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
 import { isJsonResponseValid } from "../../utils/restfulAPI";
+import _ from 'lodash';
 
 import { LOG } from "../../utils/constants";
 import * as findSchema from "../../../schemas/ResponseFind";
@@ -72,10 +73,15 @@ export default class Search extends Component {
 
   renderSearchResults() {
     return (
-      <ListGroup key={"searchres"}>
-        <ListGroupItem key={"head"} active>Results: {this.props.placesFound}</ListGroupItem>
+      <ListGroup key="searchres">
+        <ListGroupItem key="head" active>Results: {this.props.placesFound}</ListGroupItem>
         {this.props.places && this.props.places.map((place) => 
-          <ListGroupItem key={place.name+place.latitude+place.longitude} tag="button" onClick={() => this.addSelectedPlace(place)}>
+          <ListGroupItem 
+            key={place.name+place.latitude+place.longitude} 
+            tag="button" 
+            onClick={() => this.addSelectedPlace(place)}
+            color={this.props.placesSelected.filter(val => _.isEqual(val, place)).length != 0 ? "primary":"white"}
+          >
             <ListGroupItemHeading>{place.name}</ListGroupItemHeading>
             <ListGroupItemText>Lat: {Number(place.latitude).toFixed(2)} Lng: {Number(place.longitude).toFixed(2)}</ListGroupItemText>
           </ListGroupItem>
@@ -87,6 +93,11 @@ export default class Search extends Component {
   addSelectedPlace(place) {
     if(!this.props.placesSelected.includes(place)) {
       this.props.setParentState({placesSelected: [...this.props.placesSelected, place]});
+    } else {
+      let index = this.props.placesSelected.findIndex((item) => _.isEqual(item, place))
+      let newSelected = this.props.placesSelected;
+      newSelected.splice(index, 1);
+      this.props.setParentState({placesSelected: newSelected});
     }
   }
 

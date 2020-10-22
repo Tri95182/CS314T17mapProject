@@ -4,15 +4,19 @@
     for this class, and to spend that time on styling of your own personal webpage or side project.
  */
 
- .map-control:hover,
- .map-control:active,
- .map-control:visited,
- .map-control:focus {
-     background-color: #ededed !important;
+.map-control:hover,
+.map-control:active,
+.map-control:visited,
+.map-control:focus {
+  background-color: #ededed !important;
  }
 
- .map-control{
-    background-color: white;
-    border: none !important;
-    box-shadow: 0px 1px 3px 2px rgba(0,0,0,0.3) !important;
+.map-control{
+  background-color: white;
+  border: none !important;
+  box-shadow: 0px 1px 3px 2px rgba(0,0,0,0.3) !important;
+}
+
+.trip-item{
+  border: 1px solid #000000;
 }
