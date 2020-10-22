@@ -3,6 +3,8 @@ import {Button, Collapse, Row, Col, ListGroup, Nav, Navbar, NavbarBrand, NavbarT
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { isJsonResponseValid } from "../../utils/restfulAPI";
 import _ from 'lodash';
+import {downloadFile} from "./DownloadFile";
+
 
 import { LOG } from "../../utils/constants";
 import * as tripSchema from "../../../schemas/ResponseTrip";
@@ -200,23 +202,27 @@ export default class Trip extends Component {
 
   handleCalculateTrip() {
     if(this.props.placesDistance.length > 0) {
-      let placesLatLngString = _.cloneDeep(this.props.placesDistance);
-      placesLatLngString.map((place) => {
-        place.latitude = place.lat.toString();
-        delete place.lat;
-        place.longitude = place.lng.toString();
-        delete place.lng;
-
-        return place;
-      });
-      let tripRequest = {requestType: "trip", requestVersion: 3,
-        places: placesLatLngString,
-        options: {title: this.state.tripTitle, earthRadius: this.state.earthRadius.toString()}
-      };
+      let tripRequest = this.createTripJson();
 
       this.props.sendRequest(tripRequest)
       .then(response => this.processTripResponse(response));
     }
+  }
+
+  createTripJson(){
+    let placesLatLngString = _.cloneDeep(this.props.placesDistance);
+    placesLatLngString.map((place) => {
+      place.latitude = place.lat.toString();
+      delete place.lat;
+      place.longitude = place.lng.toString();
+      delete place.lng;
+
+      return place;
+    });
+    return {requestType: "trip", requestVersion: 3,
+      places: placesLatLngString,
+      options: {title: this.state.tripTitle, earthRadius: this.state.earthRadius.toString()}
+    };
   }
 
   processTripResponse(tripResponse) {
@@ -231,7 +237,7 @@ export default class Trip extends Component {
   }
 
   handleSaveTrip() {
-    // placeholder for saving trip
+    downloadFile(JSON.stringify(this.createTripJson()),'file.json','application/json');
   }
 
   handleLoadTrip() {
