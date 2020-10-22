@@ -78,7 +78,7 @@ function testHandleLocationRemove() {
     listModalOpen={this.listModalOpen}
   />);
 
-  let coord = {lat: 0, lng: 0};
+  let coord = {name: "Marker Location", lat: 0, lng: 0};
   simulateOnClickEvent(atlas, {latlng: coord});
   expect(atlas.state().markerPosition).toEqual(coord);
   
