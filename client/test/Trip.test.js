@@ -261,3 +261,11 @@ function testResetItemIndex() {
 }
 
 test("Test reset of item index", testResetItemIndex);
+
+function testTotalDistance() {
+  const trip = shallow(<Trip placesDistance={startproperties.placesDistance}/>);
+  trip.setState({itemMenuOpen: 0});
+
+  expect(trip.state().this.totalTripDistance(this.props.tripDistances)).toEqual(0);
+
+}
