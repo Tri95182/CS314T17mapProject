@@ -208,7 +208,7 @@ function mockTripResponseObj() {
 
 function testHandleSaveTrip() {
   // placeholder for save trip test
-
+  global.URL.createObjectURL = jest.fn();
   const trip = shallow(<Trip placesDistance={startproperties.placesDistance}/>);
 
   trip.instance().handleSaveTrip();
