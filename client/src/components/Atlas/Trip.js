@@ -15,6 +15,7 @@ import GetAppIcon from '@material-ui/icons/GetApp';
 import DeleteIcon from '@material-ui/icons/Delete';
 import InfoIcon from '@material-ui/icons/Info';
 import DoneIcon from '@material-ui/icons/Done';
+import EditIcon from '@material-ui/icons/Edit';
 
 export default class Trip extends Component {
 
@@ -56,7 +57,7 @@ export default class Trip extends Component {
         <Navbar className="trip-item" dark={header} light={!header} color={header ? "primary" : "white"}>
           <NavbarBrand >{this.state.editingTripTitle && header ? 
             this.renderTripTitleInput() : 
-            <div onClick={() => header ? this.setState({editingTripTitle:true}) : null}>{title}</div>}
+            <div onClick={() => header ? this.setState({editingTripTitle:true}) : null}>{title}&nbsp;{header ? <EditIcon fontSize="small"/> : ""}</div>}
             {header ? <div>Distances:{this.props.tripDistances ? this.props.tripDistances.toString() : ""}</div> : ""}
           </NavbarBrand>
           <NavbarToggler onClick={() => toggle()}>
