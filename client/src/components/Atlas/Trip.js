@@ -211,7 +211,7 @@ export default class Trip extends Component {
       });
       let tripRequest = {requestType: "trip", requestVersion: 3,
         places: placesLatLngString,
-        options: {title: this.state.tripTitle, earthRadius: this.state.earthRadius}
+        options: {title: this.state.tripTitle, earthRadius: this.state.earthRadius.toString()}
       };
 
       this.props.sendRequest(tripRequest)
