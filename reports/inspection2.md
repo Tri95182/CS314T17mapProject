@@ -12,10 +12,11 @@
 | ---- | ---- |
 | Tri Nguyen |  |
 | Jack Melvin |  |
-| Collin Wernsman |  |
+| Collin Wernsman | 30 min |
 | Austin Wulfing |  |
 
 ### Problems found
 
 | file:line | problem | hi/med/low | who found | github#  |
 | --- | --- | :---: | :---: | --- |
+| trip.js: #76-#78 | Control: Disable buttons when nothing in trip | low | cwernsma | #237 |
