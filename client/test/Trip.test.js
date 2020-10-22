@@ -261,3 +261,4 @@ function testResetItemIndex() {
 }
 
 test("Test reset of item index", testResetItemIndex);
+

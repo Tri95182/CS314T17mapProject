@@ -55,7 +55,8 @@ export default class Trip extends Component {
     return (
         <Navbar className="trip-item" dark={header} light={!header} color={header ? "primary" : "white"}>
           <NavbarBrand>{title}
-            {header ? <div>Distances:{this.props.tripDistances ? this.props.tripDistances.toString() : ""}</div> : ""}
+            {header ? <div>Total Distance:{this.props.tripDistances ? this.totalTripDistance(this.props.tripDistances) : ""}</div> : ""}
+            {header ? <div>Distances:{this.props.tripDistances ? this.props.tripDistances.toString() : ""}</div> : "" }
           </NavbarBrand>
           <NavbarToggler onClick={() => toggle()}>
             {trigger ? <MenuOpenIcon/> : <MenuIcon/>}
@@ -251,5 +252,13 @@ export default class Trip extends Component {
 
   resetItemIndex() {
     this.setState({itemMenuOpenIndex: null});
+  }
+
+   totalTripDistance(distanceArray) {
+     var total = 0;
+     for(var index = 0; index < distanceArray.length; index++) {
+       total += distanceArray[index];
+     }
+    return total;
   }
 }
