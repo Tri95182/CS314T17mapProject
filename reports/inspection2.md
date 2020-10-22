@@ -2,7 +2,7 @@
  
 | Inspection | Details |
 | ----- | ----- |
-| Subject | |
+| Subject | Trip.Js |
 | Meeting | 10/21/2020 5.30pm online|
 | Checklist | Our checklist |
 
@@ -10,7 +10,7 @@
 
 | Name | Preparation Time |
 | ---- | ---- |
-| Tri Nguyen |  |
+| Tri Nguyen | 1 hour |
 | Jack Melvin |  |
 | Collin Wernsman |  |
 | Austin Wulfing |  |
