@@ -69,7 +69,8 @@ We believe that we can accomplish all the epics this sprint. It seems we have fi
 | *10/13* | *#144, #151, #153, #154* | *#145, #166, #170, #176* | | 
 | *10/14* | ** | *#145, #166, #170, #176* | We've all had midterms and projects this week |
 | *10/16* | *#145 #184* | *#144 #166 #70 #176* | scrumed after inspection |
-| *10/19* | *#144, #206, #208, #194, #195, #196, #216, #218, #176, #171, #157, #212* | *#148, #163, #170, #221* | Lacking effort from a team mate
+| *10/19* | *#144, #206, #208, #194, #195, #196, #216, #218, #176, #171, #157, #212* | *#148, #163, #170, #221* | Lacking effort from a team mate |
+| *10/21* | *#147, #148, #152, #163, #168, #169, #198, #226* | *#160, #162, #165, #170* | since Austin hasn't done anything, we will not be able to complete everything |
 
 ## Review
 
