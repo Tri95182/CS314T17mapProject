@@ -108,14 +108,14 @@ The component hierarchy for the base application depicted below shows the our to
 * Atlas renders a map.
 * About renders information about the team.
 
-![base component hierarchy](images/ComponentHierarchyS2.png)
+![base component hierarchy](images/ComponentHierarchyS3.png)
 
 We do not show the many ReactStrap components in this hierarchy, even though they will appear when you are debugging on the client.
 
 ### Class Diagram
 The class diagram for the base application depicted below shows the basic structure of the web server application.
 
-![class diagram](images/ClassDiagramS2.png )
+![class diagram](images/ClassDiagramS3.png )
 
 The classes in blue represent the classes specific to this application.  
 * WebApplication processes command line parameters and creates MicroServer.
@@ -126,7 +126,8 @@ The classes in blue represent the classes specific to this application.
 * RequestFind is a specific request that allows the server to respond with the results of the item searched.
 * DistanceCalcuator calculates the distance between two locations given to it by RequestDistance
 * Database accesses the database and gives the search result to RequestFind
-* RequestHeader defines the basic components of all requests.
+* RequestHeader defines the basic components of all requests
+* Trip Request, calculates distance between each location in order and between last and first
 
 The classes in orange represent the external libraries used by the application.
 Often there are several related classes but we've listed only one to simplify the diagram.
@@ -137,9 +138,10 @@ Often there are several related classes but we've listed only one to simplify th
 
 
 # Sprint 1
-We added our team name to all the sections that needed the update. We also added a get more info clickable at the bottom instead of a url to make it easier to read. Once the info is clicked there is information about the name, URL, version, and type. Also, the name at the top of the page can be clicked to go to the team about page. Here we have information regarding the members of Team Bloo and a picture of them. The mission statement also appears on this page. The page can be closed either by clicking the team name at the top or the close button on the right side of the screen.
+We added our team name to all the sections that needed the update. We also added a get more info clickable at the bottom instead of a url to make it easier to read. Once the info is clicked there is information about the name, URL, version, and type. Also, the name at the top of the page can be clicked to go to the team about page. Here we have information regard ing the members of Team Bloo and a picture of them. The mission statement also appears on this page. The page can be closed either by clicking the team name at the top or the close button on the right side of the screen.
 # Sprint 2
 For sprint 2 we added both distance and find .json requests along with their appropriate needed files to help them run. We also added a return to current location button and a search button to the map. The search button uses the find request to show locations relating to the search. Adding to that, we added buttons that generate below the map that allow us to select which two locations we want in order to get the distance. Finally, we added a distance button that when clicked after selecting two locations will provide the distance in miles to the user.
 # Sprint 3
+For Sprint 3 we added trips and the UI to support it. First we moved the location list to it's own button on the atlas. This allowed us to have space for trip, and made adding to trip easier. Than directly from search bar to trip. In search bar we can add locations to the locations list, this way were not adding directly to trip and making a mess of our list. Trip is now under our atlas, This displays the trip name, Total Distance, Distnaces, and our locations in our trip. We have the ablity to reorder our trip by drag and drop, this changes the order of the polylines and corrects the distances. In our drag and drop locations we have the ablity to delete the location or see more info about it. In our trip Hamburger option button we have the ablitly Calculate, Save, Clear, and Load. Thats most of what we added this sprint 3.
 # Sprint 4 
 # Sprint 5
