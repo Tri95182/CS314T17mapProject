@@ -79,6 +79,18 @@ Whenever a user a selected location below, it will add the location for distance
 Whenever a user selects the distance button after selecting 2 locations, it will display the distance in the button.
 If no two locations are selected, then distance will not update.
 
+#### Clicking on Locations List button opens up a modal
+When a user clicks on the list button icon on the map, a modal pops up which contains a list of all locations on the map.
+The user can remove, locate, or add the place to the trip
+
+#### Under the map is the Trip Itinerary
+Users can rename the trip, calculate, save, load, and clear it.
+When dragging locations, it reorders the trip.
+Each place in the itinerary has the option to remove it or get info about it.
+
+#### Clicking on the Info icon opens an info modal
+The info modal shows all item properties for a trip place.
+
 #### Clicking on the (i)Get more info in the footer should let me change the server.
 Whenever a user clicks on the URL a popup should open showing the team name, the URL in an input text box, and a Cancel button.
 When the user modifies the URL, a Test button should appear and the server name should disappear.
