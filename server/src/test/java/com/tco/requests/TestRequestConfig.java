@@ -45,7 +45,7 @@ public class TestRequestConfig {
   @DisplayName("Supported Requests length")
   public void testSupportedRequestsLength() {
     List<String> supportedRequests = conf.getSupportedRequests();
-    assertEquals(3, supportedRequests.size());
+    assertEquals(4, supportedRequests.size());
   }
 
   @Test
@@ -56,6 +56,7 @@ public class TestRequestConfig {
     actualSupportedRequests.add("config");
     actualSupportedRequests.add("distance");
     actualSupportedRequests.add("find");
+    actualSupportedRequests.add("trip");
     assertEquals(actualSupportedRequests, supportedRequests);
   }
 }
