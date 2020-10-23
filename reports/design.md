@@ -96,7 +96,7 @@ The component hierarchy for the base application depicted below shows the our to
 * Atlas renders a map.
 * About renders information about the team.
 
-![base component hierarchy](images/ComponentHierarchyS2.png)
+![base component hierarchy](images/ComponentHierarchyS3.png)
 
 We do not show the many ReactStrap components in this hierarchy, even though they will appear when you are debugging on the client.
 
