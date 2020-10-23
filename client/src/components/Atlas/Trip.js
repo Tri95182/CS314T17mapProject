@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Collapse, Row, Col, ListGroup, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink, Modal, ModalBody, ModalHeader, ModalFooter} from 'reactstrap';
+import {Button, Collapse, Row, Col, ListGroup, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink, Modal, ModalBody, ModalHeader, ModalFooter, InputGroup, InputGroupAddon, Input} from 'reactstrap';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { isJsonResponseValid } from "../../utils/restfulAPI";
 import _ from 'lodash';
@@ -16,6 +16,8 @@ import PublishIcon from '@material-ui/icons/Publish';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import DeleteIcon from '@material-ui/icons/Delete';
 import InfoIcon from '@material-ui/icons/Info';
+import DoneIcon from '@material-ui/icons/Done';
+import EditIcon from '@material-ui/icons/Edit';
 
 export default class Trip extends Component {
 
@@ -26,6 +28,7 @@ export default class Trip extends Component {
 
     this.state = {
       tripTitle: "Trip",
+      editingTripTitle: false,
       earthRadius: 6371.0,
       tripMenuOpen: false,
       itemMenuOpen: false,
@@ -54,7 +57,9 @@ export default class Trip extends Component {
     const header = title == this.state.tripTitle;
     return (
         <Navbar className="trip-item" dark={header} light={!header} color={header ? "primary" : "white"}>
-          <NavbarBrand>{title}
+          <NavbarBrand >{this.state.editingTripTitle && header ? 
+            this.renderTripTitleInput() : 
+            <div onClick={() => header ? this.setState({editingTripTitle:true}) : null}>{title}&nbsp;{header ? <EditIcon fontSize="small"/> : ""}</div>}
             {header ? <div>Total Distance:{this.props.tripDistances ? this.totalTripDistance(this.props.tripDistances) : ""}</div> : ""}
             {header ? <div>Distances:{this.props.tripDistances ? this.props.tripDistances.toString() : ""}</div> : "" }
           </NavbarBrand>
@@ -65,6 +70,29 @@ export default class Trip extends Component {
             {renderButtons()}
           </Collapse>
         </Navbar>
+    );
+  }
+
+  renderTripTitleInput() {
+    return (
+      <InputGroup>
+        <Input
+          value={this.state.tripTitle}
+          onChange={(input) => {
+            this.setState({tripTitle: input.target.value});
+          }}
+        />
+        <InputGroupAddon addonType="append">
+          <Button onClick={() => {
+            if(this.state.tripTitle.length == 0) {
+              this.setState({tripTitle:"Trip"});
+            }
+            this.setState({editingTripTitle:false})
+          }}>
+            <DoneIcon fontSize="small"/>
+          </Button>
+        </InputGroupAddon>
+      </InputGroup>
     );
   }
 
