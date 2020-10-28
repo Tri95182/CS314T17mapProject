@@ -38,22 +38,29 @@
 
 
 ## Planned Epics
-
+* v4 protocol - Add optional coordinates element to places in trip request. Also, add filters element to the config response and add narrow element to find request. 
+* Shorter - Have a method to optimize the trip such that the order of it's destinations gives the lowest round trip distance. This must be done in under a second.
+* Filter Search - Be able to reduce the amount of output when searching by filtering it. Also, include additional information about the places that are searched such as region and country.
+* User Experience - Get user feedback from outside sources and address potential improvements that can be made to the user interface.
+* Place Details - Display additional information about places in the trip itinerary as well as on map markers. Also, use reverse geocoding to get additional information from latitude and longitude.
+* File Formats - Support several different file formats to save a trip to in order to be used with other tools. These formats include CSV, KML, and SVG.
+* Build Trip - Be able to load trip files into the itinerary.
+* Modify Trip - Adding notes to trip destinations, reversing the order of trip destinations, and selecting a new starting location for the trip.
 
 ## Metrics
 
 | Statistic | # Planned | # Completed |
 | --- | ---: | ---: |
-| Epics | *count* | *count* |
-| Tasks |  *count*   | *count* | 
-| Story Points |  *sum*  | *sum* | 
+| Epics | *8* | *count* |
+| Tasks | *18* | *count* | 
+| Story Points |  *30*  | *sum* | 
 
 
 ## Scrums
 
 | Date | Tasks closed  | Tasks in progress | Impediments |
 | :--- | :--- | :--- | :--- |
-| *date* | *#task, ...* | *#task, ...* |  | 
+| *10/27/20* |  |  | Discussing what tasks to do for this sprint | 
 
 
 ## Review
