@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Button, Col, Input, Modal, ModalBody, ModalFooter, ModalHeader, Row } from "reactstrap";
 
 import { sendServerRequest, isJsonResponseValid } from "../../utils/restfulAPI";
+import { PROTOCOL_VERSION } from "../../utils/constants";
 
 import * as configSchema from "../../../schemas/ResponseConfig";
 
@@ -99,7 +100,7 @@ export default class ServerSettings extends Component {
     updateInput(value) {
         this.setState({inputText: value}, () => {
             if (this.shouldAttemptConfigRequest(value)) {
-                sendServerRequest({requestType: "config", requestVersion: 1}, value)
+                sendServerRequest({requestType: "config", requestVersion: PROTOCOL_VERSION}, value)
                     .then(config => {
                         if (config) { this.processConfigResponse(config.data) }
                         else { this.setState({validServer: true, config: config}); }

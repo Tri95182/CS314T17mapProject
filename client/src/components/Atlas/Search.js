@@ -3,7 +3,7 @@ import {Button, InputGroup, Input, InputGroupAddon, InputGroupText, ListGroup, L
 import { isJsonResponseValid } from "../../utils/restfulAPI";
 import _ from 'lodash';
 
-import { LOG } from "../../utils/constants";
+import { LOG, PROTOCOL_VERSION } from "../../utils/constants";
 import * as findSchema from "../../../schemas/ResponseFind";
 
 import SearchIcon from '@material-ui/icons/Search';
@@ -106,7 +106,7 @@ export default class Search extends Component {
 
     let cleanInput = this.sanitizeInput(input.target.value);
 
-    let findRequest = {requestType: "find", requestVersion: 2, limit: PLACES_LIMIT};
+    let findRequest = {requestType: "find", requestVersion: PROTOCOL_VERSION, limit: PLACES_LIMIT};
     if(cleanInput != "") findRequest.match = cleanInput;
 
     this.props.sendRequest(findRequest)
