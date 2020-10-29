@@ -6,7 +6,7 @@ import _ from 'lodash';
 import {downloadFile} from "./DownloadFile";
 
 
-import { LOG } from "../../utils/constants";
+import { LOG, PROTOCOL_VERSION } from "../../utils/constants";
 import * as tripSchema from "../../../schemas/ResponseTrip";
 
 import MenuIcon from '@material-ui/icons/Menu';
@@ -248,7 +248,7 @@ export default class Trip extends Component {
 
       return place;
     });
-    return {requestType: "trip", requestVersion: 3,
+    return {requestType: "trip", requestVersion: PROTOCOL_VERSION,
       places: placesLatLngString,
       options: {title: this.state.tripTitle, earthRadius: this.state.earthRadius.toString()}
     };

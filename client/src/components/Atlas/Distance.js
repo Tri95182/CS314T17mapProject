@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {ListGroupItem} from 'reactstrap';
 import { isJsonResponseValid } from "../../utils/restfulAPI";
 
-import { LOG } from "../../utils/constants";
+import { LOG, PROTOCOL_VERSION } from "../../utils/constants";
 import * as distanceSchema from "../../../schemas/ResponseDistance";
 
 export default class Distance extends Component {
@@ -26,7 +26,7 @@ export default class Distance extends Component {
   handleDistance(){
     if(this.props.placesDistance.length == 2){
 
-      let distanceRequest = {requestType: "distance", requestVersion: 3,
+      let distanceRequest = {requestType: "distance", requestVersion: PROTOCOL_VERSION,
         place1: this.getRequestPlace(this.props.placesDistance[0]),
         place2: this.getRequestPlace(this.props.placesDistance[1]),
         earthRadius: 6371.0}
