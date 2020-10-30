@@ -61,7 +61,7 @@
 | Date | Tasks closed  | Tasks in progress | Impediments |
 | :--- | :--- | :--- | :--- |
 | *10/27/20* |  |  | Discussing what tasks to do for this sprint | 
-| *10/29/20* | *#167, #170, #271* | *#267* |  | 
+| *10/29/20* | *#267* | *#167, #170, #271* |  | 
 
 ## Review
 
