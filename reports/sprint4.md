@@ -62,6 +62,7 @@
 | :--- | :--- | :--- | :--- |
 | *10/27/20* |  |  | Discussing what tasks to do for this sprint | 
 | *10/29/20* | *#267* | *#167, #170, #271* |  | 
+| *11/02/20* | *#267*, #283| *#167, #170, #271* | Everyone has been busy with other class projects | 
 
 ## Review
 
