@@ -2,20 +2,20 @@
  
 | Inspection | Details |
 | ----- | ----- |
-| Subject | *file and methods/line range to review for meeting* |
-| Meeting | *date, time, location* |
-| Checklist | *reference, URL, etc.* |
+| Subject | *LocationsList.js* |
+| Meeting | *11/02/20 3pm* |
+| Checklist | *[Link to checklist](reports/checklist.md)* |
 
 ### Roles
 
 | Name | Preparation Time |
 | ---- | ---- |
-|  |  |
+| Collin Wernsman | 1 hour |
 |  |  |
 
 ### Problems found
 
 | file:line | problem | hi/med/low | who found | github#  |
 | --- | --- | :---: | :---: | --- |
-|  | | | | |
+| LocationsList.js: #19, #111, #138 | Data fault: could change variables to constants | low | cwernsma | #279 |
 |  | | | | |
