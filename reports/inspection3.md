@@ -18,4 +18,5 @@
 | file:line | problem | hi/med/low | who found | github#  |
 | --- | --- | :---: | :---: | --- |
 | Atlas | On the webpage the atlas will move from marker to marker | Med | Tri Nguyen | |
-| LocationList:125 | Maybe we can add a else, for locations, with length 0 | Tri Nguyen | | |
+| LocationList:125 | Maybe we can add a else, for locations, with length 0 | Low | Tri Nguyen | |
+| LocationList:101 | seems like we dont need this else statement as the thing in the else statement always functions | Low | Tri Nguyen | 
