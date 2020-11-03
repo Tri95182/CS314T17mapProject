@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {Button, Collapse, Row, Col, ListGroup, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink, Modal, ModalBody, ModalHeader, ModalFooter, InputGroup, InputGroupAddon, Input} from 'reactstrap';
+import {Button, Collapse, Row, Col, ListGroup, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink, InputGroup, InputGroupAddon, Input} from 'reactstrap';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { isJsonResponseValid } from "../../utils/restfulAPI";
 import _ from 'lodash';
 import {downloadFile} from "./DownloadFile";
-
+import Info from './Info';
 
 import { LOG } from "../../utils/constants";
 import * as tripSchema from "../../../schemas/ResponseTrip";
@@ -56,20 +56,20 @@ export default class Trip extends Component {
   renderMenu(title, trigger, toggle, renderButtons) {
     const header = title == this.state.tripTitle;
     return (
-        <Navbar className="trip-item" dark={header} light={!header} color={header ? "primary" : "white"}>
-          <NavbarBrand >{this.state.editingTripTitle && header ? 
-            this.renderTripTitleInput() : 
-            <div onClick={() => header ? this.setState({editingTripTitle:true}) : null}>{title}&nbsp;{header ? <EditIcon fontSize="small"/> : ""}</div>}
-            {header ? <div>Total Distance:{this.props.tripDistances ? this.totalTripDistance(this.props.tripDistances) : ""}</div> : ""}
-            {header ? <div>Distances:{this.props.tripDistances ? this.props.tripDistances.toString() : ""}</div> : "" }
-          </NavbarBrand>
-          <NavbarToggler onClick={() => toggle()}>
-            {trigger ? <MenuOpenIcon/> : <MenuIcon/>}
-          </NavbarToggler>
-          <Collapse isOpen={trigger} navbar>
-            {renderButtons()}
-          </Collapse>
-        </Navbar>
+      <Navbar className="trip-item" dark={header} light={!header} color={header ? "primary" : "white"}>
+        <NavbarBrand>{this.state.editingTripTitle && header ? 
+          this.renderTripTitleInput() : 
+          <div onClick={() => header ? this.setState({editingTripTitle:true}) : null}>{title}&nbsp;{header ? <EditIcon fontSize="small"/> : ""}</div>}
+          {header ? <div>Total Distance:{this.props.tripDistances ? this.totalTripDistance(this.props.tripDistances) : ""}</div> : ""}
+          {header ? <div>Distances:{this.props.tripDistances ? this.props.tripDistances.toString() : ""}</div> : "" }
+        </NavbarBrand>
+        <NavbarToggler onClick={() => toggle()}>
+          {trigger ? <MenuOpenIcon/> : <MenuIcon/>}
+        </NavbarToggler>
+        <Collapse isOpen={trigger} navbar>
+          {renderButtons()}
+        </Collapse>
+      </Navbar>
     );
   }
 
@@ -164,29 +164,21 @@ export default class Trip extends Component {
 
   renderInfoModal() {
     return (
-      <Modal isOpen={this.state.itemInfoModalOpen} 
+      <Info
+        infoModalOpen={this.state.itemInfoModalOpen}
+        info={this.state.itemInfo}
         toggle={() => this.tripToggle(this.state.itemInfoModalOpen, 'itemInfoModalOpen')}
-      >
-        <ModalHeader toggle={() => this.tripToggle(this.state.itemInfoModalOpen, 'itemInfoModalOpen')}>Info</ModalHeader>
-        <ModalBody>
-          {this.state.itemInfo ? Object.keys(this.state.itemInfo).map((key) =>
-            <Row key={key}>
-              <Col>{key}</Col>
-              <Col>{this.state.itemInfo[key]}</Col>
-            </Row>
-          ) : ""}
-        </ModalBody>
-        <ModalFooter>
-          <Button color="primary" onClick={() => this.tripToggle(this.state.itemInfoModalOpen, 'itemInfoModalOpen')}>
-            Close
-          </Button>
-        </ModalFooter>
-      </Modal>
+        setParentState={this.props.setParentState}
+        placesDistance={this.props.placesDistance}
+      />
     );
   }
 
   tripItemToggle(index) {
-    const toggle = !this.state.itemMenuOpen;
+    let toggle = !this.state.itemMenuOpen;
+    if(this.state.itemMenuOpenIndex != index && this.state.itemMenuOpen) {
+      toggle = this.state.itemMenuOpen;
+    }
     this.setState({itemMenuOpen: toggle, itemMenuOpenIndex: index});
   }
 

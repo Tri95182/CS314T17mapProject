@@ -270,7 +270,7 @@ function testTitleInputRender() {
   expect(trip.find("InputGroup").length).toEqual(1);
   expect(trip.find("Input").length).toEqual(1);
   expect(trip.find("InputGroupAddon").length).toEqual(1);
-  expect(trip.find("Button").length).toEqual(2);
+  expect(trip.find("Button").length).toEqual(1);
 }
 
 test("Test render of trip title change input", testTitleInputRender);
