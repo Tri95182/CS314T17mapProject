@@ -49,7 +49,7 @@ function testRenderSearchResults() {
   />);
 
   expect(search.find('ListGroup').length).toEqual(1);
-  expect(search.find('ListGroupItem').length).toEqual(1);
+  expect(search.find('ListGroupItem').length).toEqual(2);
 }
 
 test("Test render of search results", testRenderSearchResults);
