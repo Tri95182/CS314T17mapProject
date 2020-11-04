@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, InputGroup, Input, InputGroupAddon, InputGroupText, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
+import {Button, InputGroup, Input, InputGroupAddon, InputGroupText, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText, Modal, ModalBody, ModalFooter, ModalHeader, Spinner} from 'reactstrap';
 import { isJsonResponseValid } from "../../utils/restfulAPI";
 import _ from 'lodash';
 
@@ -19,6 +19,7 @@ export default class Search extends Component {
 
     this.state = {
       searchInput: '',
+      isLoading: false
     };
   }
 
@@ -75,7 +76,7 @@ export default class Search extends Component {
     return (
       <ListGroup key="searchres">
         <ListGroupItem key="head" active>Results: {this.props.placesFound}</ListGroupItem>
-        {this.props.places && this.props.places.map((place) => 
+        {!this.state.isLoading ? this.props.places && this.props.places.map((place) => 
           <ListGroupItem 
             key={place.name+place.latitude+place.longitude} 
             tag="button" 
@@ -85,7 +86,7 @@ export default class Search extends Component {
             <ListGroupItemHeading>{place.name}</ListGroupItemHeading>
             <ListGroupItemText>Lat: {Number(place.latitude).toFixed(2)} Lng: {Number(place.longitude).toFixed(2)}</ListGroupItemText>
           </ListGroupItem>
-        )}
+        ) : <ListGroupItem tag="button"><Spinner color="primary"/></ListGroupItem>}
       </ListGroup>
     );
   }
@@ -102,7 +103,7 @@ export default class Search extends Component {
   }
 
   handleSearch(input) {
-    this.setState({searchInput: input.target.value})
+    this.setState({searchInput: input.target.value, isLoading: true})
 
     let cleanInput = this.sanitizeInput(input.target.value);
 
@@ -118,6 +119,7 @@ export default class Search extends Component {
   }
 
   processFindResponse(findResponse) {
+    this.setState({isLoading: false});
 
     if(!isJsonResponseValid(findResponse, findSchema)) {
       let message = "Find Response Not Valid. Check The Server.";

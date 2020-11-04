@@ -14,7 +14,7 @@ import userIcon from '../../static/images/user-marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import LocationIcon from '@material-ui/icons/GpsFixed';
 import SearchIcon from '@material-ui/icons/Search';
-import ViewListIcon from '@material-ui/icons/ViewList';
+import ListIcon from '@material-ui/icons/List';
 
 import 'leaflet/dist/leaflet.css';
 
@@ -85,7 +85,7 @@ export default class Atlas extends Component {
           <TileLayer url={MAP_LAYER_URL} attribution={MAP_LAYER_ATTRIBUTION}/>
           {this.renderControlButton(() => this.setState({searchModalOpen: true}), SearchIcon)}
           {this.renderControlButton(() => this.flyToLocation(this.state.userPosition), LocationIcon, !this.state.userPosition)}
-          {this.renderControlButton(() => this.setState({listModalOpen: true}), ViewListIcon)}
+          {this.renderControlButton(() => this.setState({listModalOpen: true}), ListIcon)}
           {this.getUserPosition()}
           {this.state.placesSelected.map((place) => this.createMarker({lat:Number(place.latitude), lng:Number(place.longitude)}, MARKER_ICON, place.name))}
           {this.getMarker()}
@@ -163,7 +163,12 @@ export default class Atlas extends Component {
   }
 
   changeInArray(array, item, newItem, name) {
-    const index = array.findIndex((entry) => _.isEqual(entry, item));
+    const index = array.findIndex((entry) => {
+      if(entry.notes) {
+        item.notes = entry.notes;
+      }
+      return _.isEqual(entry, item)
+    });
     if(index != -1) {
       let tempArray = array;
       array[index] = newItem;
