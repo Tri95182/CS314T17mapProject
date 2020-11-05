@@ -53,6 +53,7 @@ export default class Trip extends Component {
           {this.renderTripList()}
         </DragDropContext>
         {this.renderInfoModal()}
+        {this.renderImportModal()}
       </ListGroup>
     );
   }
@@ -266,7 +267,7 @@ export default class Trip extends Component {
   }
 
   handleLoadTrip() {
-    this.renderImportModal();
+    this.setState({itemImportModalOpen: true})
   }
 
   renderImportModal() {
@@ -274,7 +275,7 @@ export default class Trip extends Component {
       <Import
         importModalOpen={this.state.itemImportModalOpen}
         import={this.state.itemImport}
-        toggle={() => this.tripToggle( this.state.itemImportModalOpen, 'itemImportModalOpen')}
+        toggle={() => this.tripToggle(this.state.itemImportModalOpen, 'itemImportModalOpen')}
       />
     );
   }

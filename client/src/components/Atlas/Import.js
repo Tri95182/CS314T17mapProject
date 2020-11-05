@@ -12,20 +12,11 @@ export default class Import extends Component {
       <Modal 
         isOpen={this.props.importModalOpen}
         toggle={() => this.props.toggle()}
-        scrollable={true}
       >
         <ModalHeader toggle={() => this.props.toggle()}>Import</ModalHeader>
-          {this.renderImportBody()}
-          {this.renderImportFooter()}
+        {this.renderImportBody()}
+        {this.renderImportFooter()}
       </Modal>
-    );
-  }
-
-  renderImportFooter() {
-    return (
-      <ModalFooter>
-        <Button color="primary" onClick={() => this.props.toggle()}>Cancel</Button>
-      </ModalFooter>
     );
   }
 
@@ -43,5 +34,25 @@ export default class Import extends Component {
         </FormGroup>
       </ModalBody>
     )
+  }
+
+  renderImportFooter() {
+    return (
+        <ModalFooter>
+          <Button color="primary" onClick={() => this.props.toggle()}>Cancel</Button>
+          <Button color="primary"
+                  onClick={() => {
+                    this.handleLoadFile()
+                    this.props.toggle();
+                  }
+                  //disabled?
+                  }>Load</Button>
+        </ModalFooter>
+    );
+  }
+
+  handleLoadFile() {
+
+    this.props.setParentState({file: temp});
   }
 }
