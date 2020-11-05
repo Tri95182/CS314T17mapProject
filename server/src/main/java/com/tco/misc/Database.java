@@ -30,26 +30,27 @@ public class Database {
                                               null : 
                                               "eiK5liet1uej";
 
-    private final static String FIND_QUERY = "SELECT world.name, world.municipality, region.name, country.name, continent.name, world.latitude, world.longitude\n" +
+    private final static String FIND_QUERY = "SELECT world.name, world.municipality, region.name, country.name, continent.name, " +
+                                             "world.latitude, world.longitude, world.altitude, world.id, world.type\n" +
                                              "FROM continent\n" +
                                              "INNER JOIN country ON continent.id = country.continent\n" +
                                              "INNER JOIN region ON country.id = region.iso_country\n" +
                                              "INNER JOIN world ON region.id = world.iso_region\n" +
-                                             "WHERE country.name LIKE @phrase\n" +
+                                             "WHERE (country.name LIKE @phrase\n" +
                                              "OR region.name LIKE @phrase\n" +
                                              "OR world.name LIKE @phrase\n" +
-                                             "OR world.municipality LIKE @phrase;";
+                                             "OR world.municipality LIKE @phrase)";
 
-    public static List<Map<String, String>> queryFind(String match) {
+    public static List<Map<String, String>> queryFind(String match, List<String> narrowType, List<String> narrowWhere) {
         final String MATCH_VAR = "SET @phrase=\"%" + match + "%\"\n;";
-
+        String narrowStr = getNarrowString(narrowType, "type") + " " + getNarrowString(narrowWhere, "where");
         List<Map<String, String>> places = new ArrayList<Map<String,String>>();
 
         try (
             Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
             Statement query = conn.createStatement();
             ResultSet setVarResults = query.executeQuery(MATCH_VAR);
-            ResultSet results = query.executeQuery(FIND_QUERY);
+            ResultSet results = query.executeQuery(FIND_QUERY+narrowStr+";");
         ) {
             while (results.next()) {
                 places.add(processFindResult(results));
@@ -61,15 +62,38 @@ public class Database {
         return places;
     }
 
+    private static String getNarrowString(List<String> narrow, String cat) {
+        String narrowStr = "AND ( ";
+        for(int i = 0; i < narrow.size(); i++) {
+            if (cat == "type") {
+                narrowStr += "world.type LIKE \"%" + narrow.get(i) + "%\" ";
+            } else if (cat == "where") {
+                narrowStr += "country.name LIKE \"%" + narrow.get(i) + "%\" ";
+                narrowStr += "OR region.name LIKE \"%" + narrow.get(i) + "%\" ";
+                narrowStr += "OR world.municipality LIKE \"%" + narrow.get(i) + "%\" ";
+            }
+            if(i != narrow.size()-1) {
+                narrowStr += "OR ";
+            }
+        }
+        narrowStr += " )";
+
+        if(narrowStr.length() == 8) narrowStr = "";
+        return narrowStr;
+    }
+
     private static Map<String, String> processFindResult(ResultSet results) throws Exception {
 
         Map<String, String> place = new HashMap<String, String>();
-        place.put("country", results.getString("country.name"));
-        place.put("region", results.getString("region.name"));
         place.put("name", results.getString("world.name"));
-        place.put("municipality", results.getString("world.municipality"));
         place.put("latitude", results.getString("world.latitude"));
         place.put("longitude", results.getString("world.longitude"));
+        place.put("id", results.getString("world.id"));
+        place.put("altitude", results.getString("world.altitude"));
+        place.put("municipality", results.getString("world.municipality"));
+        place.put("type", results.getString("world.type"));
+        place.put("region", results.getString("region.name"));
+        place.put("country", results.getString("country.name"));
 
         return place;
     }
