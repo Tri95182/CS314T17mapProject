@@ -15,6 +15,7 @@ public class RequestFind extends RequestHeader {
     private String match;
     private Integer limit;
     private Integer found;
+    private Map<String, List<String>> narrow;
     private List<Map<String, String>> places;
     private transient Boolean useDatabase = true;
     
@@ -36,9 +37,11 @@ public class RequestFind extends RequestHeader {
     @Override
     public void buildResponse() {
       String cleanMatch = sanitizeMatch(this.match);
+      List<String> narrowType = processNarrow("type");
+      List<String> narrowWhere = processNarrow("where");
 
       if(this.useDatabase) {
-        this.places = Database.queryFind(cleanMatch);
+        this.places = Database.queryFind(cleanMatch, narrowType, narrowWhere);
       }
 
       if(this.places != null) {
@@ -57,12 +60,22 @@ public class RequestFind extends RequestHeader {
       log.trace("buildResponse -> {}", this);
     }
 
-    private Boolean varExists(Integer var) {
-      if(var != null && var != 0) {
-        return true;
-      } else {
-        return false;
+    private List<String> processNarrow(String name) {
+      List<String> arr = new ArrayList<String>();
+      if(this.narrow != null && this.narrow.size() != 0) {
+        if(this.narrow.containsKey(name)) {
+          List<String> temp = new ArrayList<String>(this.narrow.get(name));
+          for(int i = 0; i < temp.size(); i++) {
+            arr.add(sanitizeMatch(temp.get(i)));
+          }
+        }
       }
+
+      return arr;
+    }
+
+    private Boolean varExists(Integer var) {
+      return var != null && var != 0;
     }
 
     public String sanitizeMatch(String match) {
