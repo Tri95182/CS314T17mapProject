@@ -15,6 +15,6 @@ Prohaska - CS Boulder kid
 
 Peter - CSU English Major 
 - It would like the ablity to have directions
-  - Adding streets would be dope (sidenote: I(tri) think )
+  - Adding streets would be dope (sidenote: I(tri) think we can't really do that this semi)
 - it looks nice 
 - Have the ablity to add directly to from search to trip 
