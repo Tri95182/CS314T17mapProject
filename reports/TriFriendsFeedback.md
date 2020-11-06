@@ -9,3 +9,6 @@ Plants- Metro Deisgn Student
 --Added bonus it would make you site look less like Googles
 Prohaska-CS Boulder kid
 I'm a CS kid, if it work at the end of the day it works, it seems like your site works for building trip so its good.
+Peter
+- It would like the ablity to have directions
+-- Adding streets would be dope
