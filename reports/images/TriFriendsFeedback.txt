@@ -1,0 +1,4 @@
+Plants
+- Add some type of units to total distnace so I can tell how far each location is
+- The location list button is fine but it was hard for plants to tell right away that it was for storing locations
+-
