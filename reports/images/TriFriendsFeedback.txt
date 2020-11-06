@@ -4,3 +4,6 @@ Plants
 -- Although after getting use to it he did like it more than adding directly to the list
 - Add the ablity to not make it a round trip
 -- It doesn't Make sense to always have a round trip
+-
+Prohaska-cs Kid from boulder
+I'm a CS kid, if it work at the end of the day it works, it seems like your site works for building trip so its good.
