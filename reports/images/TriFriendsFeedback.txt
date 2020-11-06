@@ -3,3 +3,4 @@ Plants
 - The location list button is fine but it was hard for plants to tell right away that it was for storing locations
 -- Although after getting use to it he did like it more than adding directly to the list
 - Add the ablity to not make it a round trip
+-- It doesn't Make sense to always have a round trip
