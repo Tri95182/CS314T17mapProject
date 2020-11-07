@@ -3,6 +3,7 @@ package com.tco.requests;
 import com.tco.requests.RequestConfig;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -58,5 +59,15 @@ public class TestRequestConfig {
     actualSupportedRequests.add("find");
     actualSupportedRequests.add("trip");
     assertEquals(actualSupportedRequests, supportedRequests);
+  }
+
+  @Test
+  @DisplayName("Filters are set")
+  public void testFilters() {
+    Map<String, List<String>> filters = conf.getFilters();
+    List<String> filterType = filters.get("type");
+    List<String> filterWhere = filters.get("where");
+    assertEquals(filterType.size(), 3);
+    assertEquals(filterWhere.size(), 195);
   }
 }
