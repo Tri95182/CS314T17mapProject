@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
-import {Button, Collapse, Row, Col, ListGroup, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink, InputGroup, InputGroupAddon, Input} from 'reactstrap';
+import {Button, Collapse, Row, Col, ListGroup, Nav, Navbar, NavbarBrand, NavbarToggler,
+        NavItem, NavLink, InputGroup, InputGroupAddon, Input, } from 'reactstrap';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { isJsonResponseValid } from "../../utils/restfulAPI";
 import _ from 'lodash';
 import {downloadFile} from "./DownloadFile";
 import Info from './Info';
+import Import from './Import';
 
 import { LOG, PROTOCOL_VERSION } from "../../utils/constants";
 import * as tripSchema from "../../../schemas/ResponseTrip";
@@ -25,6 +27,7 @@ export default class Trip extends Component {
     super(props);
 
     this.handleDragEnd = this.handleDragEnd.bind(this);
+    this.setParentState = this.setParentState.bind(this);
 
     this.state = {
       tripTitle: "Trip",
@@ -35,6 +38,8 @@ export default class Trip extends Component {
       itemMenuOpenIndex: null,
       itemInfoModalOpen: false,
       itemInfo: null,
+      itemImportModalOpen: false,
+      itemImport: null,
     }
   }
 
@@ -49,6 +54,7 @@ export default class Trip extends Component {
           {this.renderTripList()}
         </DragDropContext>
         {this.renderInfoModal()}
+        {this.renderImportModal()}
       </ListGroup>
     );
   }
@@ -262,7 +268,22 @@ export default class Trip extends Component {
   }
 
   handleLoadTrip() {
-    // placeholder for loading trip
+    this.setState({itemImportModalOpen: true})
+  }
+
+  setParentState(object) {
+    this.setState(object)
+  }
+
+  renderImportModal() {
+    return (
+      <Import
+        importModalOpen={this.state.itemImportModalOpen}
+        toggle={() => this.tripToggle(this.state.itemImportModalOpen, 'itemImportModalOpen')}
+        import={this.state.itemImport}
+        setParentState={this.setParentState}
+      />
+    );
   }
 
   handleClearTrip() {
