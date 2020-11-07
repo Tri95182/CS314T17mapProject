@@ -27,6 +27,7 @@ export default class Trip extends Component {
     super(props);
 
     this.handleDragEnd = this.handleDragEnd.bind(this);
+    this.setParentState = this.setParentState.bind(this);
 
     this.state = {
       tripTitle: "Trip",
@@ -270,12 +271,17 @@ export default class Trip extends Component {
     this.setState({itemImportModalOpen: true})
   }
 
+  setParentState(object) {
+    this.setState(object)
+  }
+
   renderImportModal() {
     return (
       <Import
         importModalOpen={this.state.itemImportModalOpen}
-        import={this.state.itemImport}
         toggle={() => this.tripToggle(this.state.itemImportModalOpen, 'itemImportModalOpen')}
+        import={this.state.itemImport}
+        setParentState={this.setParentState}
       />
     );
   }

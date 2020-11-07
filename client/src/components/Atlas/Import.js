@@ -5,6 +5,12 @@ export default class Import extends Component {
 
   constructor(props) {
     super(props);
+
+    this.handleFileContent = this.handleFileContent.bind(this)
+
+    this.state = {
+        fileContents:null
+      }
   }
 
   render() {
@@ -24,9 +30,9 @@ export default class Import extends Component {
     return (
       <ModalBody>
         <FormGroup row>
-          <Label for="exampleFile" sm={2}>File</Label>
+          <Label for="file" sm={2}>File</Label>
           <Col sm={10}>
-            <Input type="file" name="file" id="exampleFile" />
+            <Input type="file" onChange={this.handleFileContent}/>
             <FormText color="muted">
               Import a trip json file.
             </FormText>
@@ -42,7 +48,7 @@ export default class Import extends Component {
           <Button color="primary" onClick={() => this.props.toggle()}>Cancel</Button>
           <Button color="primary"
                   onClick={() => {
-                    this.handleLoadFile()
+                    this.handleLoadFile();
                     this.props.toggle();
                   }
                   //disabled?
@@ -52,7 +58,15 @@ export default class Import extends Component {
   }
 
   handleLoadFile() {
+    let reader = new FileReader();
+    let ths = this;
+    reader.onloadend = function () {
+      ths.props.setParentState({itemImport:reader.result});
+    }
+    reader.readAsText(this.state.fileContents);
+  }
 
-    this.props.setParentState({file: temp});
+  handleFileContent(input){
+    this.setState({fileContents: input.target.files[0]});
   }
 }
