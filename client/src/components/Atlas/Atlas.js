@@ -114,6 +114,9 @@ export default class Atlas extends Component {
         setParentState={this.setParentState}
         createSnackBar={this.props.createSnackBar}
         sendRequest={this.sendRequest}
+        filters={(this.props.serverSettings && this.props.serverSettings.serverConfig && this.props.serverSettings.serverConfig.filters) ? 
+          this.props.serverSettings.serverConfig.filters : {}
+        }
       />
     );
   }

@@ -56,7 +56,10 @@ export default class Page extends Component {
 	renderAtlas() {
 		return (
 			<Collapse isOpen={!this.state.showAbout}>
-				<Atlas createSnackBar={this.props.createSnackBar}/>
+				<Atlas 
+					createSnackBar={this.props.createSnackBar}
+					serverSettings={this.state.serverSettings}
+				/>
 			</Collapse>
 		);
 	}

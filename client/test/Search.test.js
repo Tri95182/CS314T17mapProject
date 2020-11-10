@@ -5,10 +5,13 @@ import {shallow, mount} from 'enzyme';
 
 import Atlas from '../src/components/Atlas/Atlas';
 import Search from '../src/components/Atlas/Search';
+import { DropdownItem } from 'reactstrap';
 
 const startProperties = {
   searchModalOpen: true,
-  sendRequest: jest.fn(async x => {return await x})
+  sendRequest: jest.fn(async x => {return await x}),
+  filters: {type:[], where:[]},
+  filtersFilled: {type:["airport", "heliport", "balloonport"], where:["United States", "Mexico"]}
 };
 
 function testRenderModal() {
@@ -16,6 +19,7 @@ function testRenderModal() {
   const search = shallow(<Search 
     searchModalOpen={startProperties.searchModalOpen}
     sendRequest={startProperties.sendRequest}
+    filters={startProperties.filters}
   />);
 
   expect(search.find('Modal').length).toEqual(1);
@@ -31,6 +35,7 @@ function testRenderModalBody() {
   const search = shallow(<Search 
     searchModalOpen={startProperties.searchModalOpen}
     sendRequest={startProperties.sendRequest}
+    filters={startProperties.filters}
   />);
 
   expect(search.find('ModalBody').length).toEqual(1);
@@ -41,11 +46,30 @@ function testRenderModalBody() {
 test("Test render of modal body", testRenderModalBody);
 
 
+function testRenderFilters() {
+
+  const search = shallow(<Search 
+    searchModalOpen={startProperties.searchModalOpen}
+    sendRequest={startProperties.sendRequest}
+    filters={startProperties.filters}
+  />);
+  search.setState({filterOpen: true});
+
+  expect(search.find('Collapse').length).toEqual(1);
+  expect(search.find('ButtonGroup').length).toEqual(1);
+  expect(search.find('ButtonDropdown').length).toEqual(2);
+  expect(search.find('Button').length).toEqual(3);
+}
+
+test("Test render of search filters", testRenderFilters);
+
+
 function testRenderSearchResults() {
 
   const search = shallow(<Search 
     searchModalOpen={startProperties.searchModalOpen}
     sendRequest={startProperties.sendRequest}
+    filters={startProperties.filters}
   />);
 
   expect(search.find('ListGroup').length).toEqual(1);
@@ -60,6 +84,7 @@ function testSanitizeSearchInput() {
   const search = shallow(<Search 
     searchModalOpen={startProperties.searchModalOpen}
     sendRequest={startProperties.sendRequest}
+    filters={startProperties.filters}
   />);
   const instance = search.instance();
 
@@ -78,6 +103,7 @@ function testUpdateSearchText() {
   const search = shallow(<Search 
     searchModalOpen={startProperties.searchModalOpen}
     sendRequest={startProperties.sendRequest}
+    filters={startProperties.filters}
   />);
 
   expect(search.state().searchInput).toEqual('');
@@ -104,6 +130,7 @@ function testAddSelectedPlace() {
     placesSelected={atlas.state().placesSelected}
     setParentState={(obj) => atlas.instance().setParentState(obj)}
     sendRequest={startProperties.sendRequest}
+    filters={startProperties.filters}
   />);
   let instance = search.instance();
 
@@ -136,6 +163,7 @@ function testHandleSearch() {
     placesSelected={atlas.state().placesSelected}
     setParentState={(obj) => atlas.instance().setParentState(obj)}
     sendRequest={(req) => atlas.instance().sendRequest(req)}
+    filters={startProperties.filters}
   />);
     
   expect(atlas.state().places.length).toEqual(0);
@@ -151,30 +179,62 @@ function testHandleSearch() {
   expect(placesAfter.length).toEqual(0);
   expect(placesFoundAfter).toEqual(0);
     
-  }
+}
   
-  function mockFindResponse() {
-    fetch.mockResponse(JSON.stringify({
-      // data: {
-        "requestType": "find",
-        "requestVersion": 2,
-        "match": "daves",
-        "limit": 25,
-        "found": 2,
-        "places": [
-          {
-            "name": "Delta Daves Airport",
-            "latitude": "64.132858",
-            "longitude": "-145.804494"
-          },
-          {
-            "name": "Pandaveswar Airfield",
-            "latitude": "23.641300520900003",
-            "longitude": "87.348690033"
-          }
-        ]
-      // }
+function mockFindResponse() {
+  fetch.mockResponse(JSON.stringify({
+      "requestType": "find",
+      "requestVersion": 2,
+      "match": "daves",
+      "limit": 25,
+      "found": 2,
+      "places": [
+        {
+          "name": "Delta Daves Airport",
+          "latitude": "64.132858",
+          "longitude": "-145.804494"
+        },
+        {
+          "name": "Pandaveswar Airfield",
+          "latitude": "23.641300520900003",
+          "longitude": "87.348690033"
+        }
+      ]
     }));
-  }
+}
   
-  test("Testing Search Query Sets 'places' State", testHandleSearch);
+test("Testing Search Query Sets 'places' State", testHandleSearch);
+
+
+function testFilterSelect() {
+
+  const search = shallow(<Search 
+    searchModalOpen={startProperties.searchModalOpen}
+    sendRequest={startProperties.sendRequest}
+    filters={startProperties.filtersFilled}
+  />);
+  search.setState({filterOpen: true});
+
+  expect(search.state().selectedTypeFilters.length).toEqual(0);
+  expect(search.state().selectedWhereFilters.length).toEqual(0);
+  
+  search.setState({typeFilterOpen: true});
+  simulateOnClickEvent(search, 'DropdownItem');
+  search.setState({typeFilterOpen: false});
+  expect(search.state().selectedTypeFilters.length).toEqual(1);
+  search.setState({whereFilterOpen: true});
+  simulateOnClickEvent(search, 'DropdownItem', 4);
+  search.setState({whereFilterOpen: false});
+  expect(search.state().selectedWhereFilters.length).toEqual(1);
+
+  simulateOnClickEvent(search, 'Button', 1);
+  expect(search.state().selectedTypeFilters.length).toEqual(0);
+  expect(search.state().selectedWhereFilters.length).toEqual(0);
+}
+
+function simulateOnClickEvent(reactWrapper, component, index=0) {
+  reactWrapper.find(component).at(index).simulate('click');
+  reactWrapper.update();
+}
+
+test("Test selecting filter options", testFilterSelect);
