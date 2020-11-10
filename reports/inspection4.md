@@ -23,5 +23,5 @@
 | Trip:233 | If the places were closer together, like less than 1 unit apart, we would not calculate trip | low | Tri |  |
 | Trip | We have 26 functions in this, file we should at this point break it up | med | Tri | --- |
 | Trip:64 | Render Menu be hella Compicated spliting it down to other functions might help readablity | low | Tri |  |
-| Trip:232-234 | extra variable created just to be used once. can clean this up | low | melvin42 | |
+| Trip:232-234 | extra variable created just to be used once. can clean this up | low | melvin42 | #299 |
 | Trip:177 | can use setParentState from the new import function | med | melvin42 | |
