@@ -20,5 +20,5 @@
 | --- | --- | :---: | :---: | --- |
 | Trip:233 | If the places were closer together, like less than 1 unit apart, we would not calculate trip | low | Tri |  |
 | Trip | We have 26 functions in this, file we should at this point break it up | med | Tri | --- |
-| Trip:64 | Render Menu be hella Compicated  | :---: | :---: | --- |
+| Trip:64 | Render Menu be hella Compicated spliting it down to other functions might help readablity | low | Tri |  |
 
