@@ -45,14 +45,17 @@ export default class Import extends Component {
   renderImportFooter() {
     return (
         <ModalFooter>
-          <Button color="primary" onClick={() => this.props.toggle()}>Cancel</Button>
+          <Button color="primary" onClick={() => {
+            this.props.toggle();
+            this.setState({fileContents: null});
+          }}>Cancel</Button>
           <Button color="primary"
-                  onClick={() => {
-                    this.handleLoadFile();
-                    this.props.toggle();
-                  }
-                  //disabled?
-                  }>Load</Button>
+            onClick={() => {
+              this.handleLoadFile();
+              this.props.toggle();
+            }}
+            disabled={this.state.fileContents == null}
+          >Load</Button>
         </ModalFooter>
     );
   }
@@ -62,6 +65,7 @@ export default class Import extends Component {
     let ths = this;
     reader.onloadend = function () {
       ths.props.setParentState({itemImport:reader.result});
+      ths.setState({fileContents: null});
     }
     reader.readAsText(this.state.fileContents);
   }
