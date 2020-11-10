@@ -20,3 +20,13 @@
 .trip-item{
   border: 1px solid #000000;
 }
+
+.filter-btn{
+  display: flex;
+  flex: 1 1 auto;
+}
+
+.filter-item{
+  overflow: auto;
+  max-height: 145px;
+}
