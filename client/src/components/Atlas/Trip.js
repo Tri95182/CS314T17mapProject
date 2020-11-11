@@ -39,7 +39,6 @@ export default class Trip extends Component {
       itemInfoModalOpen: false,
       itemInfo: null,
       itemImportModalOpen: false,
-      // itemImport: null,
     }
   }
 
@@ -280,7 +279,6 @@ export default class Trip extends Component {
       <Import
         importModalOpen={this.state.itemImportModalOpen}
         toggle={() => this.tripToggle(this.state.itemImportModalOpen, 'itemImportModalOpen')}
-        // import={this.state.itemImport}
         setParentState={this.setParentState}
         setGrandparentState={this.props.setParentState}
       />
