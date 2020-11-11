@@ -64,7 +64,17 @@ export default class Import extends Component {
     let reader = new FileReader();
     let ths = this;
     reader.onloadend = function () {
-      ths.props.setParentState({itemImport:reader.result});
+      const result = JSON.parse(reader.result);
+      result.places.map((place) => {
+        place.lat = parseFloat(place.latitude);
+        delete place.latitude;
+        place.lng = parseFloat(place.longitude);
+        delete place.longitude;
+  
+        return place;
+      })
+      ths.props.setParentState({tripTitle: result.options.title, earthRadius: result.options.earthRadius});
+      ths.props.setGrandparentState({placesDistance: result.places});
       ths.setState({fileContents: null});
     }
     reader.readAsText(this.state.fileContents);
