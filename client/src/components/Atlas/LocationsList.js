@@ -42,7 +42,7 @@ export default class LocationsList extends Component {
           sendRequest={this.props.sendRequest}
         />
         {this.renderIfPropExists("Current Location", this.props.userPosition)}
-        {this.renderIfPropExists("Marker Location", this.props.markerPosition)}
+        {this.renderIfPropExists(this.props.markerPosition ? this.props.markerPosition.name : "Marker Location", this.props.markerPosition)}
         {this.props.placesSelected.map((place) =>
           this.renderLocationItem(place.name, Number(place.latitude), Number(place.longitude))
         )}
@@ -98,7 +98,7 @@ export default class LocationsList extends Component {
   }
 
   handleLocationRemove(name) {
-    if(name == 'Marker Location') {
+    if(name == this.props.markerPosition ? this.props.markerPosition.name : 'Marker Location') {
       this.props.setParentState({markerPosition: null});
     } else {
       this.removeItem(name, this.props.placesSelected, 'placesSelected');
