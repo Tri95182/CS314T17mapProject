@@ -247,21 +247,25 @@ export default class Atlas extends Component {
     return (
       <div>
         {this.state.placesDistance.map((place, index) => {
-          let prevLatLng;
-           if(index == this.state.placesDistance.length-1) {
-            prevLatLng = this.state.placesDistance[0];
+          let nextLatLng;
+          let color = 'blue'
+          if(index != this.state.placesDistance.length-1) {
+            nextLatLng = this.state.placesDistance[index+1]
+            if (index == 0) {
+              color = 'red';
+            }
           } else {
-            prevLatLng = this.state.placesDistance[index+1];
+            nextLatLng = this.state.placesDistance[0];
           }
-          return this.renderPolyline([prevLatLng.lat, prevLatLng.lng], [place.lat, place.lng]);
+          return this.renderPolyline([nextLatLng.lat, nextLatLng.lng], [place.lat, place.lng], color);
         })}
       </div>
     );
   }
 
-  renderPolyline(from, to) {
+  renderPolyline(from, to, color) {
     return(
-        <Polyline positions={[from, to]}/>
+        <Polyline positions={[from, to]} color={color}/>
     );
   }
 }
