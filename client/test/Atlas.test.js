@@ -35,7 +35,7 @@ function testMarkerIsRenderedOnClick() {
   let latlng = {name:"Marker Location", lat: 0, lng: 0};
   simulateOnClickEvent(atlas, {latlng: latlng});
 
-  expect(atlas.state().markerPosition).toEqual(latlng);
+  expect(atlas.state().markerPosition).toEqual(expectedMarkerPosition);
   // expect(atlas.find('Marker')).toEqual(1); ??
 }
 
