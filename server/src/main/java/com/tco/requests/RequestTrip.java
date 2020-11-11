@@ -11,7 +11,7 @@ public class RequestTrip extends RequestHeader {
   private List<Map<String, String>> places;
   private List<Long> distances;
   private transient long start_time;
-  private transient long end_time;
+
 
   private final transient Logger log = LoggerFactory.getLogger(RequestTrip.class);
 
