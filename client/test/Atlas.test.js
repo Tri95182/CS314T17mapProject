@@ -99,3 +99,21 @@ function testChangeInArray() {
 }
 
 test("Test change in array function", testChangeInArray);
+
+
+async function testReverseGeocoding() {
+
+  const atlas = shallow(<Atlas createSnackBar={startProperties.createSnackBar}/>);
+  const instance = atlas.instance();
+  const map = {current:{leafletElement:{options:{crs:{scale:(z) => 10}}, getZoom: () => 10}}};
+  instance['mapRef'] = map;
+  const latlng1 = {lat:39, lng:-105};
+  const output1 = await instance.reverseGeocode(latlng1);
+  expect(output1).toEqual("Flatland Trail, El Paso County, Colorado, United States of America");
+  
+  const latlng2 = {lat:28, lng:-38};
+  const output2 = await instance.reverseGeocode(latlng2);
+  expect(output2).toEqual(null);
+}
+
+test("Test geocoding", testReverseGeocoding);
