@@ -10,16 +10,21 @@ public class RequestTrip extends RequestHeader {
   private Map<String, String> options;
   private List<Map<String, String>> places;
   private List<Long> distances;
+  private transient long start_time;
+  private transient long end_time;
 
-  private final transient Logger log = LoggerFactory.getLogger(RequestConfig.class);
+  private final transient Logger log = LoggerFactory.getLogger(RequestTrip.class);
 
   @Override
   public void buildResponse() {
+    this.start_time = System.currentTimeMillis();
     this.distances = new ArrayList<>();
     if(!this.places.isEmpty()) {
       GenerateDistancesList();
     }
     log.trace("buildResponse -> {}", this);
+    this.end_time = System.currentTimeMillis();
+    log.warn("\n \n RequestTrip BuildResponse Time : {}" ,(this.end_time-this.start_time));
   }
 
   private void GenerateDistancesList() {
