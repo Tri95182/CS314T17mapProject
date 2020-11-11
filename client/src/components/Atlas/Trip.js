@@ -20,6 +20,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import InfoIcon from '@material-ui/icons/Info';
 import DoneIcon from '@material-ui/icons/Done';
 import EditIcon from '@material-ui/icons/Edit';
+import LoopIcon from '@material-ui/icons/Loop';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 
 export default class Trip extends Component {
 
@@ -109,10 +111,20 @@ export default class Trip extends Component {
   renderTripActionBtns() {
     return (
       <Nav navbar>
-        {this.createTripButton(PlayArrowIcon, "Calculate", () => this.handleCalculateTrip())}
-        {this.createTripButton(GetAppIcon, "Save", () => this.handleSaveTrip())}
-        {this.createTripButton(DeleteIcon, "Clear", () => this.handleClearTrip())}
-        {this.createTripButton(PublishIcon, "Load", () => this.handleLoadTrip())}
+        <Row>
+          <Col>
+            {this.createTripButton(PlayArrowIcon, "Calculate", () => this.handleCalculateTrip())}
+            {this.createTripButton(ArrowForwardIcon, "Next Location", () => this.handleNextLocation())}
+          </Col>
+          <Col>
+            {this.createTripButton(GetAppIcon, "Save", () => this.handleSaveTrip())}
+            {this.createTripButton(PublishIcon, "Load", () => this.handleLoadTrip())}
+          </Col>
+          <Col>
+            {this.createTripButton(DeleteIcon, "Clear", () => this.handleClearTrip())}
+            {this.createTripButton(LoopIcon, "Reverse", () => this.handleReverseTrip())}
+          </Col>
+        </Row>
       </Nav>
     );
   }
@@ -123,7 +135,7 @@ export default class Trip extends Component {
         <NavLink>
           <Row xs="2">
             <Col xs="auto"><Icon/></Col>
-            <Col>{text}</Col>
+            <Col xs="auto">{text}</Col>
           </Row>
         </NavLink>
       </NavItem>
@@ -268,6 +280,17 @@ export default class Trip extends Component {
 
   handleLoadTrip() {
     this.setState({itemImportModalOpen: true})
+  }
+
+  handleReverseTrip() {
+    const revPlaces = this.props.placesDistance.reverse();
+    this.props.setParentState({placesDistance: revPlaces});
+  }
+  
+  handleNextLocation() {
+    let nextPlaces = this.props.placesDistance;
+    nextPlaces.push(nextPlaces.shift());
+    this.props.setParentState({placesDistance: nextPlaces});
   }
 
   setParentState(object) {
