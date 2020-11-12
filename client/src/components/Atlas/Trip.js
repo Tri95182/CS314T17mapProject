@@ -22,6 +22,8 @@ import DoneIcon from '@material-ui/icons/Done';
 import EditIcon from '@material-ui/icons/Edit';
 import LoopIcon from '@material-ui/icons/Loop';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import SendIcon from '@material-ui/icons/Send';
+
 
 export default class Trip extends Component {
 
@@ -206,6 +208,7 @@ export default class Trip extends Component {
     return (
       <Nav navbar>
         {this.createTripButton(InfoIcon, "Info", () => this.handleGetInfo(place))}
+        {this.createTripButton(SendIcon, "Set as Start", () => this.handleNewStartLocation(place))}
         {this.createTripButton(DeleteIcon, "Remove", () => this.handleRemoveItem(place))}
       </Nav>
     );
@@ -213,6 +216,13 @@ export default class Trip extends Component {
 
   handleGetInfo(place) {
     this.setState({itemInfo: place, itemInfoModalOpen: true})
+  }
+
+  handleNewStartLocation(place){
+    let index = this.props.placesDistance.findIndex(entry => _.isEqual(entry, place));
+    for(let i = 0; i < index; i++) {
+      this.handleNextLocation();
+    }
   }
 
   handleRemoveItem(place) {
