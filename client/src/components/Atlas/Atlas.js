@@ -9,6 +9,7 @@ import LocationsList from "./LocationsList";
 
 import {Map, Marker, Popup, TileLayer, Polyline} from 'react-leaflet';
 import Control from 'react-leaflet-control';
+import 'leaflet-control-geocoder';
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import userIcon from '../../static/images/user-marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
@@ -155,8 +156,10 @@ export default class Atlas extends Component {
     this.setState(stateObj);
   }
 
-  setMarker(mapClickInfo) {
+  async setMarker(mapClickInfo) {
     const mapLatLng = {name:"Marker Location", lat:mapClickInfo.latlng.lat, lng:mapClickInfo.latlng.lng};
+    const geocodeName = await this.reverseGeocode(mapClickInfo.latlng);
+    if(geocodeName) mapLatLng.name = geocodeName;
     if(this.state.markerPosition) {
       let tempMarker = this.state.markerPosition;
       this.changeInArray(this.state.placesSelected, tempMarker, mapLatLng, "placesSelected");
@@ -193,7 +196,7 @@ export default class Atlas extends Component {
 
   getMarker() {
     if (this.state.markerPosition) {
-      return this.createMarker(this.state.markerPosition, MARKER_ICON);
+      return this.createMarker(this.state.markerPosition, MARKER_ICON, this.state.markerPosition.name);
     }
   }
 
@@ -267,5 +270,22 @@ export default class Atlas extends Component {
     return(
         <Polyline positions={[from, to]} color={color}/>
     );
+  }
+
+  reverseGeocode(latlng) {
+    if(this.mapRef.current) {
+      const map = this.mapRef.current.leafletElement;
+      const geocoder = L.Control.Geocoder.nominatim();
+      return new Promise(resolve => {
+        geocoder.reverse(latlng, map.options.crs.scale(map.getZoom()), results => {
+          var r = results[0];
+          if (r) {
+            resolve(r.name);
+          } else {
+            resolve(null);
+          }
+        })
+      })
+    }
   }
 }

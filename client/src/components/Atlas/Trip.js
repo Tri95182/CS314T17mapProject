@@ -64,15 +64,18 @@ export default class Trip extends Component {
     const header = title == this.state.tripTitle;
     return (
       <Navbar className="trip-item" dark={header} light={!header} color={header ? "primary" : "white"}>
-        <NavbarBrand>{this.state.editingTripTitle && header ? 
+        <Row className="item-row"><Col>
+        <NavbarBrand className="break-word">{this.state.editingTripTitle && header ? 
           this.renderTripTitleInput() : 
           <div onClick={() => header ? this.setState({editingTripTitle:true}) : null}>{title}&nbsp;{header ? <EditIcon fontSize="small"/> : ""}</div>}
           {header ? <div>Total Distance:{this.props.tripDistances ? this.totalTripDistance(this.props.tripDistances) : ""}</div> : ""}
           {header ? <div>Distances:{this.props.tripDistances ? this.props.tripDistances.toString() : ""}</div> : "" }
         </NavbarBrand>
+        </Col><Col className="item-col" xs="1">
         <NavbarToggler onClick={() => toggle()}>
           {trigger ? <MenuOpenIcon/> : <MenuIcon/>}
         </NavbarToggler>
+        </Col></Row>
         <Collapse isOpen={trigger} navbar>
           {renderButtons()}
         </Collapse>
@@ -309,7 +312,7 @@ export default class Trip extends Component {
   }
 
   handleClearTrip() {
-    this.props.setParentState({placesDistance: []});
+    this.props.setParentState({placesDistance: [], tripDistances: []});
     this.resetItemIndex();
   }
 

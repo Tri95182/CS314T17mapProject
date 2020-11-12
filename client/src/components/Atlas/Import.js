@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {Button, Modal, ModalBody, ModalHeader, ModalFooter, Input, FormGroup, Label, FormText, Col} from 'reactstrap';
+import _ from 'lodash';
 
 export default class Import extends Component {
 
@@ -65,7 +66,8 @@ export default class Import extends Component {
     let ths = this;
     reader.onloadend = function () {
       const result = JSON.parse(reader.result);
-      result.places.map((place) => {
+      let placesLatLng = _.cloneDeep(result.places);
+      placesLatLng.map((place) => {
         place.lat = parseFloat(place.latitude);
         delete place.latitude;
         place.lng = parseFloat(place.longitude);
@@ -74,7 +76,7 @@ export default class Import extends Component {
         return place;
       })
       ths.props.setParentState({tripTitle: result.options.title, earthRadius: result.options.earthRadius});
-      ths.props.setGrandparentState({placesDistance: result.places});
+      ths.props.setGrandparentState({placesDistance: placesLatLng, placesSelected: result.places});
       ths.setState({fileContents: null});
     }
     reader.readAsText(this.state.fileContents);

@@ -30,3 +30,18 @@
   overflow: auto;
   max-height: 145px;
 }
+
+.break-word{
+  overflow: auto;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  white-space: pre-line;
+}
+
+.item-row{
+  width: 100%;
+}
+
+.item-col{
+  margin: auto;
+}

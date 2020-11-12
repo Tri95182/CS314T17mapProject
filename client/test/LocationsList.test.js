@@ -80,7 +80,7 @@ function testHandleLocationRemove() {
 
   let coord = {name: "Marker Location", lat: 0, lng: 0};
   simulateOnClickEvent(atlas, {latlng: coord});
-  expect(atlas.state().markerPosition).toEqual(coord);
+  expect(atlas.state().markerPosition).toEqual(null);
   
   loclist.instance().handleLocationRemove("Marker Location");
   expect(atlas.state().markerPosition).toEqual(null);
