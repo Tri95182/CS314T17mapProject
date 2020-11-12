@@ -227,7 +227,18 @@ function testFilterSelect() {
   search.setState({whereFilterOpen: false});
   expect(search.state().selectedWhereFilters.length).toEqual(1);
 
+  //test feeling lucky with filters
+  simulateOnClickEvent(search, 'Button', 1);
+  expect(search.state().selectedTypeFilters.length).toEqual(1);
+  expect(search.state().selectedWhereFilters.length).toEqual(1);
+
+  //test clear
   simulateOnClickEvent(search, 'Button', 2);
+  expect(search.state().selectedTypeFilters.length).toEqual(0);
+  expect(search.state().selectedWhereFilters.length).toEqual(0);
+
+  //test feeling lucky without filters
+  simulateOnClickEvent(search, 'Button', 1);
   expect(search.state().selectedTypeFilters.length).toEqual(0);
   expect(search.state().selectedWhereFilters.length).toEqual(0);
 }
