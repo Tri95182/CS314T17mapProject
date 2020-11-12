@@ -226,7 +226,7 @@ export default class Atlas extends Component {
 
   createMarker(position, icon, title="") {
     return (
-        <Marker key={title} ref={initMarker} position={{lat:position.lat, lng:position.lng}} icon={icon}>
+        <Marker key={title} position={{lat:position.lat, lng:position.lng}} icon={icon}>
           <Popup offset={[0, -18]} className="font-weight-bold"><a onClick={() => this.setInfo(position)}>
             {UNICODE_INFO_SYMBOL}&nbsp;{title}{title ? <br/> : ""}{this.getStringMarkerPosition(position)}
           </a></Popup>
