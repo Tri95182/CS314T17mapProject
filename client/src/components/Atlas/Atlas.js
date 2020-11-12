@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Col, Container, Row, Button} from 'reactstrap';
 import { sendServerRequest } from "../../utils/restfulAPI";
 import _ from 'lodash';
+import Info from "./Info";
 
 import Search from "./Search";
 import Trip from "./Trip";
@@ -27,6 +28,7 @@ const MAP_LAYER_ATTRIBUTION = "&copy; <a href=&quot;http://osm.org/copyright&quo
 const MAP_LAYER_URL = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
 const MAP_MIN_ZOOM = 1;
 const MAP_MAX_ZOOM = 19;
+const UNICODE_INFO_SYMBOL = "\u24D8";
 
 export default class Atlas extends Component {
 
@@ -48,7 +50,9 @@ export default class Atlas extends Component {
       placesSelected: [],
       placesDistance: [],
       distanceBetween: 0,
-      tripDistances: []
+      tripDistances: [],
+      infoModelOpen: false,
+      info: null
     };
   }
 
@@ -200,6 +204,7 @@ export default class Atlas extends Component {
     }
   }
 
+
   createMarker(position, icon, title="") {
     const initMarker = ref => {
       if (ref) {
@@ -208,12 +213,18 @@ export default class Atlas extends Component {
     };
 
     return (
-      <Marker key={title} ref={initMarker} position={position} icon={icon}>
-        <Popup offset={[0, -18]} className="font-weight-bold">{title}{title ? <br/> : ""}{this.getStringMarkerPosition(position)}</Popup>
-      </Marker>
+        <Marker key={title} ref={initMarker} position={position} icon={icon}>
+          <Popup offset={[0, -18]} className="font-weight-bold">
+            <a onClick={() => this.setInfo(position)}>
+              {UNICODE_INFO_SYMBOL}&nbsp;{title}{title ? <br/> : ""}{this.getStringMarkerPosition(position)}
+            </a></Popup>
+        </Marker>
     );
   }
 
+  setInfo(place){
+    this.setState({info:place, infoModelOpen: true});
+  }
   getStringMarkerPosition(position) {
     return position.lat.toFixed(2) + ', ' + position.lng.toFixed(2);
   }
