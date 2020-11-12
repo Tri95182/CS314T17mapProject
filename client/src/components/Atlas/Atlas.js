@@ -66,6 +66,7 @@ export default class Atlas extends Component {
                 {this.renderSearchComponent()}
                 {this.renderTrip()}
                 {this.renderLocationsListComponent()}
+                {this.renderInfo()}
               </Col>
             </Row>
           </Container>
@@ -280,6 +281,18 @@ export default class Atlas extends Component {
   renderPolyline(from, to, color) {
     return(
         <Polyline positions={[from, to]} color={color}/>
+    );
+  }
+
+  renderInfo() {
+    return (
+        <Info
+            infoModalOpen={this.state.infoModalOpen}
+            info={this.state.info}
+            toggle={() => {const temp = !this.state.infoModalOpen; this.setState({infoModalOpen: temp});}}
+            setParentState={this.setParentState}
+            placesDistance={this.state.placesDistance}
+        />
     );
   }
 
