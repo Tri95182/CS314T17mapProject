@@ -127,8 +127,10 @@ export default class Atlas extends Component {
             setParentState={this.setParentState}
             createSnackBar={this.props.createSnackBar}
             sendRequest={this.sendRequest}
-            filters={(this.props.serverSettings && this.props.serverSettings.serverConfig && this.props.serverSettings.serverConfig.filters) ?
-                this.props.serverSettings.serverConfig.filters : {}
+            filters={(this.props.serverSettings &&
+                this.props.serverSettings.serverConfig &&
+                this.props.serverSettings.serverConfig.filters
+              ) ? this.props.serverSettings.serverConfig.filters : {}
             }
         />
     );
@@ -209,7 +211,12 @@ export default class Atlas extends Component {
   getUserPosition() {
     if(navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
-        this.setState({userPosition: {name: 'Current Location', lat: position.coords.latitude, lng: position.coords.longitude}});
+        this.setState(
+          {userPosition: {
+            name: 'Current Location',
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          }});
       })
 
       if(this.state.userPosition) {
