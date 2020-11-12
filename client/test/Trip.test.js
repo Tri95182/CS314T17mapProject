@@ -22,8 +22,8 @@ function testTripRender() {
   expect(trip.find("ListGroup").length).toEqual(1);
   expect(trip.find("DragDropContext").length).toEqual(1);
   expect(trip.find("Nav").length).toEqual(1);
-  expect(trip.find("NavItem").length).toEqual(4);
-  expect(trip.find("NavLink").length).toEqual(4);
+  expect(trip.find("NavItem").length).toEqual(6);
+  expect(trip.find("NavLink").length).toEqual(6);
   expect(trip.find("Navbar").length).toEqual(1);
   expect(trip.find("NavbarBrand").length).toEqual(1);
   expect(trip.find("NavbarToggler").length).toEqual(1);
