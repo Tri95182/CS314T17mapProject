@@ -163,7 +163,17 @@ export default class Atlas extends Component {
         />
     );
   }
-
+  renderInfo() {
+    return (
+        <Info
+            infoModalOpen={this.state.infoModalOpen}
+            info={this.state.info}
+            toggle={() => {const temp = !this.state.infoModalOpen; this.setState({infoModalOpen: temp});}}
+            setParentState={this.setParentState}
+            placesDistance={this.state.placesDistance}
+        />
+    );
+  }
 
 
   setParentState(stateObj) {
