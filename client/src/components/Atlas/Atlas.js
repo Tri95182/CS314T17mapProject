@@ -6,6 +6,7 @@ import _ from 'lodash';
 import Search from "./Search";
 import Trip from "./Trip";
 import LocationsList from "./LocationsList";
+import Info from "./Info";
 
 import {Map, Marker, Popup, TileLayer, Polyline} from 'react-leaflet';
 import Control from 'react-leaflet-control';
@@ -27,6 +28,7 @@ const MAP_LAYER_ATTRIBUTION = "&copy; <a href=&quot;http://osm.org/copyright&quo
 const MAP_LAYER_URL = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
 const MAP_MIN_ZOOM = 1;
 const MAP_MAX_ZOOM = 19;
+const UNICODE_INFO_SYMBOL = "\u24D8";
 
 export default class Atlas extends Component {
 
@@ -48,7 +50,9 @@ export default class Atlas extends Component {
       placesSelected: [],
       placesDistance: [],
       distanceBetween: 0,
-      tripDistances: []
+      tripDistances: [],
+      infoModalOpen: false,
+      info: null
     };
   }
 
@@ -62,6 +66,7 @@ export default class Atlas extends Component {
                 {this.renderSearchComponent()}
                 {this.renderTrip()}
                 {this.renderLocationsListComponent()}
+                {this.renderInfo()}
               </Col>
             </Row>
           </Container>
@@ -88,7 +93,14 @@ export default class Atlas extends Component {
           {this.renderControlButton(() => this.flyToLocation(this.state.userPosition), LocationIcon, !this.state.userPosition)}
           {this.renderControlButton(() => this.setState({listModalOpen: true}), ListIcon)}
           {this.getUserPosition()}
-          {this.state.placesSelected.map((place) => this.createMarker({lat:Number(place.latitude), lng:Number(place.longitude)}, MARKER_ICON, place.name))}
+          {this.state.placesSelected.map((place) => {
+            let placeLatLng = _.cloneDeep(place);
+            placeLatLng.lat = Number(place.latitude);
+            delete placeLatLng.latitude;
+            placeLatLng.lng = Number(place.longitude);
+            delete placeLatLng.longitude
+            return this.createMarker(placeLatLng, MARKER_ICON, place.name);
+          })}
           {this.getMarker()}
           {this.renderTripPolylines()}
         </Map>
@@ -97,60 +109,72 @@ export default class Atlas extends Component {
 
   renderControlButton(onClick, Icon, disabled=false) {
     return (
-      <Control position="topleft">
-        <Button className="map-control" size="sm" onClick={onClick} disabled={disabled}>
+        <Control position="topleft">
+          <Button className="map-control" size="sm" onClick={onClick} disabled={disabled}>
             <Icon fontSize="small"/>
-        </Button>
-      </Control>      
+          </Button>
+        </Control>
     );
   }
 
   renderSearchComponent() {
     return (
-      <Search 
-        searchModalOpen={this.state.searchModalOpen} 
-        places={this.state.places} 
-        placesFound={this.state.placesFound} 
-        placesSelected={this.state.placesSelected}
-        setParentState={this.setParentState}
-        createSnackBar={this.props.createSnackBar}
-        sendRequest={this.sendRequest}
-        filters={(this.props.serverSettings && this.props.serverSettings.serverConfig && this.props.serverSettings.serverConfig.filters) ? 
-          this.props.serverSettings.serverConfig.filters : {}
-        }
-      />
+        <Search
+            searchModalOpen={this.state.searchModalOpen}
+            places={this.state.places}
+            placesFound={this.state.placesFound}
+            placesSelected={this.state.placesSelected}
+            setParentState={this.setParentState}
+            createSnackBar={this.props.createSnackBar}
+            sendRequest={this.sendRequest}
+            filters={(this.props.serverSettings && this.props.serverSettings.serverConfig && this.props.serverSettings.serverConfig.filters) ?
+                this.props.serverSettings.serverConfig.filters : {}
+            }
+        />
     );
   }
 
   renderLocationsListComponent() {
     return (
-      <LocationsList
-        listModalOpen={this.state.listModalOpen}
-        userPosition={this.state.userPosition}
-        markerPosition={this.state.markerPosition}
-        placesSelected={this.state.placesSelected}
-        placesDistance={this.state.placesDistance}
-        distanceBetween={this.state.distanceBetween}
-        flyToLocation={this.flyToLocation}
-        setParentState={this.setParentState}
-        createSnackBar={this.props.createSnackBar}
-        mapRef={this.mapRef}
-        sendRequest={this.sendRequest}
-      />
+        <LocationsList
+            listModalOpen={this.state.listModalOpen}
+            userPosition={this.state.userPosition}
+            markerPosition={this.state.markerPosition}
+            placesSelected={this.state.placesSelected}
+            placesDistance={this.state.placesDistance}
+            distanceBetween={this.state.distanceBetween}
+            flyToLocation={this.flyToLocation}
+            setParentState={this.setParentState}
+            createSnackBar={this.props.createSnackBar}
+            mapRef={this.mapRef}
+            sendRequest={this.sendRequest}
+        />
     );
   }
 
   renderTrip() {
     return (
-      <Trip
-        placesDistance={this.state.placesDistance}
-        tripDistances={this.state.tripDistances}
-        setParentState={this.setParentState}
-        sendRequest={this.sendRequest}
-        createSnackBar={this.props.createSnackBar}
-      />
+        <Trip
+            placesDistance={this.state.placesDistance}
+            tripDistances={this.state.tripDistances}
+            setParentState={this.setParentState}
+            sendRequest={this.sendRequest}
+            createSnackBar={this.props.createSnackBar}
+        />
     );
   }
+  renderInfo() {
+    return (
+        <Info
+            infoModalOpen={this.state.infoModalOpen}
+            info={this.state.info}
+            toggle={() => {const temp = !this.state.infoModalOpen; this.setState({infoModalOpen: temp});}}
+            setParentState={this.setParentState}
+            placesDistance={this.state.placesDistance}
+        />
+    );
+  }
+
 
   setParentState(stateObj) {
     this.setState(stateObj);
@@ -185,7 +209,7 @@ export default class Atlas extends Component {
   getUserPosition() {
     if(navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
-        this.setState({userPosition: {lat: position.coords.latitude, lng: position.coords.longitude}});
+        this.setState({userPosition: {name: 'Current Location', lat: position.coords.latitude, lng: position.coords.longitude}});
       })
 
       if(this.state.userPosition) {
@@ -202,11 +226,18 @@ export default class Atlas extends Component {
 
   createMarker(position, icon, title="") {
     return (
-      <Marker key={title} position={position} icon={icon}>
-        <Popup offset={[0, -18]} className="font-weight-bold">{title}{title ? <br/> : ""}{this.getStringMarkerPosition(position)}</Popup>
-      </Marker>
+        <Marker key={title} position={{lat:position.lat, lng:position.lng}} icon={icon}>
+          <Popup offset={[0, -18]} className="font-weight-bold"><a onClick={() => this.setInfo(position)}>
+            {UNICODE_INFO_SYMBOL}&nbsp;{title}{title ? <br/> : ""}{this.getStringMarkerPosition(position)}
+          </a></Popup>
+        </Marker>
     );
   }
+
+  setInfo(place) {
+    this.setState({info: place, infoModalOpen: true})
+  }
+
 
   getStringMarkerPosition(position) {
     return position.lat.toFixed(2) + ', ' + position.lng.toFixed(2);
@@ -230,33 +261,33 @@ export default class Atlas extends Component {
     let res = null;
 
     await sendServerRequest(request)
-    .then(response => {
-      if(response) { res = response.data; }
-      else {
-        this.props.createSnackBar("The Request To The Server Failed. Please Try Again Later.");
-      }
-    })
+        .then(response => {
+          if(response) { res = response.data; }
+          else {
+            this.props.createSnackBar("The Request To The Server Failed. Please Try Again Later.");
+          }
+        })
 
     return res;
   }
 
   renderTripPolylines() {
     return (
-      <div>
-        {this.state.placesDistance.map((place, index) => {
-          let nextLatLng;
-          let color = 'blue'
-          if(index != this.state.placesDistance.length-1) {
-            nextLatLng = this.state.placesDistance[index+1]
-            if (index == 0) {
-              color = 'red';
+        <div>
+          {this.state.placesDistance.map((place, index) => {
+            let nextLatLng;
+            let color = 'blue'
+            if(index != this.state.placesDistance.length-1) {
+              nextLatLng = this.state.placesDistance[index+1]
+              if (index == 0) {
+                color = 'red';
+              }
+            } else {
+              nextLatLng = this.state.placesDistance[0];
             }
-          } else {
-            nextLatLng = this.state.placesDistance[0];
-          }
-          return this.renderPolyline([nextLatLng.lat, nextLatLng.lng], [place.lat, place.lng], color);
-        })}
-      </div>
+            return this.renderPolyline([nextLatLng.lat, nextLatLng.lng], [place.lat, place.lng], color);
+          })}
+        </div>
     );
   }
 
