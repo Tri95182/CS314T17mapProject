@@ -60,7 +60,7 @@ function testGeolocation() {
 
   atlas.instance().getUserPosition();  
 
-  expect(atlas.state().userPosition).toEqual({lat:10, lng:20});
+  expect(atlas.state().userPosition).toEqual({name: "Current Location", lat:10, lng:20});
 }
 
 test("Test geolocation sets user state", testGeolocation);
