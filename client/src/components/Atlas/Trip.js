@@ -223,6 +223,7 @@ export default class Trip extends Component {
     for(let i = 0; i < index; i++) {
       this.handleNextLocation();
     }
+    this.setState({itemMenuOpen:false})
   }
 
   handleRemoveItem(place) {
