@@ -58,7 +58,7 @@ function testRenderFilters() {
   expect(search.find('Collapse').length).toEqual(1);
   expect(search.find('ButtonGroup').length).toEqual(1);
   expect(search.find('ButtonDropdown').length).toEqual(2);
-  expect(search.find('Button').length).toEqual(3);
+  expect(search.find('Button').length).toEqual(4);
 }
 
 test("Test render of search filters", testRenderFilters);
@@ -227,7 +227,7 @@ function testFilterSelect() {
   search.setState({whereFilterOpen: false});
   expect(search.state().selectedWhereFilters.length).toEqual(1);
 
-  simulateOnClickEvent(search, 'Button', 1);
+  simulateOnClickEvent(search, 'Button', 2);
   expect(search.state().selectedTypeFilters.length).toEqual(0);
   expect(search.state().selectedWhereFilters.length).toEqual(0);
 }
