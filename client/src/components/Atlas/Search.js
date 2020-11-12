@@ -9,7 +9,7 @@ import * as findSchema from "../../../schemas/ResponseFind";
 import SearchIcon from '@material-ui/icons/Search';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import ClearIcon from '@material-ui/icons/Clear';
-
+import NotListedLocationIcon from '@material-ui/icons/NotListedLocation';
 // import ButtonGroup from '@material-ui/core/ButtonGroup';
 // import Button from '@material-ui/core/Button';
 
@@ -99,7 +99,7 @@ export default class Search extends Component {
           () => this.filterToggle(this.state.whereFilterOpen, "whereFilterOpen"))}
           <Button onClick={async () => {
             await this.handleSearch({target:{value:this.state.searchInput}});
-          }}>Feeling Lucky<ClearIcon fontSize="small"/></Button>
+          }}>Feeling Lucky<NotListedLocationIcon fontSize="small"/></Button>
           <Button onClick={async () => {
             await this.handleFilterClear();
             await this.handleSearch({target:{value:this.state.searchInput}});
