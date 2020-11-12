@@ -25,11 +25,11 @@ export default class Distance extends Component {
 
   handleDistance(){
     if(this.props.placesDistance.length == 2){
-
-      let distanceRequest = {requestType: "distance", requestVersion: PROTOCOL_VERSION,
+      const RADIUS = 6371.0;
+      const distanceRequest = {requestType: "distance", requestVersion: PROTOCOL_VERSION,
         place1: this.getRequestPlace(this.props.placesDistance[0]),
         place2: this.getRequestPlace(this.props.placesDistance[1]),
-        earthRadius: 6371.0}
+        earthRadius: RADIUS}
 
       this.props.sendRequest(distanceRequest)
       .then(response => this.processDistanceResponse(response));
@@ -42,7 +42,7 @@ export default class Distance extends Component {
 
   processDistanceResponse(distanceResponse) {
     if(!isJsonResponseValid(distanceResponse, distanceSchema)) {
-      let message = "Distance Response Not Valid. Check The Server.";
+      const message = "Distance Response Not Valid. Check The Server.";
       LOG.error(message);
       this.props.setParentState({distanceBetween: 0});
       this.props.createSnackBar(message);

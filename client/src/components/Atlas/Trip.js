@@ -219,7 +219,7 @@ export default class Trip extends Component {
   }
 
   handleNewStartLocation(place){
-    let index = this.props.placesDistance.findIndex(entry => _.isEqual(entry, place));
+    const index = this.getPlacesDistanceIndex(place);
     for(let i = 0; i < index; i++) {
       this.handleNextLocation();
     }
@@ -227,7 +227,7 @@ export default class Trip extends Component {
   }
 
   handleRemoveItem(place) {
-    let index = this.props.placesDistance.findIndex(entry => _.isEqual(entry, place));
+    const index = this.getPlacesDistanceIndex(place);
     if(index != -1) {
       let temp = _.cloneDeep(this.props.placesDistance);
       temp.splice(index, 1);
@@ -236,12 +236,15 @@ export default class Trip extends Component {
     }
   }
 
+  getPlacesDistanceIndex(place) {
+    return this.props.placesDistance.findIndex(entry => _.isEqual(entry, place));
+  }
+
   handleDragEnd(result) {
-    if(!result.destination) {
-      return;
+    if(result.destination) {
+      const newList = this.reorderItems(this.props.placesDistance, result.source.index, result.destination.index);
+      this.props.setParentState({placesDistance: newList});
     }
-    const newList = this.reorderItems(this.props.placesDistance, result.source.index, result.destination.index);
-    this.props.setParentState({placesDistance: newList});
   }
 
   reorderItems(list, srcIndex, destIndex) {
@@ -254,9 +257,7 @@ export default class Trip extends Component {
 
   handleCalculateTrip() {
     if(this.props.placesDistance.length > 0) {
-      let tripRequest = this.createTripJson();
-
-      this.props.sendRequest(tripRequest)
+      this.props.sendRequest(this.createTripJson())
       .then(response => this.processTripResponse(response));
     }
   }
@@ -279,7 +280,7 @@ export default class Trip extends Component {
 
   processTripResponse(tripResponse) {
     if(!isJsonResponseValid(tripResponse, tripSchema)) {
-      let message = "Trip Response Not Valid. Check The Server.";
+      const message = "Trip Response Not Valid. Check The Server.";
       LOG.error(message);
       this.props.setParentState({tripDistances: []});
       this.props.createSnackBar(message);
