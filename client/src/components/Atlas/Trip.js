@@ -119,7 +119,7 @@ export default class Trip extends Component {
         <Row>
           <Col>
             {this.createTripButton(PlayArrowIcon, "Calculate", () => this.handleCalculateTrip())}
-            {this.createTripButton(ArrowForwardIcon, "Next Location", () => this.handleNextLocation())}
+            {this.createTripButton(ArrowForwardIcon, "Next", () => this.handleNextLocation())}
           </Col>
           <Col>
             {this.createTripButton(GetAppIcon, "Save", () => this.handleSaveTrip())}
