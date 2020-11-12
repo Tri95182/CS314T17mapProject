@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Collapse, Button, ButtonGroup, InputGroup, Input, InputGroupAddon, InputGroupText, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText, Modal, ModalBody, ModalFooter, ModalHeader, Spinner, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Row, Col, Badge} from 'reactstrap';
+import {Collapse, Button, ButtonGroup, InputGroup, Input, InputGroupAddon, InputGroupText, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText, Modal, ModalBody, ModalFooter, ModalHeader, Spinner, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Row, Badge} from 'reactstrap';
 import { isJsonResponseValid } from "../../utils/restfulAPI";
 import _ from 'lodash';
 
@@ -9,6 +9,7 @@ import * as findSchema from "../../../schemas/ResponseFind";
 import SearchIcon from '@material-ui/icons/Search';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import ClearIcon from '@material-ui/icons/Clear';
+
 // import ButtonGroup from '@material-ui/core/ButtonGroup';
 // import Button from '@material-ui/core/Button';
 
@@ -96,6 +97,9 @@ export default class Search extends Component {
           () => this.filterToggle(this.state.typeFilterOpen, "typeFilterOpen"))}
           {this.renderFilterDropDown("Where", this.props.filters.where ? this.props.filters.where : [], this.state.whereFilterOpen, 
           () => this.filterToggle(this.state.whereFilterOpen, "whereFilterOpen"))}
+          <Button onClick={async () => {
+            await this.handleSearch({target:{value:this.state.searchInput}});
+          }}>Feeling Lucky<ClearIcon fontSize="small"/></Button>
           <Button onClick={async () => {
             await this.handleFilterClear();
             await this.handleSearch({target:{value:this.state.searchInput}});
