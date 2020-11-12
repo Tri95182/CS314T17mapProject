@@ -225,12 +225,6 @@ export default class Atlas extends Component {
   }
 
   createMarker(position, icon, title="") {
-    const initMarker = ref => {
-      if (ref) {
-        ref.leafletElement.openPopup();
-      }
-    };
-
     return (
         <Marker key={title} ref={initMarker} position={{lat:position.lat, lng:position.lng}} icon={icon}>
           <Popup offset={[0, -18]} className="font-weight-bold"><a onClick={() => this.setInfo(position)}>
