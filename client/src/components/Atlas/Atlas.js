@@ -45,13 +45,14 @@ export default class Atlas extends Component {
       userPosition: null,
       searchModalOpen: false,
       listModalOpen: false,
-
       places: [],
       placesFound: 0,
       placesSelected: [],
       placesDistance: [],
       distanceBetween: 0,
-      tripDistances: []
+      tripDistances: [],
+      infoModalOpen: false,
+      info: null
     };
   }
 
