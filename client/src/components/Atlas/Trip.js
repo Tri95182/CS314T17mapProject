@@ -298,6 +298,7 @@ export default class Trip extends Component {
   }
 
   handleReverseTrip() {
+    this.handleNextLocation();
     const revPlaces = this.props.placesDistance.reverse();
     this.props.setParentState({placesDistance: revPlaces});
   }
