@@ -105,10 +105,11 @@ The component hierarchy for the base application depicted below shows the our to
 * App renders the major components on the screen.
 * Header renders an icon and a team name in the top banner.
 * Footer renders the current server connection in the bottom footer.
-* Atlas renders a map.
+* Atlas renders a map and the trip Itinerary.
+* Trip holds all the locations in itinerary and gives general tools to interact with the trip. 
 * About renders information about the team.
 
-![base component hierarchy](images/ComponentHierarchyS3.png)
+![base component hierarchy](images/Sprint4ComponentHierarchy.png)
 
 We do not show the many ReactStrap components in this hierarchy, even though they will appear when you are debugging on the client.
 
@@ -142,6 +143,7 @@ We added our team name to all the sections that needed the update. We also added
 # Sprint 2
 For sprint 2 we added both distance and find .json requests along with their appropriate needed files to help them run. We also added a return to current location button and a search button to the map. The search button uses the find request to show locations relating to the search. Adding to that, we added buttons that generate below the map that allow us to select which two locations we want in order to get the distance. Finally, we added a distance button that when clicked after selecting two locations will provide the distance in miles to the user.
 # Sprint 3
-For Sprint 3 we added trips and the UI to support it. First we moved the location list to it's own button on the atlas. This allowed us to have space for trip, and made adding to trip easier. Than directly from search bar to trip. In search bar we can add locations to the locations list, this way were not adding directly to trip and making a mess of our list. Trip is now under our atlas, This displays the trip name, Total Distance, Distnaces, and our locations in our trip. We have the ablity to reorder our trip by drag and drop, this changes the order of the polylines and corrects the distances. In our drag and drop locations we have the ablity to delete the location or see more info about it. In our trip Hamburger option button we have the ablitly Calculate, Save, Clear, and Load. Thats most of what we added this sprint 3.
+For Sprint 3 we added trips and the UI to support it. First we moved the location list to it's own button on the atlas. This allowed us to have space for trip, and made adding to trip easier than directly from search bar to trip. In search bar we can add locations to the locations list, this way were not adding directly to trip and making a mess of our list. Trip is now under our atlas, This displays the trip name, Total Distance, Distnaces, and our locations in our trip. We have the ablity to reorder our trip by drag and drop, this changes the order of the polylines and corrects the distances. In our drag and drop locations we have the ablity to delete the location or see more info about it. In our trip Hamburger option button we have the ablitly Calculate, Save, Clear, and Load. Thats most of what we added this sprint 3.
 # Sprint 4 
+For sprint 4, we added a handful of UI things. First we added filters to the search and the ability to clear the filters. In the same sub-menu we also added the feeling lucky button returning a random place based on the filters given. The next thing we added was the red poly-line to indicate your current leg of the trip. In the itinerary section we added more buttons with their functions. We added Load functionality, and next and reverse buttons and functions. In the location options, we added a set as start button and function to pick a new starting location. Finally we added added more info when you click on the lat at the location marker. We also fixed a handful of UI bugs.
 # Sprint 5
