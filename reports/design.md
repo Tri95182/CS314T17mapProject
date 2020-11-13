@@ -41,7 +41,7 @@ They will be added later in the semester.
 
 
 ### User Interface
-![base](images/WebUIS4-Begin.png)
+![base](images/UIRedux.png)
 
 The basic screen in black shows the view on a mobile device, with a header, footer, and map.
 The header contains a earth logo and the team name obtained from the server when the client was loaded.
@@ -99,6 +99,23 @@ If not successful, nothing changes and the user may continue to make URL changes
 If successful, the new server name should appear and a Save button should replace the Test button.
 When the user clicks the Save button, the server connection should change and the popup closes, revealing the new servername and URL in the footer.
 
+#### Clicking on the Filter button allows you to get access to the filters 'Type', 'Where' , 'Clear' and Feeling luckly
+After opening up the extra slots , you get the ablity to pick what type of airport and what country to filter by. Clear, removes all fitlers and feeling luckly shows a random one.
+
+#### The Next button 
+This button reorders the list so you next location is on top of the list. 
+
+#### Clicking on the load button
+The load button open the load modal that allows the user to upload their own trips. 
+
+#### Reverse
+The reverse button reverses the trip list.
+
+#### The Set as Start button
+If you set one of the locations as start if will be scrolled to the top. 
+
+#### Popup button
+if you click on any marker a popup with cordinets will apear, if you click on that the info modal for the location will apear.
 
 ### Component Hierarchy
 The component hierarchy for the base application depicted below shows the our top level App component with four children components.
