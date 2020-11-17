@@ -42,7 +42,12 @@ public class RequestTrip extends RequestHeader {
       // distance between first and last
       distance = distanceCalc.calculate(earthRadius, this.places.get(0), this.places.get(this.places.size() - 1));
       this.distances.add(distance);
+    } else if (this.places.size() == 1) {
+      this.distances.add(distanceCalc.calculate(earthRadius, this.places.get(0), this.places.get(0)));
     }
+
+
+
   }
 
   //for testing purposes

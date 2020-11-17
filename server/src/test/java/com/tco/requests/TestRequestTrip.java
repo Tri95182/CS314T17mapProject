@@ -38,6 +38,17 @@ public class TestRequestTrip {
   }
 
   @Test
+  @DisplayName("test 1 place")
+  public void testOnePlace() {
+    List<Map<String,String>> places = Arrays.asList(
+            genPlace("Alice","0","0"));
+    this.trip = new RequestTrip("title","1",places);
+    this.trip.buildResponse();
+    List<Long> ans= Arrays.asList((long)0);
+    assertEquals(ans, trip.getDistances());
+  }
+
+  @Test
   @DisplayName("test empty trip request")
   public void testEmptyDistances() {
     this.trip = new RequestTrip("title","1",new ArrayList<>());
