@@ -1,10 +1,10 @@
-# Sprint 5 - *your team number* - *your team name*
+# Sprint 5 - t17 - Team Bloo
 
 ## Goal
 ### User Experience
 
 ## Sprint Leader
-### *firstname lastname*
+### Tri Nguyen
 
 
 ## Definition of Done
@@ -39,22 +39,22 @@
 
 
 ## Planned Epics
-
+Clean Up, Distance Unit and Shorter
 
 ## Metrics
 
 | Statistic | # Planned | # Completed |
 | --- | ---: | ---: |
-| Epics | *count* | *count* |
-| Tasks |  *count*   | *count* | 
-| Story Points |  *sum*  | *sum* | 
+| Epics | 3-4 | *count* | 
+| Tasks | 12 | *count* | 
+| Story Points |  15 | *sum* | 
 
 
 ## Scrums
 
 | Date | Tasks closed  | Tasks in progress | Impediments |
 | :--- | :--- | :--- | :--- |
-| *date* | *#task, ...* | *#task, ...* |  | 
+| 11/16 |  | #326, #331, #149 |  | 
 
 
 ## Review
