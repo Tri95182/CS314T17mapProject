@@ -16,6 +16,24 @@ The JavaScript code will be useful examples for students to learn from and lever
 The progressive display of information using collapsible sections and popups will serve as examples of good user interface design.
 The overall design is somewhat minimalist/simple for the intended mobile device audience.
 
+
+
+
+# Sprint 1
+We added our team name to all the sections that needed the update. We also added a get more info clickable at the bottom instead of a url to make it easier to read. Once the info is clicked there is information about the name, URL, version, and type. Also, the name at the top of the page can be clicked to go to the team about page. Here we have information regard ing the members of Team Bloo and a picture of them. The mission statement also appears on this page. The page can be closed either by clicking the team name at the top or the close button on the right side of the screen.
+
+
+# Sprint 2
+For sprint 2 we added both distance and find .json requests along with their appropriate needed files to help them run. We also added a return to current location button and a search button to the map. The search button uses the find request to show locations relating to the search. Adding to that, we added buttons that generate below the map that allow us to select which two locations we want in order to get the distance. Finally, we added a distance button that when clicked after selecting two locations will provide the distance in miles to the user.
+
+
+# Sprint 3
+For Sprint 3 we added trips and the UI to support it. First we moved the location list to it's own button on the atlas. This allowed us to have space for trip, and made adding to trip easier than directly from search bar to trip. In search bar we can add locations to the locations list, this way were not adding directly to trip and making a mess of our list. Trip is now under our atlas, This displays the trip name, Total Distance, Distnaces, and our locations in our trip. We have the ablity to reorder our trip by drag and drop, this changes the order of the polylines and corrects the distances. In our drag and drop locations we have the ablity to delete the location or see more info about it. In our trip Hamburger option button we have the ablitly Calculate, Save, Clear, and Load. Thats most of what we added this sprint 3.
+
+
+# Sprint 4 
+For sprint 4, we added a handful of UI things. First we added filters to the search and the ability to clear the filters. In the same sub-menu we also added the feeling lucky button returning a random place based on the filters given. The next thing we added was the red poly-line to indicate your current leg of the trip. In the itinerary section we added more buttons with their functions. We added Load functionality, and next and reverse buttons and functions. In the location options, we added a set as start button and function to pick a new starting location. Finally we added added more info when you click on the lat at the location marker. We also fixed a handful of UI bugs.
+
 ### Architecture
 
 The Base architecture is a JavaScript single page web application in an HTML5 browser that uses RESTful APIs to access Micro-services provided by a Java server running on Linux.
@@ -153,14 +171,4 @@ Often there are several related classes but we've listed only one to simplify th
 * Spark provides the necessary web support for our MicroServer.
 * JSON provides libraries to manipulate JSON objects using the JSON Schema libraries.
 * Logger provides a centralized logging facility used in all of the application classes.
-
-
-# Sprint 1
-We added our team name to all the sections that needed the update. We also added a get more info clickable at the bottom instead of a url to make it easier to read. Once the info is clicked there is information about the name, URL, version, and type. Also, the name at the top of the page can be clicked to go to the team about page. Here we have information regard ing the members of Team Bloo and a picture of them. The mission statement also appears on this page. The page can be closed either by clicking the team name at the top or the close button on the right side of the screen.
-# Sprint 2
-For sprint 2 we added both distance and find .json requests along with their appropriate needed files to help them run. We also added a return to current location button and a search button to the map. The search button uses the find request to show locations relating to the search. Adding to that, we added buttons that generate below the map that allow us to select which two locations we want in order to get the distance. Finally, we added a distance button that when clicked after selecting two locations will provide the distance in miles to the user.
-# Sprint 3
-For Sprint 3 we added trips and the UI to support it. First we moved the location list to it's own button on the atlas. This allowed us to have space for trip, and made adding to trip easier than directly from search bar to trip. In search bar we can add locations to the locations list, this way were not adding directly to trip and making a mess of our list. Trip is now under our atlas, This displays the trip name, Total Distance, Distnaces, and our locations in our trip. We have the ablity to reorder our trip by drag and drop, this changes the order of the polylines and corrects the distances. In our drag and drop locations we have the ablity to delete the location or see more info about it. In our trip Hamburger option button we have the ablitly Calculate, Save, Clear, and Load. Thats most of what we added this sprint 3.
-# Sprint 4 
-For sprint 4, we added a handful of UI things. First we added filters to the search and the ability to clear the filters. In the same sub-menu we also added the feeling lucky button returning a random place based on the filters given. The next thing we added was the red poly-line to indicate your current leg of the trip. In the itinerary section we added more buttons with their functions. We added Load functionality, and next and reverse buttons and functions. In the location options, we added a set as start button and function to pick a new starting location. Finally we added added more info when you click on the lat at the location marker. We also fixed a handful of UI bugs.
 # Sprint 5
