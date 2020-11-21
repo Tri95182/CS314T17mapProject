@@ -66,7 +66,14 @@ export default class Import extends Component {
     let ths = this;
     reader.onloadend = function () {
       const result = JSON.parse(reader.result);
-      let placesLatLng = _.cloneDeep(result.places);
+      let alreadySeen = []
+      const placesFiltered = result.places.filter((place) => {
+        if(place.name && !alreadySeen.includes(place.name)) {
+          alreadySeen.push(place.name)
+          return place
+        }
+      })
+      let placesLatLng = _.cloneDeep(placesFiltered);
       placesLatLng.map((place) => {
         place.lat = parseFloat(place.latitude);
         delete place.latitude;
@@ -76,7 +83,7 @@ export default class Import extends Component {
         return place;
       })
       ths.props.setParentState({tripTitle: result.options.title, earthRadius: result.options.earthRadius});
-      ths.props.setGrandparentState({placesDistance: placesLatLng, placesSelected: result.places});
+      ths.props.setGrandparentState({placesDistance: placesLatLng, placesSelected: placesFiltered});
       ths.setState({fileContents: null});
     }
     reader.readAsText(this.state.fileContents);
