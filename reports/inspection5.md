@@ -4,7 +4,7 @@
 | ----- | ----- |
 | Subject | ** |
 | Meeting | *11/20/20 7pm* |
-| Checklist | *[Link to checklist](reports/checklist.md)* |
+| Checklist | *[Link to checklist](checklist.md)* |
 
 ### Roles
 
