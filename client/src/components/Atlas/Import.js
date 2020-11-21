@@ -63,8 +63,7 @@ export default class Import extends Component {
 
   handleLoadFile() {
     let reader = new FileReader();
-    let ths = this;
-    reader.onloadend = function () {
+    reader.onload = () => {
       const result = JSON.parse(reader.result);
       let alreadySeen = []
       const placesFiltered = result.places.filter((place) => {
@@ -82,9 +81,9 @@ export default class Import extends Component {
   
         return place;
       })
-      ths.props.setParentState({tripTitle: result.options.title, earthRadius: result.options.earthRadius});
-      ths.props.setGrandparentState({placesDistance: placesLatLng, placesSelected: placesFiltered});
-      ths.setState({fileContents: null});
+      this.props.setParentState({tripTitle: result.options.title, earthRadius: parseFloat(result.options.earthRadius)});
+      this.props.setGrandparentState({placesDistance: placesLatLng, placesSelected: placesFiltered});
+      this.setState({fileContents: null});
     }
     reader.readAsText(this.state.fileContents);
   }
