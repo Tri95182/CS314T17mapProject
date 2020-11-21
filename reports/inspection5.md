@@ -10,7 +10,7 @@
 
 | Name | Preparation Time |
 | ---- | ---- |
-| Collin Wernsman |  |
+| Collin Wernsman | 30 min |
 | Tri Nguyen |  |
 | Jack Melvin |  |
 
@@ -18,3 +18,4 @@
 
 | file:line | problem | hi/med/low | who found | github#  |
 | --- | --- | :---: | :---: | --- |
+| Trip.js:111-113 | toggle only used once, could be reduced to one line | low | cwernsma |  |
