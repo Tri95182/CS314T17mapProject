@@ -280,7 +280,7 @@ export default class Atlas extends Component {
       let map = this.mapRef.current.leafletElement;
       await map.eachLayer((layer) => {
         let popup = layer.getPopup();
-        if(popup && _.isEqual(JSON.stringify(popup.getLatLng()), JSON.stringify(coords))) {
+        if(popup && _.isEqual(JSON.stringify(popup.getLatLng()), JSON.stringify({lat:coords.lat,lng:coords.lng}))) {
           layer.openPopup()
         }
       })
