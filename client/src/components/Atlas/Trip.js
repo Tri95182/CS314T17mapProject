@@ -274,7 +274,12 @@ export default class Trip extends Component {
     });
     return {requestType: "trip", requestVersion: PROTOCOL_VERSION,
       places: placesLatLngString,
-      options: {title: this.state.tripTitle, earthRadius: this.state.earthRadius.toString()}
+      options: {
+        title: this.state.tripTitle, 
+        earthRadius: this.state.earthRadius.toString(),
+        response: this.props.optTrip ? "1.0" : "0.0",
+        units: this.props.units ? this.props.units.toLowerCase() : "kilometers"
+      }
     };
   }
 

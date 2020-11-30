@@ -10,8 +10,6 @@ import SearchIcon from '@material-ui/icons/Search';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import ClearIcon from '@material-ui/icons/Clear';
 import NotListedLocationIcon from '@material-ui/icons/NotListedLocation';
-// import ButtonGroup from '@material-ui/core/ButtonGroup';
-// import Button from '@material-ui/core/Button';
 
 const PLACES_LIMIT = 25;
 

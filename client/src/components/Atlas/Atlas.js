@@ -7,6 +7,7 @@ import Search from "./Search";
 import Trip from "./Trip";
 import LocationsList from "./LocationsList";
 import Info from "./Info";
+import Settings from "./Settings"
 
 import {Map, Marker, Popup, TileLayer, Polyline} from 'react-leaflet';
 import Control from 'react-leaflet-control';
@@ -17,6 +18,7 @@ import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import LocationIcon from '@material-ui/icons/GpsFixed';
 import SearchIcon from '@material-ui/icons/Search';
 import ListIcon from '@material-ui/icons/List';
+import SettingsIcon from '@material-ui/icons/Settings';
 
 import 'leaflet/dist/leaflet.css';
 
@@ -52,7 +54,14 @@ export default class Atlas extends Component {
       distanceBetween: 0,
       tripDistances: [],
       infoModalOpen: false,
-      info: null
+      info: null,
+      settingsModalOpen: false,
+      settings: {
+        units: 'Kilometers',
+        optTrip: false,
+        showMarkers: true,
+        showLines: true
+      }
     };
   }
 
@@ -67,6 +76,7 @@ export default class Atlas extends Component {
                 {this.renderTrip()}
                 {this.renderLocationsListComponent()}
                 {this.renderInfo()}
+                {this.renderSettings()}
               </Col>
             </Row>
           </Container>
@@ -89,27 +99,30 @@ export default class Atlas extends Component {
             onClick={this.setMarker}
         >
           <TileLayer url={MAP_LAYER_URL} attribution={MAP_LAYER_ATTRIBUTION}/>
-          {this.renderControlButton(() => this.setState({searchModalOpen: true}), SearchIcon)}
-          {this.renderControlButton(() => this.flyToLocation(this.state.userPosition), LocationIcon, !this.state.userPosition)}
-          {this.renderControlButton(() => this.setState({listModalOpen: true}), ListIcon)}
-          {this.getUserPosition()}
-          {this.state.placesSelected.map((place) => {
-            let placeLatLng = _.cloneDeep(place);
-            placeLatLng.lat = Number(place.latitude);
-            delete placeLatLng.latitude;
-            placeLatLng.lng = Number(place.longitude);
-            delete placeLatLng.longitude
-            return this.createMarker(placeLatLng, MARKER_ICON, place.name);
-          })}
-          {this.getMarker()}
-          {this.renderTripPolylines()}
+          {this.renderControlButton(() => this.setState({searchModalOpen: true}), SearchIcon, "topleft")}
+          {this.renderControlButton(() => this.flyToLocation(this.state.userPosition), LocationIcon, "topleft", !this.state.userPosition)}
+          {this.renderControlButton(() => this.setState({listModalOpen: true}), ListIcon, "topleft")}
+          {this.renderControlButton(() => this.setState({settingsModalOpen: true}), SettingsIcon, "topright")}
+          {this.state.settings.showMarkers ? <div>
+            {this.getUserPosition()}
+            {this.state.placesSelected.map((place) => {
+              let placeLatLng = _.cloneDeep(place);
+              placeLatLng.lat = Number(place.latitude);
+              delete placeLatLng.latitude;
+              placeLatLng.lng = Number(place.longitude);
+              delete placeLatLng.longitude
+              return this.createMarker(placeLatLng, MARKER_ICON, place.name);
+            })}
+            {this.getMarker()}
+          </div> : ""}
+          {this.state.settings.showLines ? this.renderTripPolylines() : ""}
         </Map>
     );
   }
 
-  renderControlButton(onClick, Icon, disabled=false) {
+  renderControlButton(onClick, Icon, position, disabled=false) {
     return (
-        <Control position="topleft">
+        <Control position={position}>
           <Button className="map-control" size="sm" onClick={onClick} disabled={disabled}>
             <Icon fontSize="small"/>
           </Button>
@@ -162,6 +175,8 @@ export default class Atlas extends Component {
             setParentState={this.setParentState}
             sendRequest={this.sendRequest}
             createSnackBar={this.props.createSnackBar}
+            optTrip={this.state.settings.optTrip}
+            units={this.state.settings.units}
         />
     );
   }
@@ -177,6 +192,16 @@ export default class Atlas extends Component {
     );
   }
 
+  renderSettings() {
+    return (
+      <Settings
+        settingsModalOpen={this.state.settingsModalOpen}
+        settings={this.state.settings}
+        toggle={() => {const temp = !this.state.settingsModalOpen; this.setState({settingsModalOpen: temp});}}
+        setParentState={this.setParentState}
+      />
+    );
+  }
 
   setParentState(stateObj) {
     this.setState(stateObj);
@@ -255,7 +280,7 @@ export default class Atlas extends Component {
       let map = this.mapRef.current.leafletElement;
       await map.eachLayer((layer) => {
         let popup = layer.getPopup();
-        if(popup && _.isEqual(JSON.stringify(popup.getLatLng()), JSON.stringify(coords))) {
+        if(popup && _.isEqual(JSON.stringify(popup.getLatLng()), JSON.stringify({lat:coords.lat,lng:coords.lng}))) {
           layer.openPopup()
         }
       })
