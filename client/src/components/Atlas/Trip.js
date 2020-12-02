@@ -248,7 +248,9 @@ export default class Trip extends Component {
       temp.splice(index, 1);
       this.props.setParentState({placesDistance: temp});
       this.resetItemIndex();
-      this.handleCalculateTrip();
+      if(this.props.calcTrip){
+        this.handleCalculateTrip();
+      }
     }
   }
 
@@ -268,7 +270,9 @@ export default class Trip extends Component {
     const [moved] = newList.splice(srcIndex, 1);
     newList.splice(destIndex, 0, moved);
     this.resetItemIndex();
-    this.handleCalculateTrip();
+    if(this.props.calcTrip){
+      this.handleCalculateTrip();
+    }
     return newList;
   }
 
@@ -320,20 +324,24 @@ export default class Trip extends Component {
   }
 
   handleReverseTrip() {
-    this.handleNextLocation();
-    const revPlaces = this.props.placesDistance.reverse();
-    const revDistances = this.props.tripDistances.reverse();
-    this.props.setParentState({placesDistance: revPlaces});
-    this.props.setParentState({tripDistances: revDistances})
+    //if(this.props.placesDistance.size() != 0) {
+      this.handleNextLocation();
+      const revPlaces = this.props.placesDistance.reverse();
+      const revDistances = this.props.tripDistances.reverse();
+      this.props.setParentState({placesDistance: revPlaces});
+      this.props.setParentState({tripDistances: revDistances})
+    //}
   }
   
   handleNextLocation() {
-    let nextPlaces = this.props.placesDistance;
-    let nextDistances = this.props.tripDistances;
-    nextPlaces.push(nextPlaces.shift());
-    nextDistances.push(nextDistances.shift())
-    this.props.setParentState({placesDistance: nextPlaces});
-    this.props.setParentState({tripDistance: nextDistances});
+    //if(this.props.tripDistances != []) {
+      let nextPlaces = this.props.placesDistance;
+      let nextDistances = this.props.tripDistances;
+      nextPlaces.push(nextPlaces.shift());
+      nextDistances.push(nextDistances.shift())
+      this.props.setParentState({placesDistance: nextPlaces});
+      this.props.setParentState({tripDistance: nextDistances});
+    //}
   }
 
   setParentState(object) {
@@ -361,8 +369,8 @@ export default class Trip extends Component {
   }
 
    totalTripDistance(distanceArray) {
-     var total = 0;
-     for(var index = 0; index < distanceArray.length; index++) {
+     let total = 0;
+     for(let index = 0; index < distanceArray.length; index++) {
        total += distanceArray[index];
      }
     return total;
