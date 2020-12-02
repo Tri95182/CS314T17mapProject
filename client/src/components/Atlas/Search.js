@@ -6,8 +6,6 @@ import _ from 'lodash';
 import { LOG, PROTOCOL_VERSION } from "../../utils/constants";
 import * as findSchema from "../../../schemas/ResponseFind";
 
-import Trip from "./Trip";
-
 import SearchIcon from '@material-ui/icons/Search';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import ClearIcon from '@material-ui/icons/Clear';
@@ -201,9 +199,6 @@ export default class Search extends Component {
       let newSelected = this.props.placesSelected;
       newSelected.splice(index, 1);
       this.props.setParentState({placesSelected: newSelected});
-      if (this.props.calcTrip) {
-        Trip.handleCalculateTrip();
-      }
     }
   }
 

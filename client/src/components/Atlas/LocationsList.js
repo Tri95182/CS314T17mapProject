@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 import {Row, Col, Button, ButtonGroup, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText, Modal, ModalHeader, ModalFooter, ModalBody} from 'reactstrap';
 
 import Distance from "./Distance";
-import Trip from "./Trip";
-
 
 import LocationIcon from '@material-ui/icons/GpsFixed';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -106,8 +104,8 @@ export default class LocationsList extends Component {
       this.removeItem(name, this.props.placesSelected, 'placesSelected');
     }
 
+    //this.removeItem(this.props.tripDistance[this.props.placesDistance.index(name)]);
     this.removeItem(name, this.props.placesDistance, 'placesDistance');
-    //Trip.handleRemoveItem(name);
   }
 
   removeItem(name, places, propName) {

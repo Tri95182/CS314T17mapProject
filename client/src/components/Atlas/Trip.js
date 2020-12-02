@@ -324,7 +324,7 @@ export default class Trip extends Component {
   }
 
   handleReverseTrip() {
-    //if(this.props.placesDistance.size() != 0) {
+    //zif(this.props.placesDistance.size() != -1) {
       this.handleNextLocation();
       const revPlaces = this.props.placesDistance.reverse();
       const revDistances = this.props.tripDistances.reverse();
