@@ -173,7 +173,7 @@ export default class Trip extends Component {
             {...provided.dragHandleProps}
           >
             {this.renderMenu(
-              place.name, 
+              place.name + " - Distance to next: " + this.props.tripDistances[index] + " units",
               this.state.itemMenuOpen && this.state.itemMenuOpenIndex == index, 
               () => this.tripItemToggle(index), 
               () => this.renderTripItemBtns(place)
@@ -206,6 +206,7 @@ export default class Trip extends Component {
 
   renderTripItemBtns(place) {
     return (
+
       <Nav navbar>
         {this.createTripButton(InfoIcon, "Info", () => this.handleGetInfo(place))}
         {this.createTripButton(SendIcon, "Set as Start", () => this.handleNewStartLocation(place))}
