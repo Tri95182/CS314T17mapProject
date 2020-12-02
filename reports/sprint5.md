@@ -57,6 +57,7 @@ Clean Up, Distance Unit and Shorter
 | 11/16 |  | #326, #331, #149 | We Plan out sprint5 | 
 | 11/18 | #343, #342, #331 | #326, #86, #149 | We finshed a couple tasks and we added a couple more tasks also talked aobut inspect5 and what file were going to talk aobut | 
 | 11/20 |  |  #326, #86, #149 | We work on an inspect, We didn't finish many task but were busy with other classes | 
+| 12/1  | #326, #351, #150, #352, #149, #354, #86, #265, #354|  #327, #357, #266 | We got back from break, and we're talking about UI we added and New UI we want to add |
 
 ## Review
 
