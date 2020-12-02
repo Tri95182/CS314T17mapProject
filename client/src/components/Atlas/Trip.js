@@ -23,6 +23,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import LoopIcon from '@material-ui/icons/Loop';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import SendIcon from '@material-ui/icons/Send';
+import CalcTrip from "./CalcTrip";
 
 
 export default class Trip extends Component {
@@ -277,6 +278,8 @@ export default class Trip extends Component {
   }
 
   handleCalculateTrip() {
+    //return(<CalcTrip tripTitle={this.state.tripTitle} earthRadius={this.state.earthRadius}/>);
+
     if(this.props.placesDistance.length > 0) {
       this.props.sendRequest(this.createTripJson())
       .then(response => this.processTripResponse(response));
@@ -324,24 +327,25 @@ export default class Trip extends Component {
   }
 
   handleReverseTrip() {
-    //zif(this.props.placesDistance.size() != -1) {
-      this.handleNextLocation();
-      const revPlaces = this.props.placesDistance.reverse();
+    this.handleNextLocation();
+    const revPlaces = this.props.placesDistance.reverse();
+    this.props.setParentState({placesDistance: revPlaces});
+    if(this.props.tripDistances[0] != null) {
       const revDistances = this.props.tripDistances.reverse();
-      this.props.setParentState({placesDistance: revPlaces});
       this.props.setParentState({tripDistances: revDistances})
-    //}
+    }
   }
   
   handleNextLocation() {
-    //if(this.props.tripDistances != []) {
-      let nextPlaces = this.props.placesDistance;
+    let nextPlaces = this.props.placesDistance;
+    nextPlaces.push(nextPlaces.shift());
+    this.props.setParentState({placesDistance: nextPlaces});
+
+    if(this.props.tripDistances[0] != null) {
       let nextDistances = this.props.tripDistances;
-      nextPlaces.push(nextPlaces.shift());
       nextDistances.push(nextDistances.shift())
-      this.props.setParentState({placesDistance: nextPlaces});
       this.props.setParentState({tripDistance: nextDistances});
-    //}
+    }
   }
 
   setParentState(object) {

@@ -178,6 +178,7 @@ export default class Atlas extends Component {
             createSnackBar={this.props.createSnackBar}
             optTrip={this.state.settings.optTrip}
             units={this.state.settings.units}
+            calcTrip ={this.state.settings.calcTrip}
         />
     );
   }
