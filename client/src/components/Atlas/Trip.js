@@ -164,23 +164,37 @@ export default class Trip extends Component {
   }
 
   renderTripItem(place, index) {
+    if(this.props.tripDistances[index] == null) {
+      return(
+          this.renderDraggableBtn(place, index, place.name)
+      );
+    } else {
+      return (
+          this.renderDraggableBtn(place, index, place.name + " - Distance to next: " + this.props.tripDistances[index] + " units")
+      );
+    }
+  }
+
+  renderDraggableBtn(place,index,title) {
     return (
-      <Draggable key={place.name} draggableId={place.name+place.lat+place.lng} index={index}>
-        {(provided) => (
-          <div
-            ref={provided.innerRef}
-            {...provided.draggableProps}
-            {...provided.dragHandleProps}
-          >
-            {this.renderMenu(
-              place.name + " - Distance to next: " + this.props.tripDistances[index] + " units",
-              this.state.itemMenuOpen && this.state.itemMenuOpenIndex == index, 
-              () => this.tripItemToggle(index), 
-              () => this.renderTripItemBtns(place)
-            )}
-          </div>
-        )}
-      </Draggable>
+        <Draggable key={place.name} draggableId={place.name+place.lat+place.lng} index={index}>
+          {(provided) => (
+              <div
+                  ref={provided.innerRef}
+                  {...provided.draggableProps}
+                  {...provided.dragHandleProps}
+              >
+                {
+                  this.renderMenu(
+                      title,
+                      this.state.itemMenuOpen && this.state.itemMenuOpenIndex == index,
+                      () => this.tripItemToggle(index),
+                      () => this.renderTripItemBtns(place)
+                  )
+                }
+              </div>
+          )}
+        </Draggable>
     );
   }
 
@@ -234,6 +248,7 @@ export default class Trip extends Component {
       temp.splice(index, 1);
       this.props.setParentState({placesDistance: temp});
       this.resetItemIndex();
+      this.handleCalculateTrip();
     }
   }
 
@@ -253,6 +268,7 @@ export default class Trip extends Component {
     const [moved] = newList.splice(srcIndex, 1);
     newList.splice(destIndex, 0, moved);
     this.resetItemIndex();
+    this.handleCalculateTrip();
     return newList;
   }
 
@@ -306,13 +322,18 @@ export default class Trip extends Component {
   handleReverseTrip() {
     this.handleNextLocation();
     const revPlaces = this.props.placesDistance.reverse();
+    const revDistances = this.props.tripDistances.reverse();
     this.props.setParentState({placesDistance: revPlaces});
+    this.props.setParentState({tripDistances: revDistances})
   }
   
   handleNextLocation() {
     let nextPlaces = this.props.placesDistance;
+    let nextDistances = this.props.tripDistances;
     nextPlaces.push(nextPlaces.shift());
+    nextDistances.push(nextDistances.shift())
     this.props.setParentState({placesDistance: nextPlaces});
+    this.props.setParentState({tripDistance: nextDistances});
   }
 
   setParentState(object) {

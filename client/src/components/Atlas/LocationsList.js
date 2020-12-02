@@ -114,6 +114,7 @@ export default class LocationsList extends Component {
       temp.splice(index, 1);
       this.props.setParentState({[propName]: temp});
     }
+    //if in itinerary, call handleremoveitem from 
   }
 
   handleLocationSelect(name, lat, lng) {

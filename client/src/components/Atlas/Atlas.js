@@ -60,7 +60,8 @@ export default class Atlas extends Component {
         units: 'Kilometers',
         optTrip: false,
         showMarkers: true,
-        showLines: true
+        showLines: true,
+        calcTrip: true
       }
     };
   }
