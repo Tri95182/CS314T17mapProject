@@ -2,7 +2,7 @@
  
 | Inspection | Details |
 | ----- | ----- |
-| Subject | ** |
+| Subject | *Trip.js* |
 | Meeting | *12/4/20 7pm* |
 | Checklist | *[Link to checklist](checklist.md)* |
 
@@ -18,5 +18,4 @@
 
 | file:line | problem | hi/med/low | who found | github#  |
 | --- | --- | :---: | :---: | --- |
-
-
+| Trip.js:161 | This says searchres, which i get is search results but Camel Capitalsation would help | low | Tri |  |
