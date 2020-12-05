@@ -18,5 +18,6 @@
 
 | file:line | problem | hi/med/low | who found | github#  |
 | --- | --- | :---: | :---: | --- |
-
+| search:86-87 | | can shorten to one line | low | melvin42 |  |
+| search.js:161 | searchres to searchRes | low | melvin42 |  |
 
