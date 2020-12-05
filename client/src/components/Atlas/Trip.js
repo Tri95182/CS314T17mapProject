@@ -278,12 +278,12 @@ export default class Trip extends Component {
   }
 
   handleCalculateTrip() {
-    //return(<CalcTrip tripTitle={this.state.tripTitle} earthRadius={this.state.earthRadius}/>);
-
-    if(this.props.placesDistance.length > 0) {
-      this.props.sendRequest(this.createTripJson())
-      .then(response => this.processTripResponse(response));
-    }
+    let ct = new CalcTrip(this.props,this.state)
+    ct.handleCalculateTrip();
+    //if(this.props.placesDistance.length > 0) {
+    //  this.props.sendRequest(this.createTripJson())
+    //  .then(response => this.processTripResponse(response));
+    //}
   }
 
   createTripJson(){

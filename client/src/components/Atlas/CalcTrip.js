@@ -6,8 +6,9 @@ import * as tripSchema from "../../../schemas/ResponseTrip";
 
 
 export default class CalcTrip extends Component {
-  constructor(props) {
+  constructor(props,state) {
     super(props);
+    this.state = state
   }
 
   handleCalculateTrip() {
@@ -30,7 +31,7 @@ export default class CalcTrip extends Component {
     return {requestType: "trip", requestVersion: PROTOCOL_VERSION,
       places: placesLatLngString,
       options: {
-        title: this.state.tripTitle,
+        title: this.props.tripTitle,
         earthRadius: this.state.earthRadius.toString(),
         response: this.props.optTrip ? "1.0" : "0.0",
         units: this.props.units ? this.props.units.toLowerCase() : "kilometers"
