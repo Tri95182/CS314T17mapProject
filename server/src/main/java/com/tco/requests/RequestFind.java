@@ -90,12 +90,24 @@ public class RequestFind extends RequestHeader {
       int size = this.places.size();
       if(size > 0) {
         Random rand = new Random();
-        int randNum = rand.nextInt(size);
-        if(randNum == 0) randNum += 1;
+        List<Map<String,String>> tempPlaces = new ArrayList<Map<String,String>>();
+        List<Integer> randHistory = new ArrayList<Integer>();
+        int randCount = this.limit != null ? this.limit : 1;
+        this.found = randCount;
 
-        this.places.subList(randNum, size).clear();
-        this.places.subList(0, randNum-1).clear();      
-        this.found = 1;
+        while(randCount > 0) {
+          int randNum = rand.nextInt(size);
+          if(randNum == 0) randNum += 1;
+          if(randHistory.contains(randNum)) {
+            continue;
+          } else {
+            randCount--;
+            randHistory.add(randNum);
+            tempPlaces.add(this.places.get(randNum));
+          }
+        }
+
+        this.places = tempPlaces;
       }
     }
 
