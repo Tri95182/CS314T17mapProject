@@ -60,7 +60,7 @@ export default class Info extends Component {
             key != "notes" ?
               <tr key={key}>
                 <td>{key.charAt(0).toUpperCase()+key.slice(1)}</td>
-                <td>{this.props.info[key]}</td>
+                <td>{key == "url" ? <a href={this.props.info[key]}>Wikipedia Link</a> : this.props.info[key]}</td>
               </tr>
           : "") : ""}
           {this.renderNotesInput()}
