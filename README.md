@@ -6,7 +6,6 @@ This is our Masscot Bloo, He's from Foster's Home for Imaginary Friends
 | Nguyen | Tri | Tri | Tri95182 | tri@rams.colostate.edu |
 | Wernsman | Collin | cwernsma | collinw99 | cwernsma@rams.colostate.edu |
 | Melvin | Jack | melvin42 | M-Tech212 | melvin42@rams.colostate.edu |
-| Wulfing | Austin | wulfing | wulfing | wulfing@rams.colostate.edu |
 
 Our team has set the times to meet between 5 and 8pm for group discussion. We will use messaging services such as Slack, Teams, or email to reach each other. We expect that we will learn a lot as a team, and also support everyone as they do their parts of the assignments. We value communication first and will do our best to keep everyone updated on the tasks.
 
