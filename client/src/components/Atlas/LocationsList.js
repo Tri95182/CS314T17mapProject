@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {Row, Col, Button, ButtonGroup, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText, Modal, ModalHeader, ModalFooter, ModalBody} from 'reactstrap';
+import _ from 'lodash';
+import getUnicodeFlagIcon from 'country-flag-icons/unicode'
 
 import Distance from "./Distance";
 
@@ -41,34 +43,45 @@ export default class LocationsList extends Component {
           createSnackBar={this.props.createSnackBar}
           sendRequest={this.props.sendRequest}
         />
-        {this.renderIfPropExists("Current Location", this.props.userPosition)}
-        {this.renderIfPropExists(this.props.markerPosition ? this.props.markerPosition.name : "Marker Location", this.props.markerPosition)}
-        {this.props.placesSelected.map((place) =>
-          this.renderLocationItem(place.name, Number(place.latitude), Number(place.longitude))
-        )}
+        {this.renderIfPropExists(this.props.userPosition)}
+        {this.renderIfPropExists(this.props.markerPosition)}
+        {this.props.placesSelected.map((place) => {
+          let tempPlace = _.cloneDeep(place);
+          tempPlace.lat = parseFloat(place.latitude);
+          tempPlace.lng = parseFloat(place.longitude);
+          delete tempPlace.latitude;
+          delete tempPlace.longitude;
+          return this.renderLocationItem(tempPlace)
+        })}
       </ListGroup>
     );
   }
 
-  renderIfPropExists(name, prop) {
+  renderIfPropExists(prop) {
     if(prop != null) {
-      return this.renderLocationItem(name, prop.lat, prop.lng);
+      return this.renderLocationItem(prop);
     }
   }
 
-  renderLocationItem(name, lat, lng) {
+  renderLocationItem(place) {
     return (
       <ListGroupItem 
-        key={name}
-        color={this.props.placesDistance.filter(val => val.name == name).length != 0 ? "primary":"white"}
+        key={place.name}
+        color={this.props.placesDistance.filter(val => val.name == place.name).length != 0 ? "primary":"white"}
       >
         <Row>
           <Col>
-            <ListGroupItemHeading>{name}</ListGroupItemHeading>
-            <ListGroupItemText>Lat: {lat.toFixed(2)} Lng: {lng.toFixed(2)}</ListGroupItemText>
+            <ListGroupItemHeading>{place.name}</ListGroupItemHeading>
+            <ListGroupItemText>
+              {place.country_code ? getUnicodeFlagIcon(place.country_code)+" " : ""}
+              {place.municipality ? place.municipality+", " : place.town ? place.town+", " : ""}
+              {place.region ? place.region+", " : place.state ? place.state+", " : ""}
+              {place.country ? place.country : ""}<br/>
+              Lat: {place.lat.toFixed(2)} Lng: {place.lng.toFixed(2)}
+            </ListGroupItemText>
           </Col>
           <Col xs="auto">
-            {this.renderLocationItemBtns(name, lat, lng)}
+            {this.renderLocationItemBtns(place.name, place.lat, place.lng)}
           </Col>
         </Row>
       </ListGroupItem>
