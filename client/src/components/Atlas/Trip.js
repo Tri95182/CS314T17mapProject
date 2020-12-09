@@ -173,7 +173,7 @@ export default class Trip extends Component {
             {...provided.dragHandleProps}
           >
             {this.renderMenu(
-              place.name + " - Distance to next: " + this.props.tripDistances[index] + " units",
+              place.name + " - Distance to next: " + this.props.tripDistances[index] + " "+ this.props.units,
               this.state.itemMenuOpen && this.state.itemMenuOpenIndex == index, 
               () => this.tripItemToggle(index), 
               () => this.renderTripItemBtns(place)
