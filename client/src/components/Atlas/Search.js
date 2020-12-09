@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Collapse, Button, ButtonGroup, InputGroup, Input, InputGroupAddon, InputGroupText, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText, Modal, ModalBody, ModalFooter, ModalHeader, Spinner, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Row, Badge} from 'reactstrap';
 import { isJsonResponseValid } from "../../utils/restfulAPI";
 import _ from 'lodash';
+import getUnicodeFlagIcon from 'country-flag-icons/unicode'
 
 import { LOG, PROTOCOL_VERSION } from "../../utils/constants";
 import * as findSchema from "../../../schemas/ResponseFind";
@@ -171,7 +172,10 @@ export default class Search extends Component {
             color={this.props.placesSelected.filter(val => _.isEqual(val, place)).length != 0 ? "primary":"white"}
           >
             <ListGroupItemHeading>{place.name}</ListGroupItemHeading>
-            <ListGroupItemText>Lat: {Number(place.latitude).toFixed(2)} Lng: {Number(place.longitude).toFixed(2)}</ListGroupItemText>
+            <ListGroupItemText>
+              {place.country_code ? getUnicodeFlagIcon(place.country_code)+" " : ""}
+              {place.municipality ? place.municipality+", " : ""}{place.region ? place.region+", " : ""}{place.country ? place.country : ""}
+            </ListGroupItemText>
           </ListGroupItem>
         ) : <ListGroupItem tag="button"><Spinner color="primary"/></ListGroupItem>}
       </ListGroup>
