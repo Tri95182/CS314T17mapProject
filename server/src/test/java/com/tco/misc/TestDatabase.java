@@ -29,11 +29,13 @@ public class TestDatabase {
       place1.put("latitude", "40.0332984924");
       place1.put("longitude", "-105.124000549");
       place1.put("id", "0CO1");
+      place1.put("country_code", "US");
       place1.put("altitude", "5170");
       place1.put("municipality", "Louisville");
       place1.put("type", "small_airport");
       place1.put("region", "Colorado");
       place1.put("country", "United States");
+      place1.put("url", null);
       expected.add(place1);
 
       assertEquals(expected, results);
