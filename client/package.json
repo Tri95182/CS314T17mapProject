@@ -13,6 +13,7 @@
     "ajv": "^6.12.2",
     "axios": "^0.19.2",
     "bootstrap": "^4.5.0",
+    "country-flag-icons": "^1.2.7",
     "js-cookie": "^2.2.1",
     "leaflet": "^1.6.0",
     "leaflet-control-geocoder": "^1.13.0",

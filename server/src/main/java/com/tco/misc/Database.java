@@ -30,8 +30,8 @@ public class Database {
                                               null : 
                                               "eiK5liet1uej";
 
-    private final static String FIND_QUERY = "SELECT world.name, world.municipality, region.name, country.name, continent.name, " +
-                                             "world.latitude, world.longitude, world.altitude, world.id, world.type\n" +
+    private final static String FIND_QUERY = "SELECT world.name, world.municipality, region.name, country.name, country.id, continent.name, " +
+                                             "world.latitude, world.longitude, world.altitude, world.id, world.type, world.wikipedia_link\n" +
                                              "FROM continent\n" +
                                              "INNER JOIN country ON continent.id = country.continent\n" +
                                              "INNER JOIN region ON country.id = region.iso_country\n" +
@@ -89,11 +89,13 @@ public class Database {
         place.put("latitude", results.getString("world.latitude"));
         place.put("longitude", results.getString("world.longitude"));
         place.put("id", results.getString("world.id"));
+        place.put("country_code", results.getString("country.id"));
         place.put("altitude", results.getString("world.altitude"));
         place.put("municipality", results.getString("world.municipality"));
         place.put("type", results.getString("world.type"));
         place.put("region", results.getString("region.name"));
         place.put("country", results.getString("country.name"));
+        place.put("url", results.getString("world.wikipedia_link"));
 
         return place;
     }
