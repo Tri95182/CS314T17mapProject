@@ -11,7 +11,8 @@ const startproperties = {
     units: 'Kilometers',
     optTrip: false,
     showMarkers: true,
-    showLines: true
+    showLines: true,
+    calcTrip: true
   },
   toggle: jest.fn(),
 }
@@ -29,7 +30,7 @@ function testModalRender() {
   expect(settings.find("ModalHeader").length).toEqual(1);
   expect(settings.find("ModalBody").length).toEqual(1);
   expect(settings.find("Table").length).toEqual(1);
-  expect(settings.find("CustomInput").length).toEqual(4);
+  expect(settings.find("CustomInput").length).toEqual(5);
   expect(settings.find("ModalFooter").length).toEqual(1);
   expect(settings.find("Button").length).toEqual(2);
 }
@@ -51,7 +52,7 @@ function testSettingsChangeCancel() {
   expect(atlas.state().settings).toEqual(startproperties.settings);
   expect(settings.state().settings).toEqual(startproperties.settings);
   
-  const newSettings = {units:"Miles",optTrip:true,showMarkers:false,showLines:false};
+  const newSettings = {units:"Miles",optTrip:true,showMarkers:false,showLines:false,calcTrip:true};
   simulateOnChangeEvent(settings, 0, {target:{value:newSettings.units}});
   simulateOnChangeEvent(settings, 1, newSettings.optTrip);
   simulateOnChangeEvent(settings, 2, newSettings.showMarkers);
@@ -79,8 +80,8 @@ function testSettingsChangeSave() {
 
   expect(atlas.state().settings).toEqual(startproperties.settings);
   expect(settings.state().settings).toEqual(startproperties.settings);
-  
-  const newSettings = {units:"Miles",optTrip:true,showMarkers:false,showLines:false};
+
+  const newSettings = {units:"Miles",optTrip:true,showMarkers:false,showLines:false,calcTrip:true};
   simulateOnChangeEvent(settings, 0, {target:{value:newSettings.units}});
   simulateOnChangeEvent(settings, 1, newSettings.optTrip);
   simulateOnChangeEvent(settings, 2, newSettings.showMarkers);

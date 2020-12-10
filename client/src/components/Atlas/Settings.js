@@ -51,6 +51,7 @@ export default class Settings extends Component {
 							{this.renderSwitchSetting("Optimize Trip", this.state.settings.optTrip, "optTrip")}
 							{this.renderSwitchSetting("Show Markers", this.state.settings.showMarkers, "showMarkers")}
 							{this.renderSwitchSetting("Show Lines", this.state.settings.showLines, "showLines")}
+							{this.renderSwitchSetting("AutoRecalculate Trip", this.state.settings.calcTrip, "calcTrip")}
 						</tbody>
 					</Table>
 				: <p>No settings to display</p>}

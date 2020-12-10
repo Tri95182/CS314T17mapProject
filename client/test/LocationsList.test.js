@@ -3,7 +3,9 @@ import {shallow, mount} from 'enzyme';
 
 import React from 'react';
 import Atlas from '../src/components/Atlas/Atlas';
+
 import LocationsList from '../src/components/Atlas/LocationsList';
+import Trip from "../src/components/Atlas/Trip";
 
 const startProperties = {
   placesSelectedEmpty: [],
@@ -32,7 +34,7 @@ function testRenderLocationsList() {
   />);
 
   expect(loclist.find("ListGroup").length).toEqual(1);
-  expect(loclist.find("ListGroupItem").length).toEqual(2);
+  expect(loclist.find("ListGroupItem").length).toEqual(1);
 }
 
 test("Test the render of locations list", testRenderLocationsList);
@@ -49,7 +51,7 @@ function testRenderLocationItems() {
   />);
 
   expect(loclist.find("ListGroup").length).toEqual(1);
-  expect(loclist.find("ListGroupItem").length).toEqual(5);
+  expect(loclist.find("ListGroupItem").length).toEqual(4);
 }
 
 test("Test the render of location items", testRenderLocationItems);
@@ -109,6 +111,9 @@ function testHandleLocationSelect() {
     placesDistance={atlas.state().placesDistance}
     setParentState={(obj) => atlas.instance().setParentState(obj)}
     listModalOpen={startProperties.listModalOpen}
+    earthRadius = {6371.0}
+    sendRequest={(obj)=>atlas.instance().sendRequest(obj)}
+
   />);
 
   expect(atlas.state().placesDistance.length).toEqual(0);

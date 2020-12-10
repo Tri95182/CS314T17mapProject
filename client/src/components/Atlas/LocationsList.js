@@ -3,7 +3,7 @@ import {Row, Col, Button, ButtonGroup, ListGroup, ListGroupItem, ListGroupItemHe
 import _ from 'lodash';
 import getUnicodeFlagIcon from 'country-flag-icons/unicode'
 
-import Distance from "./Distance";
+import CalcTrip from "./CalcTrip";
 
 import LocationIcon from '@material-ui/icons/GpsFixed';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -36,13 +36,6 @@ export default class LocationsList extends Component {
     return (
       <ListGroup key={"loclist"}>
         <ListGroupItem active>Select Locations </ListGroupItem>
-        <Distance 
-          placesDistance={this.props.placesDistance}
-          distanceBetween={this.props.distanceBetween}
-          setParentState={this.props.setParentState}
-          createSnackBar={this.props.createSnackBar}
-          sendRequest={this.props.sendRequest}
-        />
         {this.renderIfPropExists(this.props.userPosition)}
         {this.renderIfPropExists(this.props.markerPosition)}
         {this.props.placesSelected.map((place) => {
@@ -117,6 +110,7 @@ export default class LocationsList extends Component {
       this.removeItem(name, this.props.placesSelected, 'placesSelected');
     }
 
+    //this.removeItem(this.props.tripDistance[this.props.placesDistance.index(name)]);
     this.removeItem(name, this.props.placesDistance, 'placesDistance');
   }
 
@@ -151,7 +145,7 @@ export default class LocationsList extends Component {
       let temp = this.props.placesDistance.filter(val => val.name != name);
       this.props.setParentState({placesDistance: temp});
     }
+
+    //new CalcTrip(this.props).handleCalculateTrip();
   }
-
-
 }

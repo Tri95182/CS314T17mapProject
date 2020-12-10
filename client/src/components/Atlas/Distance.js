@@ -26,11 +26,12 @@ export default class Distance extends Component {
   handleDistance(){
     if(this.props.placesDistance.length == 2){
       const RADIUS = 6371.0;
-      const distanceRequest = {requestType: "distance", requestVersion: PROTOCOL_VERSION,
+      const distanceRequest = {
+        requestType: "distance", requestVersion: PROTOCOL_VERSION,
         place1: this.getRequestPlace(this.props.placesDistance[0]),
         place2: this.getRequestPlace(this.props.placesDistance[1]),
-        earthRadius: RADIUS}
-
+        earthRadius: RADIUS
+      }
       this.props.sendRequest(distanceRequest)
       .then(response => this.processDistanceResponse(response));
     }

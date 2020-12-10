@@ -7,6 +7,7 @@ import _ from 'lodash';
 import {downloadFile} from "./DownloadFile";
 import Info from './Info';
 import Import from './Import';
+import CalcTrip from "./CalcTrip";
 
 import { LOG, PROTOCOL_VERSION } from "../../utils/constants";
 import * as tripSchema from "../../../schemas/ResponseTrip";
@@ -34,9 +35,7 @@ export default class Trip extends Component {
     this.setParentState = this.setParentState.bind(this);
 
     this.state = {
-      tripTitle: "Trip",
       editingTripTitle: false,
-      earthRadius: 6371.0,
       tripMenuOpen: false,
       itemMenuOpen: false,
       itemMenuOpenIndex: null,
@@ -49,7 +48,7 @@ export default class Trip extends Component {
   render() {
     return (
       <ListGroup>
-        {this.renderMenu(this.state.tripTitle, this.state.tripMenuOpen, 
+        {this.renderMenu(this.props.tripTitle, this.state.tripMenuOpen,
           () => this.tripToggle(this.state.tripMenuOpen, 'tripMenuOpen'), 
           () => this.renderTripActionBtns()
         )}
@@ -63,7 +62,7 @@ export default class Trip extends Component {
   }
 
   renderMenu(title, trigger, toggle, renderButtons) {
-    const header = title == this.state.tripTitle;
+    const header = title == this.props.tripTitle;
     return (
       <Navbar className="trip-item" dark={header} light={!header} color={header ? "primary" : "white"}>
         <Row className="item-row"><Col>
@@ -89,15 +88,15 @@ export default class Trip extends Component {
     return (
       <InputGroup>
         <Input
-          value={this.state.tripTitle}
+          value={this.props.tripTitle}
           onChange={(input) => {
-            this.setState({tripTitle: input.target.value});
+            this.props.setParentState({tripTitle: input.target.value});
           }}
         />
         <InputGroupAddon addonType="append">
           <Button onClick={() => {
-            if(this.state.tripTitle.length == 0) {
-              this.setState({tripTitle:"Trip"});
+            if(this.props.tripTitle.length == 0) {
+              this.props.setParentState({tripTitle:"Trip"});
             }
             this.setState({editingTripTitle:false})
           }}>
@@ -164,7 +163,20 @@ export default class Trip extends Component {
   }
 
   renderTripItem(place, index) {
+    if(this.props.tripDistances[index] == null) {
+      return(
+          this.renderDraggableBtn(place, index, place.name)
+      );
+    } else {
+      return (
+          this.renderDraggableBtn(place, index, place.name + " - Distance to next: " + this.props.tripDistances[index] + " units")
+      );
+    }
+  }
+
+  renderDraggableBtn(place,index,title) {
     return (
+
       <Draggable key={place.name} draggableId={place.name+place.lat+place.lng} index={index}>
         {(provided) => (
           <div
@@ -234,6 +246,9 @@ export default class Trip extends Component {
       temp.splice(index, 1);
       this.props.setParentState({placesDistance: temp});
       this.resetItemIndex();
+      if(this.props.calcTrip){
+        this.handleCalculateTrip();
+      }
     }
   }
 
@@ -253,14 +268,15 @@ export default class Trip extends Component {
     const [moved] = newList.splice(srcIndex, 1);
     newList.splice(destIndex, 0, moved);
     this.resetItemIndex();
+    if(this.props.calcTrip){
+      this.handleCalculateTrip();
+    }
     return newList;
   }
 
   handleCalculateTrip() {
-    if(this.props.placesDistance.length > 0) {
-      this.props.sendRequest(this.createTripJson())
-      .then(response => this.processTripResponse(response));
-    }
+    let ct = new CalcTrip(this.props)
+    ct.handleCalculateTrip();
   }
 
   createTripJson(){
@@ -276,8 +292,8 @@ export default class Trip extends Component {
     return {requestType: "trip", requestVersion: PROTOCOL_VERSION,
       places: placesLatLngString,
       options: {
-        title: this.state.tripTitle, 
-        earthRadius: this.state.earthRadius.toString(),
+        title: this.props.tripTitle,
+        earthRadius: this.props.earthRadius.toString(),
         response: this.props.optTrip ? "1.0" : "0.0",
         units: this.props.units ? this.props.units.toLowerCase() : "kilometers"
       }
@@ -307,12 +323,22 @@ export default class Trip extends Component {
     this.handleNextLocation();
     const revPlaces = this.props.placesDistance.reverse();
     this.props.setParentState({placesDistance: revPlaces});
+    if(this.props.tripDistances[0] != null) {
+      const revDistances = this.props.tripDistances.reverse();
+      this.props.setParentState({tripDistances: revDistances})
+    }
   }
   
   handleNextLocation() {
     let nextPlaces = this.props.placesDistance;
     nextPlaces.push(nextPlaces.shift());
     this.props.setParentState({placesDistance: nextPlaces});
+
+    if(this.props.tripDistances[0] != null) {
+      let nextDistances = this.props.tripDistances;
+      nextDistances.push(nextDistances.shift())
+      this.props.setParentState({tripDistance: nextDistances});
+    }
   }
 
   setParentState(object) {
@@ -340,8 +366,8 @@ export default class Trip extends Component {
   }
 
    totalTripDistance(distanceArray) {
-     var total = 0;
-     for(var index = 0; index < distanceArray.length; index++) {
+     let total = 0;
+     for(let index = 0; index < distanceArray.length; index++) {
        total += distanceArray[index];
      }
     return total;

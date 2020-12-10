@@ -39,18 +39,16 @@ test("Test the render of import modal", testModalRender)
 function testFileLoadCancel() {
 
   const atlas = shallow(<Atlas/>)
-  const trip = shallow(<Trip/>)
   const imprt = shallow(<Import
     importModalOpen={startproperties.importModalOpen}
     toggle={startproperties.toggle}
-    setParentState={(obj) => trip.instance().setParentState(obj)}
     setGrandparentState={(obj) => atlas.instance().setParentState(obj)}
   />)
 
   expect(atlas.state().placesDistance).toEqual([])
   expect(atlas.state().placesSelected).toEqual([])
-  expect(trip.state().tripTitle).toEqual("Trip")
-  expect(trip.state().earthRadius).toEqual(6371.0)
+  expect(atlas.state().tripTitle).toEqual("Trip")
+  expect(atlas.state().earthRadius).toEqual(6371.0)
   expect(imprt.state().fileContents).toEqual(null)
 
   const fileContent = new Blob([JSON.stringify({
@@ -73,8 +71,8 @@ function testFileLoadCancel() {
 
   expect(atlas.state().placesDistance).toEqual([])
   expect(atlas.state().placesSelected).toEqual([])
-  expect(trip.state().tripTitle).toEqual("Trip")
-  expect(trip.state().earthRadius).toEqual(6371.0)
+  expect(atlas.state().tripTitle).toEqual("Trip")
+  expect(atlas.state().earthRadius).toEqual(6371.0)
   expect(imprt.state().fileContents).toEqual(null)
 }
 
@@ -94,18 +92,16 @@ test("Test cancel loading of file content", testFileLoadCancel)
 function testFileLoad() {
 
   const atlas = shallow(<Atlas/>)
-  const trip = shallow(<Trip/>)
   const imprt = shallow(<Import
     importModalOpen={startproperties.importModalOpen}
     toggle={startproperties.toggle}
-    setParentState={(obj) => trip.instance().setParentState(obj)}
     setGrandparentState={(obj) => atlas.instance().setParentState(obj)}
   />)
 
   expect(atlas.state().placesDistance).toEqual([])
   expect(atlas.state().placesSelected).toEqual([])
-  expect(trip.state().tripTitle).toEqual("Trip")
-  expect(trip.state().earthRadius).toEqual(6371.0)
+  expect(atlas.state().tripTitle).toEqual("Trip")
+  expect(atlas.state().earthRadius).toEqual(6371.0)
   expect(imprt.state().fileContents).toEqual(null)
 
   const fileContent = new Blob([JSON.stringify({
