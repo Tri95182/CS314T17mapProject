@@ -70,7 +70,7 @@ export default class Trip extends Component {
         <NavbarBrand className="break-word">{this.state.editingTripTitle && header ? 
           this.renderTripTitleInput() : 
           <div onClick={() => header ? this.setState({editingTripTitle:true}) : null}>{title}&nbsp;{header ? <EditIcon fontSize="small"/> : ""}</div>}
-          {header ? <div>Total Distance:{this.props.tripDistances ? this.totalTripDistance(this.props.tripDistances) : ""}</div> : ""}
+          {header ? <div>Total Distance:{this.props.tripDistances ? this.totalTripDistance(this.props.tripDistances) : "" } {this.props.units} </div> : ""}
           {header ? <div>Distances:{this.props.tripDistances ? this.props.tripDistances.toString() : ""}</div> : "" }
         </NavbarBrand>
         </Col><Col className="item-col" xs="1">
@@ -173,7 +173,7 @@ export default class Trip extends Component {
             {...provided.dragHandleProps}
           >
             {this.renderMenu(
-              place.name + " - Distance to next: " + this.props.tripDistances[index] + " units",
+              place.name + " - Distance to next: " + this.props.tripDistances[index] + " "+ this.props.units,
               this.state.itemMenuOpen && this.state.itemMenuOpenIndex == index, 
               () => this.tripItemToggle(index), 
               () => this.renderTripItemBtns(place)
