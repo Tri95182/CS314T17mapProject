@@ -60,6 +60,7 @@ Clean Up, Distance Unit and Shorter
 | 12/1  | #326, #351, #150, #352, #149, #354, #86, #265, #354|  #327, #357, #266 | We got back from break, and we're talking about UI we added and New UI we want to add |
 | 12/4  | #361, #358, #366, #367, #369, #368, #370 | #340, #357, #327, #362, #363, #266 | Did a lot after break |
 | 12/8  | #371, #327, #372, #353 | #340, #357, #344, #362, #363, #266| We're all really busy with dead week so we haven't done as much to the site |
+| 12/9  | #373, #344, $374, #340, #357, #74, #379 |  #360, #364 #362, #363, #266 | We're all really busy with dead week but were making sure to work on our site and put in last tasks |
 
 ## Review
 
