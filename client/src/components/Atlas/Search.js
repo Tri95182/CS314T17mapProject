@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Collapse, Button, ButtonGroup, InputGroup, Input, InputGroupAddon, InputGroupText, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText, Modal, ModalBody, ModalFooter, ModalHeader, Spinner, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Row, Badge} from 'reactstrap';
 import { isJsonResponseValid } from "../../utils/restfulAPI";
 import _ from 'lodash';
+import getUnicodeFlagIcon from 'country-flag-icons/unicode'
 
 import { LOG, PROTOCOL_VERSION } from "../../utils/constants";
 import * as findSchema from "../../../schemas/ResponseFind";
@@ -32,7 +33,7 @@ export default class Search extends Component {
   }
 
   componentDidMount() {
-    this.handleSearch({target:{value:""}});
+    this.handleSearch({target:{value:""}}, false);
   }
 
   render() {
@@ -96,7 +97,7 @@ export default class Search extends Component {
           {this.renderFilterDropDown("Where", this.props.filters.where ? this.props.filters.where : [], this.state.whereFilterOpen, 
           () => this.filterToggle(this.state.whereFilterOpen, "whereFilterOpen"))}
           <Button onClick={async () => {
-            await this.handleSearch({target:{value:this.state.searchInput}});
+            await this.handleSearch({target:{value:""}}, false);
           }}>Feeling Lucky<NotListedLocationIcon fontSize="small"/></Button>
           <Button onClick={async () => {
             await this.handleFilterClear();
@@ -171,7 +172,10 @@ export default class Search extends Component {
             color={this.props.placesSelected.filter(val => _.isEqual(val, place)).length != 0 ? "primary":"white"}
           >
             <ListGroupItemHeading>{place.name}</ListGroupItemHeading>
-            <ListGroupItemText>Lat: {Number(place.latitude).toFixed(2)} Lng: {Number(place.longitude).toFixed(2)}</ListGroupItemText>
+            <ListGroupItemText>
+              {place.country_code ? getUnicodeFlagIcon(place.country_code)+" " : ""}
+              {place.municipality ? place.municipality+", " : ""}{place.region ? place.region+", " : ""}{place.country ? place.country : ""}
+            </ListGroupItemText>
           </ListGroupItem>
         ) : <ListGroupItem tag="button"><Spinner color="primary"/></ListGroupItem>}
       </ListGroup>
@@ -202,13 +206,16 @@ export default class Search extends Component {
     }
   }
 
-  handleSearch(input) {
+  handleSearch(input, defaultLimit=true) {
     this.setState({searchInput: input.target.value, isLoading: true})
 
     let cleanInput = this.sanitizeInput(input.target.value);
 
-    let findRequest = {requestType: "find", requestVersion: PROTOCOL_VERSION, limit: PLACES_LIMIT, narrow: {}};
-    if(cleanInput != "") findRequest.match = cleanInput;
+    let findRequest = {requestType: "find", requestVersion: PROTOCOL_VERSION, narrow: {}};
+    if(cleanInput != "") {
+      findRequest.match = cleanInput
+      if(defaultLimit) findRequest.limit = PLACES_LIMIT;
+    };
     if(this.state.selectedTypeFilters.length > 0) {
       findRequest.narrow.type = this.state.selectedTypeFilters;
     }

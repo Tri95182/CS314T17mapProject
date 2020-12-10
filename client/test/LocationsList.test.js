@@ -10,10 +10,15 @@ import Trip from "../src/components/Atlas/Trip";
 const startProperties = {
   placesSelectedEmpty: [],
   placesSelected: [{name:"place1", lat:"10", lng:"20"}],
+  placesSelectedMultipleLong: [
+    {name:"firstplace", latitude:10, longitude:20},
+    {name:"secondplace", latitude:20, longitude:30},
+    {name:"thirdplace", latitude:30, longitude:40},
+  ],
   placesSelectedMultiple: [
-    {name:"firstplace", lat:"10", lng:"20"},
-    {name:"secondplace", lat:"20", lng:"30"},
-    {name:"thirdplace", lat:"30", lng:"40"},
+    {name:"firstplace", lat:10, lng:20},
+    {name:"secondplace", lat:20, lng:30},
+    {name:"thirdplace", lat:30, lng:40},
   ],
   placesDistance: [],
   userPosition: {lat: 40, lng: -100},
@@ -102,7 +107,7 @@ function testHandleLocationSelect() {
   const loclist = shallow(<LocationsList
     userPosition={startProperties.userPosition}
     markerPosition={startProperties.markerPosition}
-    placesSelected={startProperties.placesSelectedMultiple}
+    placesSelected={startProperties.placesSelectedMultipleLong}
     placesDistance={atlas.state().placesDistance}
     setParentState={(obj) => atlas.instance().setParentState(obj)}
     listModalOpen={startProperties.listModalOpen}

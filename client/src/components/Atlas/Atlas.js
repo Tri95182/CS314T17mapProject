@@ -110,9 +110,9 @@ export default class Atlas extends Component {
             {this.getUserPosition()}
             {this.state.placesSelected.map((place) => {
               let placeLatLng = _.cloneDeep(place);
-              placeLatLng.lat = Number(place.latitude);
+              placeLatLng.lat = parseFloat(place.latitude);
               delete placeLatLng.latitude;
-              placeLatLng.lng = Number(place.longitude);
+              placeLatLng.lng = parseFloat(place.longitude);
               delete placeLatLng.longitude
               return this.createMarker(placeLatLng, MARKER_ICON, place.name);
             })}
@@ -216,9 +216,9 @@ export default class Atlas extends Component {
   }
 
   async setMarker(mapClickInfo) {
-    const mapLatLng = {name:"Marker Location", lat:mapClickInfo.latlng.lat, lng:mapClickInfo.latlng.lng};
-    const geocodeName = await this.reverseGeocode(mapClickInfo.latlng);
-    if(geocodeName) mapLatLng.name = geocodeName;
+    let mapLatLng = {name:"Marker Location", lat:mapClickInfo.latlng.lat, lng:mapClickInfo.latlng.lng};
+    const geocodeInfo = await this.reverseGeocode(mapClickInfo.latlng);
+    if(geocodeInfo) mapLatLng = {...mapLatLng, ...geocodeInfo};
     if(this.state.markerPosition) {
       let tempMarker = this.state.markerPosition;
       this.changeInArray(this.state.placesSelected, tempMarker, mapLatLng, "placesSelected");
@@ -232,24 +232,27 @@ export default class Atlas extends Component {
       if(entry.notes) {
         item.notes = entry.notes;
       }
-      return _.isEqual(entry, item)
+      return entry.name==item.name && entry.lat==item.lat && entry.lng==item.lng;
     });
     if(index != -1) {
       let tempArray = array;
-      array[index] = newItem;
+      tempArray[index] = newItem;
       this.setState({[name]: tempArray});
     }
   }
 
   getUserPosition() {
     if(navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        this.setState(
-          {userPosition: {
-            name: 'Current Location',
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          }});
+      navigator.geolocation.getCurrentPosition(async (position) => {
+        let userInfo = null;
+        if(!this.state.userPosition) {
+          const geocodeInfo = await this.reverseGeocode({lat:position.coords.latitude, lng:position.coords.longitude});
+          userInfo = {...geocodeInfo}
+        } else {
+          userInfo = {...this.state.userPosition};
+        }
+        userInfo = {...userInfo, name: 'Current Location', lat: position.coords.latitude, lng: position.coords.longitude};
+        this.setState({userPosition: userInfo});
       })
 
       if(this.state.userPosition) {
@@ -345,7 +348,7 @@ export default class Atlas extends Component {
         geocoder.reverse(latlng, map.options.crs.scale(map.getZoom()), results => {
           var r = results[0];
           if (r) {
-            resolve(r.name);
+            resolve({name: r.name, ...r.properties.address});
           } else {
             resolve(null);
           }

@@ -57,7 +57,7 @@ function testGeolocation() {
   };
   global.navigator.geolocation = mockGeolocation;
 
-
+  atlas.setState({userPosition: {name: "Current Location", lat:10, lng:20}})
   atlas.instance().getUserPosition();  
 
   expect(atlas.state().userPosition).toEqual({name: "Current Location", lat:10, lng:20});
@@ -109,7 +109,14 @@ async function testReverseGeocoding() {
   instance['mapRef'] = map;
   const latlng1 = {lat:39, lng:-105};
   const output1 = await instance.reverseGeocode(latlng1);
-  expect(output1).toEqual("Flatland Trail, El Paso County, Colorado, United States of America");
+  expect(output1).toEqual({
+    "country": "United States of America", 
+    "country_code": "us", 
+    "county": "El Paso County", 
+    "name": "Flatland Trail, El Paso County, Colorado, United States of America", 
+    "road": "Flatland Trail", 
+    "state": "Colorado"
+  });
   
   const latlng2 = {lat:28, lng:-38};
   const output2 = await instance.reverseGeocode(latlng2);
