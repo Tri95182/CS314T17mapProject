@@ -54,6 +54,9 @@ export default class Search extends Component {
         <ModalHeader toggle={toggle}>Search</ModalHeader>
         {this.renderSearchModalBody()}
         <ModalFooter>
+          <Button color="primary" onClick={() => {
+            this.props.setParentState({searchModalOpen: false, listModalOpen: true});
+          }}>Open Locations</Button>
           <Button color="primary" onClick={toggle}>Close</Button>
         </ModalFooter>
       </Modal>
@@ -114,7 +117,7 @@ export default class Search extends Component {
         <DropdownToggle caret>{name}</DropdownToggle>
         <DropdownMenu className="filter-item">
           {options.map((item) => 
-            <DropdownItem toggle={false} active={this.isFilterSelected(name, item)} 
+            <DropdownItem key={item} toggle={false} active={this.isFilterSelected(name, item)} 
             onClick={async () => {
               await this.handleFilterSelect(name, item);
               await this.handleSearch({target:{value: this.state.searchInput}});
@@ -164,21 +167,46 @@ export default class Search extends Component {
           <Row>Results: {this.props.placesFound}</Row>
           {this.renderFilterBadges()}
         </ListGroupItem>
-        {!this.state.isLoading ? this.props.places && this.props.places.map((place) => 
-          <ListGroupItem 
-            key={place.name+place.latitude+place.longitude} 
-            tag="button" 
-            onClick={() => this.addSelectedPlace(place)}
-            color={this.props.placesSelected.filter(val => _.isEqual(val, place)).length != 0 ? "primary":"white"}
-          >
-            <ListGroupItemHeading>{place.name}</ListGroupItemHeading>
-            <ListGroupItemText>
-              {place.country_code ? getUnicodeFlagIcon(place.country_code)+" " : ""}
-              {place.municipality ? place.municipality+", " : ""}{place.region ? place.region+", " : ""}{place.country ? place.country : ""}
-            </ListGroupItemText>
-          </ListGroupItem>
-        ) : <ListGroupItem tag="button"><Spinner color="primary"/></ListGroupItem>}
+        {!this.state.isLoading ? this.props.places && this.props.places.map((place) => {
+          let tempPlace = _.cloneDeep(place);
+          tempPlace.lat = parseFloat(tempPlace.latitude);
+          tempPlace.lng = parseFloat(tempPlace.longitude);
+          delete tempPlace.latitude;
+          delete tempPlace.longitude;
+          const isInSelected = this.props.placesSelected.filter(val => _.isEqual(val, place)).length != 0;
+          const isInDistance = this.props.placesDistance.filter(val => _.isEqual(val, tempPlace)).length != 0;
+          return (
+            <ListGroupItem 
+              key={place.name+place.latitude+place.longitude} 
+              tag="button" 
+              color={isInSelected ? "primary":"white"}
+            >
+              <ListGroupItemHeading>{place.name}</ListGroupItemHeading>
+              <ListGroupItemText>
+                {place.country_code ? getUnicodeFlagIcon(place.country_code)+" " : ""}
+                {place.municipality ? place.municipality+", " : ""}{place.region ? place.region+", " : ""}{place.country ? place.country : ""}
+              </ListGroupItemText>
+              {this.renderItemButton(() => this.addSelectedPlace(place, isInSelected, this.props.placesSelected, "placesSelected"), isInDistance, isInSelected, "map")}
+              {this.renderItemButton(() => {
+                this.addSelectedPlace(place, isInSelected, this.props.placesSelected, "placesSelected", true);
+                this.addSelectedPlace(tempPlace, isInDistance, this.props.placesDistance, "placesDistance");
+              }, false, isInDistance, "trip")}
+            </ListGroupItem>
+          )
+        }) : <ListGroupItem tag="button"><Spinner color="primary"/></ListGroupItem>}
       </ListGroup>
+    );
+  }
+
+  renderItemButton(onClick, disabled, isIn, name) {
+    return (
+      <Button 
+        disabled={disabled}
+        className="search-item-button" 
+        onClick={onClick}
+      >
+        {isIn ? "Remove from" : "Add to"} {name}
+      </Button>
     );
   }
 
@@ -195,14 +223,14 @@ export default class Search extends Component {
     );
   }
 
-  addSelectedPlace(place) {
-    if(!this.props.placesSelected.includes(place)) {
-      this.props.setParentState({placesSelected: [...this.props.placesSelected, place]});
-    } else {
-      let index = this.props.placesSelected.findIndex((item) => _.isEqual(item, place))
-      let newSelected = this.props.placesSelected;
+  addSelectedPlace(place, isIn, prop, propName, dontDelete=false) {
+    if(!isIn) {
+      this.props.setParentState({[propName]: [...prop, place]});
+    } else if(!dontDelete){
+      let index = prop.findIndex((item) => _.isEqual(item, place))
+      let newSelected = prop;
       newSelected.splice(index, 1);
-      this.props.setParentState({placesSelected: newSelected});
+      this.props.setParentState({[propName]: newSelected});
     }
   }
 
