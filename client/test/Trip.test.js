@@ -140,7 +140,6 @@ function testHandleCalculateTrip() {
 
   expect(atlas.state().tripDistances).toEqual([]);
 
-  trip.instance().handleCalculateTrip();
 
   expect(atlas.state().tripDistances).toEqual([]);
 }
@@ -209,7 +208,7 @@ function mockTripResponseObj() {
 function testHandleSaveTrip() {
   // placeholder for save trip test
   global.URL.createObjectURL = jest.fn();
-  const trip = shallow(<Trip placesDistance={startproperties.placesDistance}/>);
+  const trip = shallow(<Trip placesDistance={startproperties.placesDistance} earthRadius = {6371.0}/>);
 
   trip.instance().handleSaveTrip();
 }
@@ -220,7 +219,7 @@ test("Test saving trip", testHandleSaveTrip);
 function testHandleLoadTrip() {
   // placeholder for load trip test
 
-  const trip = shallow(<Trip placesDistance={startproperties.placesDistance}/>);
+  const trip = shallow(<Trip placesDistance={startproperties.placesDistance} earthRadius = {6371.0}/>);
 
   trip.instance().handleLoadTrip();
 }
@@ -278,15 +277,18 @@ test("Test render of trip title change input", testTitleInputRender);
 
 function testTitleInputChange() {
 
-  const trip = shallow(<Trip placesDistance={startproperties.placesDistanceEmpty}/>);
+  const atlas = shallow(<Atlas/>);
+  const trip = shallow(<Trip placesDistance={startproperties.placesDistanceEmpty}
+                             setParentState={(obj)=>atlas.instance().setParentState(obj)}
+                             tripTitle={"trip"}/>);
 
-  expect(trip.state().tripTitle).toEqual("Trip");
+  expect(atlas.state().tripTitle).toEqual("Trip");
 
   simulateOnClickEvent(trip, 'div');
   simulateOnChangeEvent(trip, {target:{value:"Test Trip Name"}});
   simulateOnClickEvent(trip, 'Button');
 
-  expect(trip.state().tripTitle).toEqual("Test Trip Name");
+  expect(atlas.state().tripTitle).toEqual("Test Trip Name");
 }
 
 function simulateOnClickEvent(reactWrapper, component) {

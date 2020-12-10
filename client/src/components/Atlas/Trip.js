@@ -7,6 +7,7 @@ import _ from 'lodash';
 import {downloadFile} from "./DownloadFile";
 import Info from './Info';
 import Import from './Import';
+import CalcTrip from "./CalcTrip";
 
 import { LOG, PROTOCOL_VERSION } from "../../utils/constants";
 import * as tripSchema from "../../../schemas/ResponseTrip";
@@ -23,7 +24,6 @@ import EditIcon from '@material-ui/icons/Edit';
 import LoopIcon from '@material-ui/icons/Loop';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import SendIcon from '@material-ui/icons/Send';
-import CalcTrip from "./CalcTrip";
 
 
 export default class Trip extends Component {
@@ -35,9 +35,7 @@ export default class Trip extends Component {
     this.setParentState = this.setParentState.bind(this);
 
     this.state = {
-      tripTitle: "Trip",
       editingTripTitle: false,
-      earthRadius: 6371.0,
       tripMenuOpen: false,
       itemMenuOpen: false,
       itemMenuOpenIndex: null,
@@ -50,7 +48,7 @@ export default class Trip extends Component {
   render() {
     return (
       <ListGroup>
-        {this.renderMenu(this.state.tripTitle, this.state.tripMenuOpen, 
+        {this.renderMenu(this.props.tripTitle, this.state.tripMenuOpen,
           () => this.tripToggle(this.state.tripMenuOpen, 'tripMenuOpen'), 
           () => this.renderTripActionBtns()
         )}
@@ -64,7 +62,7 @@ export default class Trip extends Component {
   }
 
   renderMenu(title, trigger, toggle, renderButtons) {
-    const header = title == this.state.tripTitle;
+    const header = title == this.props.tripTitle;
     return (
       <Navbar className="trip-item" dark={header} light={!header} color={header ? "primary" : "white"}>
         <Row className="item-row"><Col>
@@ -90,15 +88,15 @@ export default class Trip extends Component {
     return (
       <InputGroup>
         <Input
-          value={this.state.tripTitle}
+          value={this.props.tripTitle}
           onChange={(input) => {
-            this.setState({tripTitle: input.target.value});
+            this.props.setParentState({tripTitle: input.target.value});
           }}
         />
         <InputGroupAddon addonType="append">
           <Button onClick={() => {
-            if(this.state.tripTitle.length == 0) {
-              this.setState({tripTitle:"Trip"});
+            if(this.props.tripTitle.length == 0) {
+              this.props.setParentState({tripTitle:"Trip"});
             }
             this.setState({editingTripTitle:false})
           }}>
@@ -278,12 +276,8 @@ export default class Trip extends Component {
   }
 
   handleCalculateTrip() {
-    let ct = new CalcTrip(this.props,this.state)
+    let ct = new CalcTrip(this.props)
     ct.handleCalculateTrip();
-    //if(this.props.placesDistance.length > 0) {
-    //  this.props.sendRequest(this.createTripJson())
-    //  .then(response => this.processTripResponse(response));
-    //}
   }
 
   createTripJson(){
@@ -299,8 +293,8 @@ export default class Trip extends Component {
     return {requestType: "trip", requestVersion: PROTOCOL_VERSION,
       places: placesLatLngString,
       options: {
-        title: this.state.tripTitle, 
-        earthRadius: this.state.earthRadius.toString(),
+        title: this.props.tripTitle,
+        earthRadius: this.props.earthRadius.toString(),
         response: this.props.optTrip ? "1.0" : "0.0",
         units: this.props.units ? this.props.units.toLowerCase() : "kilometers"
       }

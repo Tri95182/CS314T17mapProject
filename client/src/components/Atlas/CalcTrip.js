@@ -1,14 +1,13 @@
 import React, {Component} from 'react';
 import { isJsonResponseValid } from "../../utils/restfulAPI";
-
+import _ from "lodash"
 import { LOG, PROTOCOL_VERSION } from "../../utils/constants";
 import * as tripSchema from "../../../schemas/ResponseTrip";
 
 
 export default class CalcTrip extends Component {
-  constructor(props,state) {
+  constructor(props) {
     super(props);
-    this.state = state
   }
 
   handleCalculateTrip() {
@@ -32,7 +31,7 @@ export default class CalcTrip extends Component {
       places: placesLatLngString,
       options: {
         title: this.props.tripTitle,
-        earthRadius: this.state.earthRadius.toString(),
+        earthRadius: this.props.earthRadius.toString(),
         response: this.props.optTrip ? "1.0" : "0.0",
         units: this.props.units ? this.props.units.toLowerCase() : "kilometers"
       }
@@ -48,5 +47,6 @@ export default class CalcTrip extends Component {
     } else {
       this.props.setParentState({tripDistances: tripResponse.distances});
     }
+    this.setState({ state: this.state });
   }
 }

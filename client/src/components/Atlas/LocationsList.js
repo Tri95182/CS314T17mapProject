@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Row, Col, Button, ButtonGroup, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText, Modal, ModalHeader, ModalFooter, ModalBody} from 'reactstrap';
 
-import Distance from "./Distance";
+import CalcTrip from "./CalcTrip";
 
 import LocationIcon from '@material-ui/icons/GpsFixed';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -34,13 +34,6 @@ export default class LocationsList extends Component {
     return (
       <ListGroup key={"loclist"}>
         <ListGroupItem active>Select Locations </ListGroupItem>
-        <Distance 
-          placesDistance={this.props.placesDistance}
-          distanceBetween={this.props.distanceBetween}
-          setParentState={this.props.setParentState}
-          createSnackBar={this.props.createSnackBar}
-          sendRequest={this.props.sendRequest}
-        />
         {this.renderIfPropExists("Current Location", this.props.userPosition)}
         {this.renderIfPropExists(this.props.markerPosition ? this.props.markerPosition.name : "Marker Location", this.props.markerPosition)}
         {this.props.placesSelected.map((place) =>
@@ -139,5 +132,7 @@ export default class LocationsList extends Component {
       let temp = this.props.placesDistance.filter(val => val.name != name);
       this.props.setParentState({placesDistance: temp});
     }
+
+    //new CalcTrip(this.props).handleCalculateTrip();
   }
 }
