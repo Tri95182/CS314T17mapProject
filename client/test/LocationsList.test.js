@@ -34,7 +34,7 @@ function testRenderLocationsList() {
   />);
 
   expect(loclist.find("ListGroup").length).toEqual(1);
-  expect(loclist.find("ListGroupItem").length).toEqual(1);
+  expect(loclist.find("ListGroupItem").length).toEqual(2);
 }
 
 test("Test the render of locations list", testRenderLocationsList);
@@ -51,7 +51,7 @@ function testRenderLocationItems() {
   />);
 
   expect(loclist.find("ListGroup").length).toEqual(1);
-  expect(loclist.find("ListGroupItem").length).toEqual(4);
+  expect(loclist.find("ListGroupItem").length).toEqual(5);
 }
 
 test("Test the render of location items", testRenderLocationItems);
@@ -67,7 +67,7 @@ function testRenderLocationItemBtns() {
 
   expect(loclist.find("ListGroup").length).toEqual(1);
   expect(loclist.find("ButtonGroup").length).toEqual(1);
-  expect(loclist.find("Button").length).toEqual(4);
+  expect(loclist.find("Button").length).toEqual(9);
 }
 
 test("Testing the render of location item buttons", testRenderLocationItemBtns);
