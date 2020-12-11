@@ -254,9 +254,6 @@ export default class Trip extends Component {
       temp.splice(index, 1);
       this.props.setParentState({placesDistance: temp});
       this.resetItemIndex();
-      if(this.props.calcTrip){
-        this.handleCalculateTrip();
-      }
     }
   }
 
@@ -276,9 +273,6 @@ export default class Trip extends Component {
     const [moved] = newList.splice(srcIndex, 1);
     newList.splice(destIndex, 0, moved);
     this.resetItemIndex();
-    if(this.props.calcTrip){
-      this.handleCalculateTrip();
-    }
     return newList;
   }
 
