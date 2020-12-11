@@ -45,11 +45,17 @@ export default class Trip extends Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    if(!_.isEqual(prevProps.placesDistance, this.props.placesDistance) && this.props.settings.calcTrip) {
+      this.handleCalculateTrip();
+    }
+  }
+
   render() {
     return (
       <ListGroup>
         {this.renderMenu(this.props.tripTitle, this.state.tripMenuOpen,
-          () => this.tripToggle(this.state.tripMenuOpen, 'tripMenuOpen'), 
+          () => this.tripToggle(this.state.tripMenuOpen, 'tripMenuOpen'),
           () => this.renderTripActionBtns()
         )}
         <DragDropContext onDragEnd={this.handleDragEnd}>
