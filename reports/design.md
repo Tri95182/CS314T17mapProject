@@ -598,7 +598,7 @@ The component hierarchy for the base application depicted below shows the our to
 * Trip holds all the locations in itinerary and gives general tools to interact with the trip. 
 * About renders information about the team.
 
-![base component hierarchy](images/Sprint4ComponentHierarchy.png)
+![base component hierarchy](images/Sprint5ComponentHierarchy.png)
 
 We do not show the many ReactStrap components in this hierarchy, even though they will appear when you are debugging on the client.
 
