@@ -42,7 +42,7 @@ export default class Settings extends Component {
 						<tbody>
 							{this.renderUnitsInput()}
 							{this.renderEarthRadiusInput()}
-							{this.renderSwitchSetting("Optimize Trip", this.state.settings.optTrip, "optTrip")}
+							{this.renderSwitchSetting("Optimize Trip", this.state.settings.optTrip, "optTrip", true)}
 							{this.renderSwitchSetting("Show Markers", this.state.settings.showMarkers, "showMarkers")}
 							{this.renderSwitchSetting("Show Lines", this.state.settings.showLines, "showLines")}
 							{this.renderSwitchSetting("AutoRecalculate Trip", this.state.settings.calcTrip, "calcTrip")}
@@ -98,11 +98,11 @@ export default class Settings extends Component {
 		);
 	}
 
-	renderSwitchSetting(name, state, stateName) {
+	renderSwitchSetting(name, state, stateName, disabled=false) {
 		return (
 			<tr key={name}>
 				<td>{name}</td>
-				<td><CustomInput id={stateName} color="primary" type="switch" checked={state} onChange={() => {
+				<td><CustomInput id={stateName} color="primary" type="switch" checked={state} disabled={disabled} onChange={() => {
 					let newSettings = _.cloneDeep(this.state.settings);
 					newSettings[stateName] = !state;
 					this.setState({settings: newSettings});
