@@ -10,7 +10,8 @@ export default class Settings extends Component {
 		this.state = {
 			settings: null,
 			validEarthRadius: true,
-			units: ["Kilometers", "Miles", "Meters", "Feet", "Yards", "Custom"]
+			units: ["Kilometers", "Miles", "Meters", "Feet", "Yards", "Custom"],
+			earthRadi: [6371,3958.8,6371000,20902000,6975240.59,0]
 		}
 	}
 
@@ -62,6 +63,7 @@ export default class Settings extends Component {
 					color="primary"
 					valid={this.state.validEarthRadius}
 					invalid={!this.state.validEarthRadius}
+
 					onChange={(e) => {
 						let isValid = true;
 						if(isNaN(e.target.value)) isValid = false;
@@ -81,6 +83,14 @@ export default class Settings extends Component {
 				<td><CustomInput id="units" color="primary" type="select" value={this.state.settings.units} onChange={(e) => {
 					let newSettings = _.cloneDeep(this.state.settings);
 					newSettings.units = e.target.value;
+					var index = 0;
+					while(index<this.state.units.length){
+						if(e.target.value == this.state.units[index]){
+							newSettings.earthRadius = this.state.earthRadi[index];
+						}
+						index++;
+					}
+
 					this.setState({settings: newSettings});
 				}}>
 					{this.state.units.map((unit) => <option key={unit}>{unit}</option>)}
