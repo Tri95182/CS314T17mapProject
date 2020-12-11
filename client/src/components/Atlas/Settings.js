@@ -42,6 +42,7 @@ export default class Settings extends Component {
 						<tbody>
 							{this.renderUnitsInput()}
 							{this.renderEarthRadiusInput()}
+							{this.renderSwitchSetting("Optimize Trip", this.state.settings.optTrip, "optTrip")}
 							{this.renderSwitchSetting("Show Markers", this.state.settings.showMarkers, "showMarkers")}
 							{this.renderSwitchSetting("Show Lines", this.state.settings.showLines, "showLines")}
 							{this.renderSwitchSetting("AutoRecalculate Trip", this.state.settings.calcTrip, "calcTrip")}
