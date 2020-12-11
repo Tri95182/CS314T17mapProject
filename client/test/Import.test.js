@@ -48,7 +48,7 @@ function testFileLoadCancel() {
   expect(atlas.state().placesDistance).toEqual([])
   expect(atlas.state().placesSelected).toEqual([])
   expect(atlas.state().tripTitle).toEqual("Trip")
-  expect(atlas.state().earthRadius).toEqual(6371.0)
+  expect(atlas.state().settings.earthRadius).toEqual(6371.0)
   expect(imprt.state().fileContents).toEqual(null)
 
   const fileContent = new Blob([JSON.stringify({
@@ -72,7 +72,7 @@ function testFileLoadCancel() {
   expect(atlas.state().placesDistance).toEqual([])
   expect(atlas.state().placesSelected).toEqual([])
   expect(atlas.state().tripTitle).toEqual("Trip")
-  expect(atlas.state().earthRadius).toEqual(6371.0)
+  expect(atlas.state().settings.earthRadius).toEqual(6371.0)
   expect(imprt.state().fileContents).toEqual(null)
 }
 
@@ -101,7 +101,7 @@ function testFileLoad() {
   expect(atlas.state().placesDistance).toEqual([])
   expect(atlas.state().placesSelected).toEqual([])
   expect(atlas.state().tripTitle).toEqual("Trip")
-  expect(atlas.state().earthRadius).toEqual(6371.0)
+  expect(atlas.state().settings.earthRadius).toEqual(6371.0)
   expect(imprt.state().fileContents).toEqual(null)
 
   const fileContent = new Blob([JSON.stringify({
