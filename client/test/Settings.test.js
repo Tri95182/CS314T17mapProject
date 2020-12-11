@@ -8,6 +8,7 @@ import Settings from '../src/components/Atlas/Settings';
 const startproperties = {
   settingsModalOpen: true,
   settings: {
+    earthRadius: 6371.0,
     units: 'Kilometers',
     optTrip: false,
     showMarkers: true,
@@ -52,7 +53,7 @@ function testSettingsChangeCancel() {
   expect(atlas.state().settings).toEqual(startproperties.settings);
   expect(settings.state().settings).toEqual(startproperties.settings);
   
-  const newSettings = {units:"Miles",optTrip:true,showMarkers:false,showLines:false,calcTrip:true};
+  const newSettings = {earthRadius:6371.0, units:"Miles",optTrip:true,showMarkers:false,showLines:false,calcTrip:true};
   simulateOnChangeEvent(settings, 0, {target:{value:newSettings.units}});
   simulateOnChangeEvent(settings, 1, newSettings.optTrip);
   simulateOnChangeEvent(settings, 2, newSettings.showMarkers);
@@ -81,7 +82,7 @@ function testSettingsChangeSave() {
   expect(atlas.state().settings).toEqual(startproperties.settings);
   expect(settings.state().settings).toEqual(startproperties.settings);
 
-  const newSettings = {units:"Miles",optTrip:true,showMarkers:false,showLines:false,calcTrip:true};
+  const newSettings = {earthRadius:6371.0, units:"Miles",optTrip:true,showMarkers:false,showLines:false,calcTrip:true};
   simulateOnChangeEvent(settings, 0, {target:{value:newSettings.units}});
   simulateOnChangeEvent(settings, 1, newSettings.optTrip);
   simulateOnChangeEvent(settings, 2, newSettings.showMarkers);

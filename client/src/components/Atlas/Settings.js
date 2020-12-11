@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Modal, ModalBody, ModalFooter, ModalHeader, Table, CustomInput} from 'reactstrap';
+import {Button, Modal, ModalBody, ModalFooter, ModalHeader, Table, CustomInput, Input} from 'reactstrap';
 import _ from 'lodash';
 
 export default class Settings extends Component {
@@ -9,7 +9,8 @@ export default class Settings extends Component {
 
 		this.state = {
 			settings: null,
-			units: ["Kilometers", "Miles", "Meters", "Feet", "Yards"]
+			validEarthRadius: true,
+			units: ["Kilometers", "Miles", "Meters", "Feet", "Yards", "Custom"]
 		}
 	}
 
@@ -38,16 +39,8 @@ export default class Settings extends Component {
 				{this.state.settings ? 
 					<Table borderless>
 						<tbody>
-							<tr key="units">
-								<td>Units</td>
-								<td><CustomInput id="units" color="primary" type="select" value={this.state.settings.units} onChange={(e) => {
-									let newSettings = _.cloneDeep(this.state.settings);
-									newSettings.units = e.target.value;
-									this.setState({settings: newSettings});					
-								}}>
-									{this.state.units.map((unit) => <option>{unit}</option>)}
-								</CustomInput></td>
-							</tr>
+							{this.renderUnitsInput()}
+							{this.renderEarthRadiusInput()}
 							{this.renderSwitchSetting("Optimize Trip", this.state.settings.optTrip, "optTrip")}
 							{this.renderSwitchSetting("Show Markers", this.state.settings.showMarkers, "showMarkers")}
 							{this.renderSwitchSetting("Show Lines", this.state.settings.showLines, "showLines")}
@@ -56,6 +49,43 @@ export default class Settings extends Component {
 					</Table>
 				: <p>No settings to display</p>}
 			</ModalBody>
+		);
+	}
+
+	renderEarthRadiusInput() {
+		return (
+			<tr key="earthRadius">
+				<td>Earth Radius</td>
+				<td><Input 
+					disabled={this.state.settings.units != "Custom"}
+					value={this.state.settings.earthRadius} 
+					color="primary"
+					valid={this.state.validEarthRadius}
+					invalid={!this.state.validEarthRadius}
+					onChange={(e) => {
+						let isValid = true;
+						if(isNaN(e.target.value)) isValid = false;
+						let newSettings = _.cloneDeep(this.state.settings);
+						newSettings.earthRadius = e.target.value;
+						this.setState({settings: newSettings, validEarthRadius: isValid});
+					}}
+				/></td>
+			</tr>
+		);
+	}
+
+	renderUnitsInput() {
+		return (
+			<tr key="units">
+				<td>Units</td>
+				<td><CustomInput id="units" color="primary" type="select" value={this.state.settings.units} onChange={(e) => {
+					let newSettings = _.cloneDeep(this.state.settings);
+					newSettings.units = e.target.value;
+					this.setState({settings: newSettings});
+				}}>
+					{this.state.units.map((unit) => <option key={unit}>{unit}</option>)}
+				</CustomInput></td>
+			</tr>
 		);
 	}
 
@@ -75,17 +105,17 @@ export default class Settings extends Component {
 	renderSettingsFooter() {
 		return (
 			<ModalFooter>
-        <Button color="primary" onClick={() => {
+				<Button color="primary" onClick={() => {
+							this.props.toggle();
+							this.setState({settings: null, validEarthRadius: true});
+						}}>Cancel</Button>
+				<Button color="primary" 
+				onClick={() => {
 					this.props.toggle();
-					this.setState({settings: null});
-				}}>Cancel</Button>
-        <Button color="primary" 
-          onClick={() => {
-						this.props.toggle();
-            this.props.setParentState({settings: this.state.settings});
-          }}
-          disabled={_.isEqual(this.props.settings, this.state.settings)}
-        >Save</Button>
+					this.props.setParentState({settings: this.state.settings});
+				}}
+				disabled={_.isEqual(this.props.settings, this.state.settings) || !this.state.validEarthRadius}
+				>Save</Button>
 			</ModalFooter>
 		);
 	}

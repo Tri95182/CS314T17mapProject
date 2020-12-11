@@ -56,9 +56,9 @@ export default class Atlas extends Component {
       infoModalOpen: false,
       info: null,
       settingsModalOpen: false,
-      earthRadius: 6371.0,
       tripTitle: "Trip",
       settings: {
+        earthRadius: 6371.0,
         units: 'Kilometers',
         optTrip: false,
         showMarkers: true,
@@ -167,7 +167,7 @@ export default class Atlas extends Component {
             createSnackBar={this.props.createSnackBar}
             mapRef={this.mapRef}
             sendRequest={this.sendRequest}
-            earthRadius={this.state.earthRadius}
+            earthRadius={this.state.settings.earthRadius}
             tripTitle={this.state.tripTitle}
         />
     );
@@ -184,8 +184,9 @@ export default class Atlas extends Component {
             optTrip={this.state.settings.optTrip}
             units={this.state.settings.units}
             calcTrip ={this.state.settings.calcTrip}
-            earthRadius={this.state.earthRadius}
+            earthRadius={this.state.settings.earthRadius}
             tripTitle={this.state.tripTitle}
+            settings={this.state.settings}
         />
     );
   }

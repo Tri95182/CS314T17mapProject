@@ -81,8 +81,10 @@ export default class Import extends Component {
   
         return place;
       })
-      this.props.setParentState({tripTitle: result.options.title, earthRadius: parseFloat(result.options.earthRadius)});
-      this.props.setGrandparentState({placesDistance: placesLatLng, placesSelected: placesFiltered});
+      let newSettings = {...this.props.settings};
+      if(result.options.earthRadius) newSettings.earthRadius = parseFloat(result.options.earthRadius);
+      this.props.setParentState({tripTitle: result.options.title});
+      this.props.setGrandparentState({placesDistance: placesLatLng, placesSelected: placesFiltered, settings:newSettings});
       this.setState({fileContents: null});
     }
     reader.readAsText(this.state.fileContents);
