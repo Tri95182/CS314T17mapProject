@@ -349,6 +349,7 @@ export default class Trip extends Component {
     return (
       <Import
         importModalOpen={this.state.itemImportModalOpen}
+        settings={this.props.settings}
         toggle={() => this.tripToggle(this.state.itemImportModalOpen, 'itemImportModalOpen')}
         setParentState={this.setParentState}
         setGrandparentState={this.props.setParentState}
