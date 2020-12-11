@@ -46,7 +46,10 @@ export default class Trip extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if(!_.isEqual(prevProps.placesDistance, this.props.placesDistance) && this.props.settings.calcTrip) {
+    if((prevProps.placesDistance.length != this.props.placesDistance.length || 
+    !_.isEqual(prevProps.placesDistance, this.props.placesDistance) || 
+    !_.isEqual(prevProps.settings.units, this.props.settings.units)) && 
+    this.props.settings.calcTrip) {
       this.handleCalculateTrip();
     }
   }
@@ -335,14 +338,16 @@ export default class Trip extends Component {
   }
   
   handleNextLocation() {
-    let nextPlaces = this.props.placesDistance;
-    nextPlaces.push(nextPlaces.shift());
-    this.props.setParentState({placesDistance: nextPlaces});
-
-    if(this.props.tripDistances[0] != null) {
-      let nextDistances = this.props.tripDistances;
-      nextDistances.push(nextDistances.shift())
-      this.props.setParentState({tripDistance: nextDistances});
+    if(this.props.placesDistance.length > 0) {
+        let nextPlaces = this.props.placesDistance;
+        nextPlaces.push(nextPlaces.shift());
+        this.props.setParentState({placesDistance: nextPlaces});
+    
+        if(this.props.tripDistances[0] != null) {
+          let nextDistances = this.props.tripDistances;
+          nextDistances.push(nextDistances.shift())
+          this.props.setParentState({tripDistance: nextDistances});
+        }
     }
   }
 

@@ -12,12 +12,13 @@ const startproperties = {
     {name:"secondplace", lat:"20", lng:"30"},
     {name:"thirdplace", lat:"30", lng:"40"},
   ],
-  createSnackBar: jest.fn()
+  createSnackBar: jest.fn(),
+  settings:{units:"Miles"}
 }
 
 function testTripRender() {
 
-  const trip = shallow(<Trip placesDistance={startproperties.placesDistanceEmpty}/>);
+  const trip = shallow(<Trip placesDistance={startproperties.placesDistanceEmpty} settings={startproperties.settings}/>);
 
   expect(trip.find("ListGroup").length).toEqual(1);
   expect(trip.find("DragDropContext").length).toEqual(1);
@@ -36,7 +37,7 @@ test("Test initial trip render", testTripRender);
 
 function testTripToggle() {
 
-  const trip = shallow(<Trip placesDistance={startproperties.placesDistanceEmpty}/>);
+  const trip = shallow(<Trip placesDistance={startproperties.placesDistanceEmpty} settings={startproperties.settings}/>);
 
   expect(trip.state().itemInfoModalOpen).toEqual(false);
   
@@ -50,7 +51,7 @@ test("Test state toggle function", testTripToggle);
 
 function testTripItemToggle() {
 
-  const trip = shallow(<Trip placesDistance={startproperties.placesDistanceEmpty}/>);
+  const trip = shallow(<Trip placesDistance={startproperties.placesDistanceEmpty} settings={startproperties.settings}/>);
 
   expect(trip.state().itemMenuOpen).toEqual(false);
   expect(trip.state().itemMenuOpenIndex).toEqual(null);
@@ -66,7 +67,7 @@ test("Test toggling item menu", testTripItemToggle);
 
 function testGetInfo() {
 
-  const trip = shallow(<Trip placesDistance={startproperties.placesDistanceEmpty}/>);
+  const trip = shallow(<Trip placesDistance={startproperties.placesDistanceEmpty} settings={startproperties.settings}/>);
 
   expect(trip.state().itemInfo).toEqual(null);
   expect(trip.state().itemInfoModalOpen).toEqual(false);
@@ -88,6 +89,7 @@ function testRemoveItem() {
   const trip = shallow(<Trip 
     placesDistance={atlas.state().placesDistance}
     setParentState={(obj) => atlas.instance().setParentState(obj)}
+    settings={startproperties.settings}
   />);
 
   expect(atlas.state().placesDistance.length).toEqual(3);
@@ -107,6 +109,7 @@ function testDragEnd() {
   const trip = shallow(<Trip 
     placesDistance={atlas.state().placesDistance}
     setParentState={(obj) => atlas.instance().setParentState(obj)}
+    settings={startproperties.settings}
   />);
 
   const given = startproperties.placesDistance;
@@ -136,6 +139,7 @@ function testHandleCalculateTrip() {
     placesDistance={atlas.state().placesDistance}
     setParentState={(obj) => atlas.instance().setParentState(obj)}
     sendRequest={(req) => atlas.instance().sendRequest(req)}
+    settings={startproperties.settings}
   />);
 
   expect(atlas.state().tripDistances).toEqual([]);
@@ -154,6 +158,7 @@ function testProcessResponse() {
   const trip = shallow(<Trip 
     placesDistance={atlas.state().placesDistance}
     setParentState={(obj) => atlas.instance().setParentState(obj)}
+    settings={startproperties.settings}
   />);
 
   expect(atlas.state().tripDistances).toEqual([]);
@@ -174,6 +179,7 @@ function testProcessResponseFail() {
     placesDistance={atlas.state().placesDistance}
     setParentState={(obj) => atlas.instance().setParentState(obj)}
     createSnackBar={jest.fn()}
+    settings={startproperties.settings}
   />);
 
   expect(atlas.state().tripDistances).toEqual([]);
@@ -208,7 +214,7 @@ function mockTripResponseObj() {
 function testHandleSaveTrip() {
   // placeholder for save trip test
   global.URL.createObjectURL = jest.fn();
-  const trip = shallow(<Trip placesDistance={startproperties.placesDistance} earthRadius = {6371.0}/>);
+  const trip = shallow(<Trip placesDistance={startproperties.placesDistance} earthRadius={6371.0} settings={startproperties.settings}/>);
 
   trip.instance().handleSaveTrip();
 }
@@ -219,7 +225,7 @@ test("Test saving trip", testHandleSaveTrip);
 function testHandleLoadTrip() {
   // placeholder for load trip test
 
-  const trip = shallow(<Trip placesDistance={startproperties.placesDistance} earthRadius = {6371.0}/>);
+  const trip = shallow(<Trip placesDistance={startproperties.placesDistance} earthRadius={6371.0} settings={startproperties.settings}/>);
 
   trip.instance().handleLoadTrip();
 }
@@ -234,6 +240,7 @@ function testClearTrip() {
   const trip = shallow(<Trip 
     placesDistance={atlas.state().placesDistance}
     setParentState={(obj) => atlas.instance().setParentState(obj)}
+    settings={startproperties.settings}
   />);
 
   expect(atlas.state().placesDistance).toEqual(startproperties.placesDistance);
@@ -248,7 +255,7 @@ test("Test clearing trip", testClearTrip);
 
 function testResetItemIndex() {
 
-  const trip = shallow(<Trip placesDistance={startproperties.placesDistance}/>);
+  const trip = shallow(<Trip placesDistance={startproperties.placesDistance} settings={startproperties.settings}/>);
   trip.setState({itemMenuOpenIndex: 0});
 
   expect(trip.state().itemMenuOpenIndex).toEqual(0);
@@ -263,7 +270,7 @@ test("Test reset of item index", testResetItemIndex);
 
 function testTitleInputRender() {
 
-  const trip = shallow(<Trip placesDistance={startproperties.placesDistanceEmpty}/>);
+  const trip = shallow(<Trip placesDistance={startproperties.placesDistanceEmpty} settings={startproperties.settings}/>);
   trip.setState({editingTripTitle: true});
 
   expect(trip.find("InputGroup").length).toEqual(1);
@@ -280,7 +287,7 @@ function testTitleInputChange() {
   const atlas = shallow(<Atlas/>);
   const trip = shallow(<Trip placesDistance={startproperties.placesDistanceEmpty}
                              setParentState={(obj)=>atlas.instance().setParentState(obj)}
-                             tripTitle={"trip"}/>);
+                             tripTitle={"trip"} settings={startproperties.settings}/>);
 
   expect(atlas.state().tripTitle).toEqual("Trip");
 
