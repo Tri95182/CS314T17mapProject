@@ -513,7 +513,7 @@ They will be added later in the semester.
 
 
 ### User Interface
-![base](images/UIRedux.png)
+![base](images/Sprint5UI.png)
 
 The basic screen in black shows the view on a mobile device, with a header, footer, and map.
 The header contains a earth logo and the team name obtained from the server when the client was loaded.
