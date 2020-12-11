@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Row, Col, Button, ButtonGroup, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText, Modal, ModalHeader, ModalFooter, ModalBody} from 'reactstrap';
+import {Row, Col, Button, ButtonGroup, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText, Modal, ModalHeader, ModalFooter, ModalBody, Collapse} from 'reactstrap';
 import _ from 'lodash';
 import getUnicodeFlagIcon from 'country-flag-icons/unicode'
 
@@ -9,11 +9,17 @@ import LocationIcon from '@material-ui/icons/GpsFixed';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
+import MenuIcon from '@material-ui/icons/Menu';
+import MenuOpenIcon from '@material-ui/icons/MenuOpen';
 
 export default class LocationsList extends Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      optionsOpen: false
+    }
   }
 
   render() {
@@ -26,16 +32,61 @@ export default class LocationsList extends Component {
         <ModalHeader toggle={toggle}>Locations</ModalHeader>
         <ModalBody>{this.renderLocationsList()}</ModalBody>
         <ModalFooter>
+          <Button color="primary" onClick={() => {
+            this.props.setParentState({listModalOpen: false, searchModalOpen: true});
+          }}>Open Search</Button>
           <Button color="primary" onClick={toggle}>Close</Button>
         </ModalFooter>
       </Modal>
     );
   }
 
+  renderListHeader() {
+    return (
+      <ListGroupItem active>
+        <Row>
+          <Col>
+            <ListGroupItemText>Select Locations</ListGroupItemText>
+          </Col>
+          <Col xs="auto">
+            <Button size="sm" onClick={() => {
+              const temp = !this.state.optionsOpen; 
+              this.setState({optionsOpen: temp});
+            }}>{this.state.optionsOpen ? <MenuOpenIcon fontSize="small"/> : <MenuIcon fontSize="small"/>}</Button>
+          </Col>
+        </Row>
+      </ListGroupItem>
+    );
+  }
+
+  renderListOptions() {
+    return (
+      <Collapse isOpen={this.state.optionsOpen}>
+        <ListGroupItem className="loclist-button-center" active>
+          {this.renderOptionButton(AddIcon, "Select all", () => this.handleSelectAll())}
+          {this.renderOptionButton(RemoveIcon, "Unselect all", () => this.handleUnselectAll())}
+          {this.renderOptionButton(DeleteIcon, "Remove all", () => this.handleRemoveAll())}
+        </ListGroupItem>
+      </Collapse>
+    );
+  }
+
+  renderOptionButton(Icon, text, onClick) {
+    return (
+      <Button
+        className="search-item-button"
+        onClick={onClick}
+      >
+        <Icon fontSize="small"/> {text}
+      </Button>
+    );
+  }
+
   renderLocationsList() {
     return (
       <ListGroup key={"loclist"}>
-        <ListGroupItem active>Select Locations </ListGroupItem>
+        {this.renderListHeader()}
+        {this.renderListOptions()}
         {this.renderIfPropExists(this.props.userPosition)}
         {this.renderIfPropExists(this.props.markerPosition)}
         {this.props.placesSelected.map((place) => {
@@ -147,5 +198,29 @@ export default class LocationsList extends Component {
     }
 
     //new CalcTrip(this.props).handleCalculateTrip();
+  }
+
+  handleSelectAll() {
+    let newSelected = [];
+    this.props.placesSelected.forEach((place) => {
+      if(this.props.placesDistance.filter(val => val.name == place.name).length == 0) {
+        let tempPlace = _.cloneDeep(place);
+        tempPlace.lat = parseFloat(place.latitude); delete tempPlace.latitude;
+        tempPlace.lng = parseFloat(place.longitude); delete tempPlace.longitude;
+        newSelected.push(tempPlace);
+      }
+    })
+    if(this.props.markerPosition && this.props.placesDistance.filter(val => val.name == this.props.markerPosition.name).length == 0) newSelected.push(this.props.markerPosition);
+    if(this.props.userPosition && this.props.placesDistance.filter(val => val.name == this.props.userPosition.name).length == 0) newSelected.push(this.props.userPosition)
+    this.props.setParentState({placesDistance: [...this.props.placesDistance, ...newSelected]});
+  }
+
+  handleUnselectAll() {
+    this.props.setParentState({placesDistance: []});
+  }
+
+  handleRemoveAll() {
+    this.props.setParentState({placesDistance: [], placesSelected: []});
+    if(this.props.markerPosition) this.props.setParentState({markerPosition: null});
   }
 }

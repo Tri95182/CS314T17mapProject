@@ -58,7 +58,7 @@ function testRenderFilters() {
   expect(search.find('Collapse').length).toEqual(1);
   expect(search.find('ButtonGroup').length).toEqual(1);
   expect(search.find('ButtonDropdown').length).toEqual(2);
-  expect(search.find('Button').length).toEqual(4);
+  expect(search.find('Button').length).toEqual(5);
 }
 
 test("Test render of search filters", testRenderFilters);
@@ -144,7 +144,7 @@ function testAddSelectedPlace() {
     "region": "Alaska",
     "longitude": "-145.804494"
   };
-  instance.addSelectedPlace(place);
+  instance.addSelectedPlace(place, false, [], "placesSelected");
 
   expect(atlas.state().placesSelected.length).toEqual(1);
 }

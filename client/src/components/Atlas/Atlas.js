@@ -140,6 +140,7 @@ export default class Atlas extends Component {
             places={this.state.places}
             placesFound={this.state.placesFound}
             placesSelected={this.state.placesSelected}
+            placesDistance={this.state.placesDistance}
             setParentState={this.setParentState}
             createSnackBar={this.props.createSnackBar}
             sendRequest={this.sendRequest}
