@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Modal, ModalBody, ModalFooter, ModalHeader, Table, CustomInput, Input} from 'reactstrap';
 import _ from 'lodash';
-
+import CalcTrip from "./CalcTrip";
 export default class Settings extends Component {
 
 	constructor(props) {
@@ -90,7 +90,6 @@ export default class Settings extends Component {
 						}
 						index++;
 					}
-
 					this.setState({settings: newSettings});
 				}}>
 					{this.state.units.map((unit) => <option key={unit}>{unit}</option>)}

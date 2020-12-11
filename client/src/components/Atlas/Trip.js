@@ -70,7 +70,6 @@ export default class Trip extends Component {
           this.renderTripTitleInput() : 
           <div onClick={() => header ? this.setState({editingTripTitle:true}) : null}>{title}&nbsp;{header ? <EditIcon fontSize="small"/> : ""}</div>}
           {header ? <div>Total Distance:{this.props.tripDistances ? this.totalTripDistance(this.props.tripDistances) : "" } {this.props.units} </div> : ""}
-          {header ? <div>Distances:{this.props.tripDistances ? this.props.tripDistances.toString() : ""}</div> : "" }
         </NavbarBrand>
         </Col><Col className="item-col" xs="1">
         <NavbarToggler onClick={() => toggle()}>
